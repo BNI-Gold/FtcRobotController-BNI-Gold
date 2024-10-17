@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.DriveTrains.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.DriveTrains.MecanumDrive;
 
 public class StraferKit extends MecanumDrive {
     public HardwareMap hwBot = null;

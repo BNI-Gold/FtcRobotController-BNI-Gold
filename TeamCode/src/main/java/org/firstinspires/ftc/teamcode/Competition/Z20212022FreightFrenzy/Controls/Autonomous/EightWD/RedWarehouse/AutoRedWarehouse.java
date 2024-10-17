@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Contro
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Robots.EightWheelBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Robots.EightWheelBot;
 
 @Autonomous(name = "Red Warehouse 8WD", group = "Programming Bot")
 

@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Contro
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Robots.SixWheelBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Robots.SixWheelBot;
 
 @Autonomous(name = "Red Carousel Shipping Hub", group = "Programming Bot")
 @Disabled

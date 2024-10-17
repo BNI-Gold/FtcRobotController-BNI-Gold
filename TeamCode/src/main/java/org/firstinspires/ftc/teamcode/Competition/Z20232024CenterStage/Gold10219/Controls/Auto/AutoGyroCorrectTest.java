@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold1021
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Robots.ProgrammingBot;
-import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Robots.ProgrammingBot;
+//import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 @Disabled
 @Autonomous (name = "GyroTest")
@@ -14,7 +14,7 @@ public class AutoGyroCorrectTest extends AutoMain{
 public ProgrammingBot Bot = new ProgrammingBot();
     public static int oneSecond = 1000;
 
-    public TfodProcessor tFod;
+ //   public TfodProcessor tFod;
     @Override
     public void runOpMode() throws InterruptedException {
         Bot.initRobot(hardwareMap);

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.controls.A
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.Robots.CompetionBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.Robots.CompetionBot;
 
 @Autonomous (name = "lets win this tournament! i love programming!!!", group = "1")
 

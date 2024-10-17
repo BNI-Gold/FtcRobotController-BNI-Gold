@@ -4,8 +4,8 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold1021
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Vision.TeamPropPosition;
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Vision.TeamPropPositionPipeline_Gold;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Vision.TeamPropPosition;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Vision.TeamPropPositionPipeline_Gold;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;

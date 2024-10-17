@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Robots.AckerBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Robots.AckerBot;
 @Disabled
 @TeleOp (name = "MecTeleOp")
 public class MecTeleOp extends OpMode {

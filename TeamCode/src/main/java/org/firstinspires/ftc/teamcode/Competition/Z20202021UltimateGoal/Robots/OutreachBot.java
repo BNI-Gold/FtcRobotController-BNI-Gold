@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.DriveTrains.SixWD;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.DriveTrains.SixWD;
 
 public class OutreachBot extends SixWD {
     public HardwareMap hwBot  =  null;

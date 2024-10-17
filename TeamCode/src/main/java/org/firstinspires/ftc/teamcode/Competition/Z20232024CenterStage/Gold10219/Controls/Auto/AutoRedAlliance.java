@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Controls.Auto;
 
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Robots.CompBot;
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Vision.TeamPropPosition;
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Vision.TeamPropPositionPipeline_Gold;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Robots.CompBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Vision.TeamPropPosition;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Vision.TeamPropPositionPipeline_Gold;
 
 public abstract class AutoRedAlliance extends AutoMain{
 

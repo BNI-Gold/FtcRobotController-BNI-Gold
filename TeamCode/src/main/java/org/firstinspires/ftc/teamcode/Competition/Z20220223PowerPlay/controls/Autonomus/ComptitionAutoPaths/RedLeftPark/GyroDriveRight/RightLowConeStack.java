@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.controls.Autonomus.ComptitionAutoPaths.RedLeftPark.GyroDriveRight;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.Robots.CompetionBot;
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.controls.Autonomus.ComptitionAutoPaths.AutoMain;
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.controls.Autonomus.ComptitionAutoPaths.AutoTargetZone;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.Robots.CompetionBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.controls.Autonomus.ComptitionAutoPaths.AutoMain;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.controls.Autonomus.ComptitionAutoPaths.AutoTargetZone;
 
 
 public abstract class RightLowConeStack extends AutoMain {

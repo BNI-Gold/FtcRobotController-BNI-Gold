@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Modules.EasyOpenCVWebcam;
-//import org.firstinspires.ftc.teamcode.Compitition.Z202220223PowerPlay.Modules.EasyOpenCVWebcam;
 import org.firstinspires.ftc.teamcode.Lab.VisionTracking.EOCV.examples.PipelineStageSwitchingExample;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;

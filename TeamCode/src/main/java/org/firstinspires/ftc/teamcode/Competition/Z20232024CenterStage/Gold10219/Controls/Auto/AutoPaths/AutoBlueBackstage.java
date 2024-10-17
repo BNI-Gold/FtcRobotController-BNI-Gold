@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold1021
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Controls.Auto.AutoBlueAlliance;
-import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Controls.Auto.AutoBlueAlliance;
+//import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 @Disabled
 @Autonomous (name = "A - Blue Backstage FOR COMP")
@@ -14,7 +14,7 @@ public class AutoBlueBackstage extends AutoBlueAlliance {
 
     public static int oneSecond = 1000;
 
-    public TfodProcessor tFod;
+    //public TfodProcessor tFod;
 
     //public VisionPortal visionPortal;
 

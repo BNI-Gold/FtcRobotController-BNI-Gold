@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Robots.BlueBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Robots.BlueBot;
 
 @Disabled
     @TeleOp(name = "BlueBot:TeleOp_OLD-DO NOT USE")

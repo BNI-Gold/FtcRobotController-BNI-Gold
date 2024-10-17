@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.DriveTrains.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.DriveTrains.MecanumDrive;
 
 public class StraferBot extends MecanumDrive {
 

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.DriveTrains.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.DriveTrains.MecanumDrive;
 
 public class ClawBot extends MecanumDrive {
     public HardwareMap hwBot = null;

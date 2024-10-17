@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Control
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.Modules.EasyOpenCVWebcam;
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.Robots.CompetitionBot;
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.Robots.LabBot;
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.Robots.StraferKit;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Modules.EasyOpenCVWebcam;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Robots.CompetitionBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Robots.LabBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Robots.StraferKit;
 
 public abstract class AutoMain extends LinearOpMode {
 

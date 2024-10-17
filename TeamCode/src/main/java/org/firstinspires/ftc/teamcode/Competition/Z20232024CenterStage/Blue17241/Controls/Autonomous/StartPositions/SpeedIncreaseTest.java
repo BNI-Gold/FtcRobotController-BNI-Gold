@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue1724
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Controls.Autonomous.AutoMain;
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Drivetrains.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Controls.Autonomous.AutoMain;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Drivetrains.MecanumDrive;
 
 @Disabled
 @Autonomous(name = "Speed Acceleration Test")

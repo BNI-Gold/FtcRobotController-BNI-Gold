@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Contro
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Robots.EightWheelBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Robots.EightWheelBot;
 
 public abstract class AutoMain extends LinearOpMode {
 

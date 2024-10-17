@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.DriveTrains.SixWD;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.DriveTrains.SixWD;
 
 public class SixWheelBot extends SixWD {
 

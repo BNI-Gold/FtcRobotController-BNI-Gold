@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Controls.Autonomous.EightWD.BlueShippingHub;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Controls.Autonomous.EightWD.AutoMain;
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Robots.EightWheelBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Controls.Autonomous.EightWD.AutoMain;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Robots.EightWheelBot;
 
 public abstract class BlueShippingHubTop extends AutoMain {
     public long sleepTime = 100;

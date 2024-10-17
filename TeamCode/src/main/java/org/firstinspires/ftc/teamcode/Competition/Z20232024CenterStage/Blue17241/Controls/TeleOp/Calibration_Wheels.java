@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue1724
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Robots.BlueBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Robots.BlueBot;
 
 
 public class Calibration_Wheels extends OpMode {
@@ -53,7 +53,7 @@ public class Calibration_Wheels extends OpMode {
     public double endGameDownPosition = 0;
 
     // Construct the physical robot object
-    public org.firstinspires.ftc.teamcode.Competition.CenterStage.Robots.BlueBot Bot = new BlueBot();
+    public BlueBot Bot = new BlueBot();
 
 
 

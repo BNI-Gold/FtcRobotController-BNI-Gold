@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Controls.Autonomous.Tank.RedDuckParkStorageUnit;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Controls.Autonomous.Tank.AutoMain;
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Robots.TankBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Controls.Autonomous.Tank.AutoMain;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Robots.TankBot;
 
 public abstract class RedDuckParkStorageUnit extends AutoMain {
 

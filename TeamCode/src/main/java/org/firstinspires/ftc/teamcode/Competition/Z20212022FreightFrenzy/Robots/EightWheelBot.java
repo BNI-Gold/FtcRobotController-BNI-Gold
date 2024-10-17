@@ -68,9 +68,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.DriveTrains.EightWD;
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.mechanisms.CompContourPipeline;
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.mechanisms.TSELocation;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.DriveTrains.EightWD;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.mechanisms.CompContourPipeline;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.mechanisms.TSELocation;
 import org.opencv.core.Scalar;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;

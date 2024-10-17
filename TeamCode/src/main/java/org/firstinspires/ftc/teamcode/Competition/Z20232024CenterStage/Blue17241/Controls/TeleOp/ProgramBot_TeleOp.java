@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Robots.ProgramBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Robots.ProgramBot;
 @Disabled
 @TeleOp(name="ProgramBot")
 public class ProgramBot_TeleOp extends OpMode {

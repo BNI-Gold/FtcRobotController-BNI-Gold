@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Control
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.Robots.StraferKit;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Robots.StraferKit;
 @Autonomous (name = "Strafer Auto")
 public class StraferAuto extends LinearOpMode {
 

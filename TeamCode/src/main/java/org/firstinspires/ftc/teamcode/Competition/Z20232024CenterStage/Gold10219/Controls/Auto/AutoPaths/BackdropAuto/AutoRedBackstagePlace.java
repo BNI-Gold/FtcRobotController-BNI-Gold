@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold1021
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Controls.Auto.AutoMain;
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Robots.CompBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Controls.Auto.AutoMain;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Robots.CompBot;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+//import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 @Disabled
 @Autonomous (name = "A - Red Backstage Auto- FOR COMP")
 public class AutoRedBackstagePlace extends AutoMain {
@@ -15,7 +15,7 @@ public class AutoRedBackstagePlace extends AutoMain {
 
     public static int oneSecond = 1000;
 
-    public TfodProcessor tFod;
+  //  public TfodProcessor tFod;
 
     public VisionPortal visionPortal;
 

@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Contro
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Controls.Autonomous.Tank.AutoMain;
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Robots.TankBot;
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.mechanisms.TSELocation;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Controls.Autonomous.Tank.AutoMain;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Robots.TankBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.mechanisms.TSELocation;
 
 public abstract class RedShippingHubPark extends AutoMain {
 

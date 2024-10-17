@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Controls.Autonomous.StraferLab;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZFreightFrenzy.Robots.StraferBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20212022FreightFrenzy.Robots.StraferBot;
 
 public class AutoStraferMoving extends StraferMoving {
 

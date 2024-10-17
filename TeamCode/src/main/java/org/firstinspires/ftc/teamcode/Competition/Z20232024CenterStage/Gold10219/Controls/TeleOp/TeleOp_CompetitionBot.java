@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Controls.TeleOp;
 
-import com.acmerobotics.dashboard.FtcDashboard;
+//import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.Compitition.CenterStage.Robots.CompBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Robots.CompBot;
 
 import java.util.Locale;
 
@@ -17,8 +17,8 @@ import java.util.Locale;
 @TeleOp (name = "A - Center Stage - 'RANGER RATTLE'")
 public class TeleOp_CompetitionBot extends OpMode {
 
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+   // FtcDashboard dashboard = FtcDashboard.getInstance();
+   // Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
     public double rotationPos = 0.5;
     double incValue = 0.05;
@@ -333,7 +333,7 @@ public class TeleOp_CompetitionBot extends OpMode {
     }
         public void telemetryOutput () {
 
-            dashboardTelemetry.addData("worm gear encoder: ", Bot.wormgearRight.getCurrentPosition());
+           // dashboardTelemetry.addData("worm gear encoder: ", Bot.wormgearRight.getCurrentPosition());
 
             telemetry.addData("Front Left: ", Bot.frontLeftMotor.getCurrentPosition());
             telemetry.addData("Front Right: ", Bot.frontRightMotor.getCurrentPosition());
@@ -344,14 +344,14 @@ public class TeleOp_CompetitionBot extends OpMode {
 
             telemetry.addData("DPAD SERVO ", Bot.endgameArmRotator.getPosition());
 
-            dashboardTelemetry.addData("FRONT LEFT: ", Bot.frontLeftMotor.getPower());
-            dashboardTelemetry.addData("FRONT RIGHT: ", Bot.frontRightMotor.getPower());
+          //  dashboardTelemetry.addData("FRONT LEFT: ", Bot.frontLeftMotor.getPower());
+          //  dashboardTelemetry.addData("FRONT RIGHT: ", Bot.frontRightMotor.getPower());
 
-            dashboardTelemetry.addData("REAR LEFT: ", Bot.rearLeftMotor.getPower());
-            dashboardTelemetry.addData("REAR RIGHT: ", Bot.rearRightMotor.getPower());
+          //  dashboardTelemetry.addData("REAR LEFT: ", Bot.rearLeftMotor.getPower());
+         //   dashboardTelemetry.addData("REAR RIGHT: ", Bot.rearRightMotor.getPower());
 
 //            dashboardTelemetry.addData("worm gear encoder: ", Bot.wormgearRight.getCurrentPosition());
-            dashboardTelemetry.update();
+         //   dashboardTelemetry.update();
 
             telemetry.addData("Distance 1 (in)",
                     String.format(Locale.US, "%.02f", Bot.pixelDistanceSensor1.getDistance(DistanceUnit.INCH)));

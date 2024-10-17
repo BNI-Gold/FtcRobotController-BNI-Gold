@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue1724
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Robots.AckerBot;
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Robots.BlueBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Robots.AckerBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Robots.BlueBot;
 
 @Disabled
 @Autonomous(name= "Encoder Tester")

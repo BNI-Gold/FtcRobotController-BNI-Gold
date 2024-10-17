@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Gold10219.Controls.Auto.VisionAuto;
 
-import com.acmerobotics.dashboard.FtcDashboard;
+//import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -20,8 +20,8 @@ public class BNIVision_Adapted extends LinearOpMode {
 
 
 
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+  //  FtcDashboard dashboard = FtcDashboard.getInstance();
+  //  Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
     OpenCvCamera webcam;
     TeamPropPositionPipeline pipeline;
@@ -40,7 +40,7 @@ public class BNIVision_Adapted extends LinearOpMode {
         webcam.setPipeline(pipeline);
         webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY);
 
-        FtcDashboard.getInstance().startCameraStream(webcam, 0);
+        //FtcDashboard.getInstance().startCameraStream(webcam, 0);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {

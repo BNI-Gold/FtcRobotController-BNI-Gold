@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.Robots.LabBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Robots.LabBot;
 
 @Autonomous(name = "AutoBotsRollOut")
 @Disabled

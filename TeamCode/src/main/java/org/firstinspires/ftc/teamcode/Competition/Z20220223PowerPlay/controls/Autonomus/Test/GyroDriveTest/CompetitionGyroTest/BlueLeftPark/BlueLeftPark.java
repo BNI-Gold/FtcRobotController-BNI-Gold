@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.controls.Autonomus.Test.GyroDriveTest.CompetitionGyroTest.BlueLeftPark;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.Robots.CompetionBot;
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.Robots.StraferBot;
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.controls.Autonomus.Test.GyroDriveTest.CompetitionGyroTest.AutoMain;
-import org.firstinspires.ftc.teamcode.Compitition.ZPowerPlay.controls.Autonomus.Test.GyroDriveTest.CompetitionGyroTest.AutoTargetZone;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.Robots.CompetionBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.Robots.StraferBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.controls.Autonomus.Test.GyroDriveTest.CompetitionGyroTest.AutoMain;
+import org.firstinspires.ftc.teamcode.Competition.Z20220223PowerPlay.controls.Autonomus.Test.GyroDriveTest.CompetitionGyroTest.AutoTargetZone;
 
 public abstract class BlueLeftPark extends AutoMain {
     public void parkplace (CompetionBot Bot, AutoTargetZone target) throws InterruptedException{

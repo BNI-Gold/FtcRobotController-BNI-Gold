@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Compitition.ZCompititionUltimateGoal.Robots.OutreachBot;
+import org.firstinspires.ftc.teamcode.Competition.Z20202021UltimateGoal.Robots.OutreachBot;
 @Disabled
 @TeleOp (name = "Teleop_OutreachBot", group = "3")
 //@Disabled

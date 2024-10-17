@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Controls.Autonomous;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Controls.TeamPropPosition;
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Controls.TeamPropPositionPipeline;
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Drivetrains.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Controls.TeamPropPosition;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Controls.TeamPropPositionPipeline;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Drivetrains.MecanumDrive;
 
 public abstract class AutoRedAlliance extends AutoMain{
 

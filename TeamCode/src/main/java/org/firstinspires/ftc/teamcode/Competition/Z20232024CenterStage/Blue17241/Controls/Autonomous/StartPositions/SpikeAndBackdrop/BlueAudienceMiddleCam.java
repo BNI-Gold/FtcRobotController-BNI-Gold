@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue1724
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.Competition.CenterStage.Controls.Autonomous.AutoBlueAlliance;
+import org.firstinspires.ftc.teamcode.Competition.Z20232024CenterStage.Blue17241.Controls.Autonomous.AutoBlueAlliance;
 @Disabled
 @Autonomous (name = "Blue:Audience:Middle:Cam")
 public class BlueAudienceMiddleCam extends AutoBlueAlliance {
