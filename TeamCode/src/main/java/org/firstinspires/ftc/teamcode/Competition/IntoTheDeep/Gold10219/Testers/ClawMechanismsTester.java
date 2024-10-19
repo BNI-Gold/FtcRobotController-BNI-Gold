@@ -2,16 +2,11 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.Bot;
 
 @TeleOp(name = "B - Claw Mechanisms Tester")
 public class ClawMechanismsTester extends OpMode {
-
-    public Servo primaryExtender = null;
-    public Servo secondaryExtender = null;
-    public Servo claw = null;
 
     public Bot Bot = new Bot();
 
