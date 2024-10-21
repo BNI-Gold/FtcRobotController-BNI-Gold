@@ -28,6 +28,7 @@ public class ClawMechanismsTester extends OpMode {
     public void control() {
 //        double primaryExtenderPos = Bot.primaryExtender.getPosition();
 //        double secondaryExtenderPos = Bot.secondaryExtender.getPosition();
+        //TODO: set extender powers
         double primaryExtenderPower = 0;
         double secondaryExtenderPower = 0;
         double clawPos = Bot.claw.getPosition();

@@ -118,6 +118,7 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void clawMechanismsControl() {
+        //TODO: set extender powers
         double primaryExtenderJump = .05;
         double primaryExtenderPower = 0;
         double secondaryExtenderJump = .05;
