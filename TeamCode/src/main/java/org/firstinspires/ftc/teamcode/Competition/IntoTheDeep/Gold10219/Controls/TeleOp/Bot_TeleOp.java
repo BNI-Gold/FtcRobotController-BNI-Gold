@@ -118,10 +118,39 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void clawMechanismsControl() {
-        if (gamepad2.x) Bot.prepCollection(); //Should be left button
-        else if (gamepad2.a) Bot.collectSample(); //Should be bottom button
-        else if (gamepad2.y) Bot.driveWithSample(); //Should be top button
-        else if (gamepad2.b) Bot.retractAll(); //Should be right button
+        double primaryExtenderJump = .05;
+        double primaryExtenderPower = 0;
+        double secondaryExtenderJump = .05;
+        double secondaryExtenderPower = 0;
+        double clawJump = .05;
+//        if (gamepad2.x) Bot.prepCollection(); //Should be left button
+//        else if (gamepad2.a) Bot.collectSample(); //Should be bottom button
+//        else if (gamepad2.y) Bot.driveWithSample(); //Should be top button
+//        else if (gamepad2.b) Bot.retractAll(); //Should be right button
+
+//        double primaryExtenderPos = Bot.primaryExtender.getPosition();
+//        double secondaryExtenderPos = Bot.secondaryExtender.getPosition();
+        double clawPos = Bot.claw.getPosition();
+
+        if (gamepad2.right_bumper) {
+            Bot.primaryExtender.setPower(primaryExtenderPower);
+        } else if (gamepad2.left_bumper) {
+            Bot.primaryExtender.setPower(-primaryExtenderPower);
+        } else {
+            Bot.primaryExtender.setPower(0);
+        }
+        if (gamepad2.a) { //Should be bottom button
+            Bot.secondaryExtender.setPower(secondaryExtenderPower);
+        } else if (gamepad2.y) { //Should be top button
+            Bot.secondaryExtender.setPower(-secondaryExtenderPower);
+        } else {
+            Bot.secondaryExtender.setPower(0);
+        }
+        if (gamepad2.x) { //Should be left button
+            Bot.claw.setPosition(clawPos + clawJump);
+        } else if (gamepad2.b) { //Should be right button
+            Bot.claw.setPosition(clawPos - clawJump);
+        }
     }
 
     public void telemetryOutput() {
