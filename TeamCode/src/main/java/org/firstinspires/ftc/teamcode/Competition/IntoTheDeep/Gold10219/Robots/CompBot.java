@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetrains.MecanumDrive;
 
-public class Bot extends MecanumDrive {
+public class CompBot extends MecanumDrive {
 
     public HardwareMap hwBot = null;
 
@@ -38,7 +38,7 @@ public class Bot extends MecanumDrive {
     RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
     RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
-    public Bot() {
+    public CompBot() {
     }
 
     public void initRobot(HardwareMap hwMap) {

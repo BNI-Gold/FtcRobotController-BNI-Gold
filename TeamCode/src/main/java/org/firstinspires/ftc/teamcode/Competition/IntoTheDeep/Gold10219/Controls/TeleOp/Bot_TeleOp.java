@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.Bot;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 @TeleOp(name = "A - Into the Deep")
 public class Bot_TeleOp extends OpMode {
@@ -25,7 +25,7 @@ public class Bot_TeleOp extends OpMode {
 
     public boolean slowMode = false;
 
-    public Bot Bot = new Bot();
+    public CompBot Bot = new CompBot();
 
     ElapsedTime timer = new ElapsedTime();
 
