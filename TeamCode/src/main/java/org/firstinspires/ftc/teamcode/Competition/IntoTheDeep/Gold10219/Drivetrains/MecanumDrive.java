@@ -35,18 +35,6 @@ public class MecanumDrive {
     //Heading error tolerance for roadrunner
     public double headingError = 0;
 
-
-    //********** AnyDrive Enums **********
-    public enum anyDriveDirections {
-        STOP, FORWARD, BACKWARD, LEFT, RIGHT
-    }
-    public enum anyDriveMode {
-        LINEAR, ROTATION, DIAGONAL
-    }
-    //****************************************
-
-
-
     //Default constructor
     public MecanumDrive() {}
 
