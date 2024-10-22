@@ -32,6 +32,8 @@ public class MecanumDrive {
     //Current heading for roadrunner
     public double currentHeading = 0;
 
+    //Heading error tolerance for roadrunner
+    public double headingError = 0;
 
 
     //********** AnyDrive Enums **********

@@ -25,10 +25,6 @@ public class CompBot extends MecanumDrive {
     //public Servo secondaryExtender = null;
     public Servo claw = null;
 
-    //Init IMU & heading
-    public IMU imu = null;
-    public double headingError = 0;
-
     //Set hub directions
     //TODO: confirm directions
     RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
