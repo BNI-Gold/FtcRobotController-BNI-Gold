@@ -118,11 +118,6 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void clawMechanismsControl() {
-        //TODO: set extender powers
-        double primaryExtenderJump = .05;
-        double primaryExtenderPower = 0;
-        double secondaryExtenderJump = .05;
-        double secondaryExtenderPower = 0;
         double clawJump = .05;
 //        if (gamepad2.x) Bot.prepCollection(); //Should be left button
 //        else if (gamepad2.a) Bot.collectSample(); //Should be bottom button
@@ -134,16 +129,16 @@ public class Bot_TeleOp extends OpMode {
         double clawPos = Bot.claw.getPosition();
 
         if (gamepad2.right_bumper) {
-            Bot.primaryExtender.setPower(primaryExtenderPower);
+            Bot.primaryExtender.setPower(Bot.primaryExtenderPower);
         } else if (gamepad2.left_bumper) {
-            Bot.primaryExtender.setPower(-primaryExtenderPower);
+            Bot.primaryExtender.setPower(-Bot.primaryExtenderPower);
         } else {
             Bot.primaryExtender.setPower(0);
         }
         if (gamepad2.a) { //Should be bottom button
-            Bot.secondaryExtender.setPower(secondaryExtenderPower);
+            Bot.secondaryExtender.setPower(Bot.secondaryExtenderPower);
         } else if (gamepad2.y) { //Should be top button
-            Bot.secondaryExtender.setPower(-secondaryExtenderPower);
+            Bot.secondaryExtender.setPower(-Bot.secondaryExtenderPower);
         } else {
             Bot.secondaryExtender.setPower(0);
         }

@@ -25,6 +25,13 @@ public class CompBot extends MecanumDrive {
     //public Servo secondaryExtender = null;
     public Servo claw = null;
 
+
+    //TODO: set extender powers
+    public double primaryExtenderJump = .05;
+    public double primaryExtenderPower = 0;
+    public double secondaryExtenderJump = .05;
+    public double secondaryExtenderPower = 0;
+
     //Set hub directions
     //TODO: confirm directions
     RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
