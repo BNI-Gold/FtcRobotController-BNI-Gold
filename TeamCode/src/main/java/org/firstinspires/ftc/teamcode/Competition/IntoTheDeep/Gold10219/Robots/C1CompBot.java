@@ -13,13 +13,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetrains.MecanumDrive;
 
-public class CompBot extends MecanumDrive {
+public class C1CompBot extends MecanumDrive {
 
     public HardwareMap hwBot = null;
 
     //Mechanism motors and servos
-    public Servo primaryExtender = null;
-    public Servo secondaryExtender = null;
+    public CRServo primaryExtender = null;
+    public CRServo secondaryExtender = null;
     public Servo claw = null;
 
     //Set hub directions
@@ -28,7 +28,7 @@ public class CompBot extends MecanumDrive {
     RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
     RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
-    public CompBot() {
+    public C1CompBot() {
     }
 
     public void initRobot(HardwareMap hwMap) {
@@ -61,14 +61,19 @@ public class CompBot extends MecanumDrive {
 
 
         //********** SERVO CONFIG **********
-        primaryExtender = hwBot.servo.get("primary_extender");
-        secondaryExtender = hwBot.servo.get("secondary_extender");
+        //Get servo ports & info from control hub config
+        primaryExtender = hwBot.crservo.get("primary_extender");
+        //primaryExtender = hwBot.servo.get("primary_extender");
+        secondaryExtender = hwBot.crservo.get("secondary_extender");
+        //secondaryExtender = hwBot.servo.get("secondary_extender");
         claw = hwBot.servo.get("claw");
 
         //Assign direction to servos
         //TODO: confirm directions
-        primaryExtender.setDirection(Servo.Direction.FORWARD);
-        secondaryExtender.setDirection(Servo.Direction.FORWARD);
+        primaryExtender.setDirection(CRServo.Direction.FORWARD);
+        //primaryExtender.setDirection(Servo.Direction.FORWARD);
+        secondaryExtender.setDirection(CRServo.Direction.FORWARD);
+        //secondaryExtender.setDirection(Servo.Direction.FORWARD);
         claw.setDirection(Servo.Direction.FORWARD);
         //****************************************
     }
@@ -110,72 +115,11 @@ public class CompBot extends MecanumDrive {
 
 
     //********** PERIPHERAL METHODS **********
-    //Values for peripheral positions
-    //TODO: determine these positions (use three below methods to figure out
-    //what they're for lol)
-    double primaryExtenderExtend = 0;
-    double primaryExtenderDrive = 0;
-    double primaryExtenderRetract = 0;
-    double primaryExtenderPastChassis = 0;
-
-    double secondaryExtenderExtend = 0;
-    double secondaryExtenderRetract = 0;
-
     //Still need the claw pos vars bc claw servo is not continuous and is servo-servo
     double clawOpen = 0;
     double clawClose = 0;
 
-
-    //These first three methods *technically* can be used directly from
-    //controller button presses, however I'd prefer to use the methods
-    //defined after these first three.
-    public void usePrimaryExtender(extenderDirections direction) {
-        switch (direction) {
-            case EXTEND:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                //primaryExtender.setPosition(primaryExtenderExtend);
-                break;
-            case DRIVE:
-                //to robot as possible
-
-                //This should be a button press to actuate to correct position
-                //each time.
-
-                //primaryExtender.setPosition(primaryExtenderDrive);
-                break;
-            case RETRACT:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                //primaryExtender.setPosition(primaryExtenderRetract);
-                break;
-        }
-    }
-    public void useSecondaryExtender(extenderDirections direction) {
-        switch (direction) {
-            case EXTEND:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                //Should only extend if primary extender is past robot chassis
-//                if (primaryExtender.getPosition() >= primaryExtenderPastChassis) {
-//                    //secondaryExtender.setPosition(secondaryExtenderExtend);
-//                }
-                break;
-            case RETRACT:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                //secondaryExtender.setPosition(secondaryExtenderRetract);
-                break;
-        }
-    }
+    //Sets claw to correct position
     public void useClaw(clawOptions option) {
         switch(option) {
             case OPEN:
@@ -191,39 +135,5 @@ public class CompBot extends MecanumDrive {
                 //claw.setPosition(clawClose);
                 break;
         }
-    }
-
-    //Sets extenders and claw to optimal driving position for when
-    //a sample is being held
-    public void driveWithSample() {
-        //Claw is closed, then primary
-        //extender is retracted as close to robot as possible while
-        //sample is being held (see comments in usePrimaryExtender
-        //method), then secondary extender is retracted completely.
-        useClaw(clawOptions.CLOSE);
-        useSecondaryExtender(extenderDirections.RETRACT);
-        usePrimaryExtender(extenderDirections.DRIVE);
-    }
-
-    //Retracts all peripherals
-    public void retractAll() {
-        useClaw(clawOptions.CLOSE);
-        useSecondaryExtender(extenderDirections.RETRACT);
-        usePrimaryExtender(extenderDirections.RETRACT);
-    }
-
-    //Extends primary arm, retracts secondary arm, opens claw
-    public void prepCollection() {
-        useClaw(clawOptions.OPEN);
-        useSecondaryExtender(extenderDirections.RETRACT);
-        usePrimaryExtender(extenderDirections.EXTEND);
-    }
-
-    //Extends secondary arm to sample then closes claw.
-    //Calls prepCollection in case primary isn't already extended
-    public void collectSample() {
-        prepCollection();
-        useSecondaryExtender(extenderDirections.EXTEND);
-        useClaw(clawOptions.CLOSE);
     }
 }

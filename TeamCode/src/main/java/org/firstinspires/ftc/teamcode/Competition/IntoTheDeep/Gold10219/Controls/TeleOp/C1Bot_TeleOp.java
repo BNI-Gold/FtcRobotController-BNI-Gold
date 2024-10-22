@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.C1CompBot;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
-@Disabled
-@TeleOp(name = "A - Into the Deep")
-public class Bot_TeleOp extends OpMode {
+@TeleOp(name = "A - C1 Into the Deep")
+public class C1Bot_TeleOp extends OpMode {
 
     double leftStickXVal;
     double leftStickYVal;
@@ -28,7 +25,7 @@ public class Bot_TeleOp extends OpMode {
 
     public boolean slowMode = false;
 
-    public CompBot Bot = new CompBot();
+    public C1CompBot Bot = new C1CompBot();
 
     ElapsedTime timer = new ElapsedTime();
 
@@ -121,10 +118,30 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void clawMechanismsControl() {
-        if (gamepad2.x) Bot.prepCollection(); //Should be left button
-        else if (gamepad2.a) Bot.collectSample(); //Should be bottom button
-        else if (gamepad2.y) Bot.driveWithSample(); //Should be top button
-        else if (gamepad2.b) Bot.retractAll(); //Should be right button
+        double clawJump = .05;
+        double primaryExtenderPower = 0;
+        double secondaryExtenderPower = 0;
+        double clawPos = Bot.claw.getPosition();
+
+        if (gamepad2.right_bumper) {
+            Bot.primaryExtender.setPower(primaryExtenderPower);
+        } else if (gamepad2.left_bumper) {
+            Bot.primaryExtender.setPower(-primaryExtenderPower);
+        } else {
+            Bot.primaryExtender.setPower(0);
+        }
+        if (gamepad2.a) { //Should be bottom button
+            Bot.secondaryExtender.setPower(secondaryExtenderPower);
+        } else if (gamepad2.y) { //Should be top button
+            Bot.secondaryExtender.setPower(-secondaryExtenderPower);
+        } else {
+            Bot.secondaryExtender.setPower(0);
+        }
+        if (gamepad2.x) { //Should be left button
+            Bot.claw.setPosition(clawPos + clawJump);
+        } else if (gamepad2.b) { //Should be right button
+            Bot.claw.setPosition(clawPos - clawJump);
+        }
     }
 
     public void telemetryOutput() {
