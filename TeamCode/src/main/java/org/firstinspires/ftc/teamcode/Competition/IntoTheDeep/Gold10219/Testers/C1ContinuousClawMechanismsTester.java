@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.C1CompBot;
 
-@TeleOp(name = "B - Claw Mechanisms Tester")
+@TeleOp(name = "B - C1 Claw Mechanisms Tester")
 public class C1ContinuousClawMechanismsTester extends OpMode {
 
     public C1CompBot Bot = new C1CompBot();

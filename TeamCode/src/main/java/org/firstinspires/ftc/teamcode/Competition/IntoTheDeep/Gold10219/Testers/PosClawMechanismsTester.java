@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
+@Disabled
 @TeleOp(name = "B - Claw Mechanisms Tester")
 public class PosClawMechanismsTester extends OpMode {
 
