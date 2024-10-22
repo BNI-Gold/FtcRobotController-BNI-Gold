@@ -18,12 +18,6 @@ public class CompBot extends MecanumDrive {
 
     public HardwareMap hwBot = null;
 
-    //Primary four motors for mecanum wheels
-    public DcMotor frontLeftMotor = null;
-    public DcMotor frontRightMotor = null;
-    public DcMotor rearLeftMotor = null;
-    public DcMotor rearRightMotor = null;
-
     //Mechanism motors and servos
     public CRServo primaryExtender = null;
     //public Servo primaryExtender = null;
@@ -63,8 +57,8 @@ public class CompBot extends MecanumDrive {
 
         //Initialize motor run mode
         //TODO: Ensure this is how we want it (or don't use at all?)
-//        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
