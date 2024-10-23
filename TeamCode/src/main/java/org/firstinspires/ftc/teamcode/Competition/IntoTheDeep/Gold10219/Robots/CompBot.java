@@ -24,12 +24,12 @@ public class CompBot extends MecanumDrive {
 
     //Set hub directions
     //TODO: confirm directions
+    //Why do we have this? `orientationOnRobot` is never referenced...
     RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
     RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
     RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
-    public CompBot() {
-    }
+    public CompBot() {}
 
     public void initRobot(HardwareMap hwMap) {
         hwBot = hwMap;
@@ -111,8 +111,7 @@ public class CompBot extends MecanumDrive {
 
     //********** PERIPHERAL METHODS **********
     //Values for peripheral positions
-    //TODO: determine these positions (use three below methods to figure out
-    //what they're for lol)
+    //TODO: determine these positions (use three below methods to figure out what they're for lol)
     double primaryExtenderExtend = 0;
     double primaryExtenderDrive = 0;
     double primaryExtenderRetract = 0;
@@ -121,7 +120,6 @@ public class CompBot extends MecanumDrive {
     double secondaryExtenderExtend = 0;
     double secondaryExtenderRetract = 0;
 
-    //Still need the claw pos vars bc claw servo is not continuous and is servo-servo
     double clawOpen = 0;
     double clawClose = 0;
 

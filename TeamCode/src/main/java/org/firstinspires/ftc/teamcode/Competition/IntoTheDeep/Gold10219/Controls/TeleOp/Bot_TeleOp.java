@@ -25,8 +25,6 @@ public class Bot_TeleOp extends OpMode {
     double powerThreshold = 0;
     double speedMultiply = 1;
 
-    public boolean slowMode = false;
-
     public CompBot Bot = new CompBot();
 
     ElapsedTime timer = new ElapsedTime();
@@ -43,25 +41,10 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void speedControl() {
-
         if (gamepad1.left_trigger > 0.35) {
-
-            slowMode = true;
-
-        } else {
-
-            slowMode = false;
-
-        }
-
-        if (slowMode) {
-
             speedMultiply = 0.3;
-
         } else {
-
             speedMultiply = 1;
-
         }
     }
 
