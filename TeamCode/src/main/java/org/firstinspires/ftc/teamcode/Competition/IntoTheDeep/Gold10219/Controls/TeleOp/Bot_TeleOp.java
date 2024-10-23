@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.clawOptions;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.extenderDirections;
 
 @TeleOp(name = "A - Into the Deep")
 public class Bot_TeleOp extends OpMode {
@@ -23,8 +26,6 @@ public class Bot_TeleOp extends OpMode {
     double powerThreshold = 0;
     double speedMultiply = 1;
 
-    public boolean slowMode = false;
-
     public CompBot Bot = new CompBot();
 
     ElapsedTime timer = new ElapsedTime();
@@ -41,25 +42,10 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void speedControl() {
-
         if (gamepad1.left_trigger > 0.35) {
-
-            slowMode = true;
-
-        } else {
-
-            slowMode = false;
-
-        }
-
-        if (slowMode) {
-
             speedMultiply = 0.3;
-
         } else {
-
             speedMultiply = 1;
-
         }
     }
 
@@ -73,8 +59,8 @@ public class Bot_TeleOp extends OpMode {
         rightStickXVal = gamepad1.right_stick_x;
         rightStickXVal = Range.clip(rightStickXVal, -1, 1);
         //Using negative value here because for some stupid reason up is negative
-        rightStickYVal = -gamepad1.right_stick_y;
-        rightStickYVal = Range.clip(rightStickYVal, -1, 1);
+//        rightStickYVal = -gamepad1.right_stick_y;
+//        rightStickYVal = Range.clip(rightStickYVal, -1, 1);
 
         frontLeftSpeed = leftStickYVal + leftStickXVal + rightStickXVal;
         frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
@@ -118,40 +104,14 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void clawMechanismsControl() {
-        //TODO: set extender powers
-        double primaryExtenderJump = .05;
-        double primaryExtenderPower = 0;
-        double secondaryExtenderJump = .05;
-        double secondaryExtenderPower = 0;
-        double clawJump = .05;
-//        if (gamepad2.x) Bot.prepCollection(); //Should be left button
-//        else if (gamepad2.a) Bot.collectSample(); //Should be bottom button
-//        else if (gamepad2.y) Bot.driveWithSample(); //Should be top button
-//        else if (gamepad2.b) Bot.retractAll(); //Should be right button
-
-//        double primaryExtenderPos = Bot.primaryExtender.getPosition();
-//        double secondaryExtenderPos = Bot.secondaryExtender.getPosition();
-        double clawPos = Bot.claw.getPosition();
-
-        if (gamepad2.right_bumper) {
-            Bot.primaryExtender.setPower(primaryExtenderPower);
-        } else if (gamepad2.left_bumper) {
-            Bot.primaryExtender.setPower(-primaryExtenderPower);
-        } else {
-            Bot.primaryExtender.setPower(0);
-        }
-        if (gamepad2.a) { //Should be bottom button
-            Bot.secondaryExtender.setPower(secondaryExtenderPower);
-        } else if (gamepad2.y) { //Should be top button
-            Bot.secondaryExtender.setPower(-secondaryExtenderPower);
-        } else {
-            Bot.secondaryExtender.setPower(0);
-        }
-        if (gamepad2.x) { //Should be left button
-            Bot.claw.setPosition(clawPos + clawJump);
-        } else if (gamepad2.b) { //Should be right button
-            Bot.claw.setPosition(clawPos - clawJump);
-        }
+        if (gamepad2.x) Bot.prepCollection(); //Should be left button
+        else if (gamepad2.a) Bot.hover(); //Should be bottom button
+        else if (gamepad2.y) Bot.driveWithSample(); //Should be top button
+        else if (gamepad2.b) Bot.retractAll(); //Should be right button
+        else if (gamepad2.dpad_up) Bot.useSecondaryExtender(true, extenderDirections.RETRACT);
+        else if (gamepad2.dpad_down) Bot.useSecondaryExtender(true, extenderDirections.EXTEND);
+        else if (gamepad2.dpad_left) Bot.useClaw(clawOptions.CLOSE);
+        else if (gamepad2.dpad_right) Bot.useClaw(clawOptions.OPEN);
     }
 
     public void telemetryOutput() {
@@ -159,7 +119,9 @@ public class Bot_TeleOp extends OpMode {
         telemetry.addData("Front Right: ", Bot.frontRightMotor.getCurrentPosition());
         telemetry.addData("Rear Left: ", Bot.rearLeftMotor.getCurrentPosition());
         telemetry.addData("Rear Right: ", Bot.rearRightMotor.getCurrentPosition());
-
+        telemetry.addData("Primary Extender Position: ", Bot.primaryExtender.getPosition());
+        telemetry.addData("Secondary Extender Position: ", Bot.secondaryExtender.getPosition());
+        telemetry.addData("Claw Position: ", Bot.claw.getPosition());
         telemetry.update();
     }
 
