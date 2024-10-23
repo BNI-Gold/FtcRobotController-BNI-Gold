@@ -7,8 +7,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.clawOptions;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.extenderDirections;
 
-@Disabled
 @TeleOp(name = "A - Into the Deep")
 public class Bot_TeleOp extends OpMode {
 
@@ -58,8 +59,8 @@ public class Bot_TeleOp extends OpMode {
         rightStickXVal = gamepad1.right_stick_x;
         rightStickXVal = Range.clip(rightStickXVal, -1, 1);
         //Using negative value here because for some stupid reason up is negative
-        rightStickYVal = -gamepad1.right_stick_y;
-        rightStickYVal = Range.clip(rightStickYVal, -1, 1);
+//        rightStickYVal = -gamepad1.right_stick_y;
+//        rightStickYVal = Range.clip(rightStickYVal, -1, 1);
 
         frontLeftSpeed = leftStickYVal + leftStickXVal + rightStickXVal;
         frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
@@ -104,9 +105,13 @@ public class Bot_TeleOp extends OpMode {
 
     public void clawMechanismsControl() {
         if (gamepad2.x) Bot.prepCollection(); //Should be left button
-        else if (gamepad2.a) Bot.collectSample(); //Should be bottom button
+        else if (gamepad2.a) Bot.hover(); //Should be bottom button
         else if (gamepad2.y) Bot.driveWithSample(); //Should be top button
         else if (gamepad2.b) Bot.retractAll(); //Should be right button
+        else if (gamepad2.dpad_up) Bot.useSecondaryExtender(true, extenderDirections.RETRACT);
+        else if (gamepad2.dpad_down) Bot.useSecondaryExtender(true, extenderDirections.EXTEND);
+        else if (gamepad2.dpad_left) Bot.useClaw(clawOptions.CLOSE);
+        else if (gamepad2.dpad_right) Bot.useClaw(clawOptions.OPEN);
     }
 
     public void telemetryOutput() {
@@ -114,7 +119,9 @@ public class Bot_TeleOp extends OpMode {
         telemetry.addData("Front Right: ", Bot.frontRightMotor.getCurrentPosition());
         telemetry.addData("Rear Left: ", Bot.rearLeftMotor.getCurrentPosition());
         telemetry.addData("Rear Right: ", Bot.rearRightMotor.getCurrentPosition());
-
+        telemetry.addData("Primary Extender Position: ", Bot.primaryExtender.getPosition());
+        telemetry.addData("Secondary Extender Position: ", Bot.secondaryExtender.getPosition());
+        telemetry.addData("Claw Position: ", Bot.claw.getPosition());
         telemetry.update();
     }
 

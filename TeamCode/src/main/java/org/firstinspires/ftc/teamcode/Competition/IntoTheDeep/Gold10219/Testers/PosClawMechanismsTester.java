@@ -16,9 +16,9 @@ public class PosClawMechanismsTester extends OpMode {
         Bot.initRobot(hardwareMap);
     }
 
-    double primaryExtenderJump = .05;
-    double secondaryExtenderJump = .05;
-    double clawJump = .05;
+    double primaryExtenderJump = .0005;
+    double secondaryExtenderJump = .0005;
+    double clawJump = .0005;
 
     @Override
     public void loop() {
@@ -44,6 +44,11 @@ public class PosClawMechanismsTester extends OpMode {
             Bot.claw.setPosition(clawPos + clawJump);
         } else if (gamepad1.b) { //Should be right button
             Bot.claw.setPosition(clawPos - clawJump);
+        }
+        if (gamepad1.dpad_up) {
+            Bot.claw.setPosition(0);
+            Bot.primaryExtender.setPosition(0);
+            Bot.secondaryExtender.setPosition(0);
         }
     }
 

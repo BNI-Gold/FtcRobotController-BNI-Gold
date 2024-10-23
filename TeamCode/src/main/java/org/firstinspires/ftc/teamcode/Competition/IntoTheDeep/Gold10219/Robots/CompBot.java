@@ -43,8 +43,8 @@ public class CompBot extends MecanumDrive {
 
         //Assign direction to motors
         //TODO: confirm directions
-        frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-        rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
         rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
@@ -67,7 +67,7 @@ public class CompBot extends MecanumDrive {
 
         //Assign direction to servos
         //TODO: confirm directions
-        primaryExtender.setDirection(Servo.Direction.FORWARD);
+        primaryExtender.setDirection(Servo.Direction.REVERSE);
         secondaryExtender.setDirection(Servo.Direction.FORWARD);
         claw.setDirection(Servo.Direction.FORWARD);
         //****************************************
@@ -112,16 +112,18 @@ public class CompBot extends MecanumDrive {
     //********** PERIPHERAL METHODS **********
     //Values for peripheral positions
     //TODO: determine these positions (use three below methods to figure out what they're for lol)
-    double primaryExtenderExtend = 0;
-    double primaryExtenderDrive = 0;
-    double primaryExtenderRetract = 0;
-    double primaryExtenderPastChassis = 0;
+    double primaryExtenderExtend = 1;
+    double primaryExtenderDrive = .7;
+    double primaryExtenderRetract = .3;
+    double primaryExtenderPastChassis = .6644;
 
-    double secondaryExtenderExtend = 0;
-    double secondaryExtenderRetract = 0;
+    double secondaryExtenderExtend = 1;
+    double secondaryExtenderHover = .9267;
+    double secondaryExtenderRetract = .81;
+    double secondaryExtenderJump = .001;
 
-    double clawOpen = 0;
-    double clawClose = 0;
+    double clawOpen = .1989;
+    double clawClose = .4717;
 
 
     //These first three methods *technically* can be used directly from
@@ -134,7 +136,7 @@ public class CompBot extends MecanumDrive {
                 //to actuate to correct position each time, but another option
                 //is to allow for continuous operation based on button hold
 
-                //primaryExtender.setPosition(primaryExtenderExtend);
+                primaryExtender.setPosition(primaryExtenderExtend);
                 break;
             case DRIVE:
                 //to robot as possible
@@ -142,14 +144,14 @@ public class CompBot extends MecanumDrive {
                 //This should be a button press to actuate to correct position
                 //each time.
 
-                //primaryExtender.setPosition(primaryExtenderDrive);
+                primaryExtender.setPosition(primaryExtenderDrive);
                 break;
             case RETRACT:
                 //I'd prefer to use these methods as a button press (not hold)
                 //to actuate to correct position each time, but another option
                 //is to allow for continuous operation based on button hold
 
-                //primaryExtender.setPosition(primaryExtenderRetract);
+                primaryExtender.setPosition(primaryExtenderRetract);
                 break;
         }
     }
@@ -161,18 +163,40 @@ public class CompBot extends MecanumDrive {
                 //is to allow for continuous operation based on button hold
 
                 //Should only extend if primary extender is past robot chassis
-//                if (primaryExtender.getPosition() >= primaryExtenderPastChassis) {
-//                    //secondaryExtender.setPosition(secondaryExtenderExtend);
-//                }
+                if (primaryExtender.getPosition() >= primaryExtenderPastChassis) {
+                    secondaryExtender.setPosition(secondaryExtenderExtend);
+                }
+                break;
+            case HOVER:
+                //I'd prefer to use these methods as a button press (not hold)
+                //to actuate to correct position each time, but another option
+                //is to allow for continuous operation based on button hold
+
+                if (primaryExtender.getPosition() >= primaryExtenderPastChassis) {
+                    secondaryExtender.setPosition(secondaryExtenderHover);
+                }
                 break;
             case RETRACT:
                 //I'd prefer to use these methods as a button press (not hold)
                 //to actuate to correct position each time, but another option
                 //is to allow for continuous operation based on button hold
 
-                //secondaryExtender.setPosition(secondaryExtenderRetract);
+                secondaryExtender.setPosition(secondaryExtenderRetract);
                 break;
         }
+    }
+    public void useSecondaryExtender(boolean use, extenderDirections direction) {
+        double position = secondaryExtender.getPosition();
+        if (use) {
+            switch (direction) {
+                case EXTEND:
+                    secondaryExtender.setPosition(position + secondaryExtenderJump);
+                    break;
+                case RETRACT:
+                    secondaryExtender.setPosition(position - secondaryExtenderJump);
+                    break;
+            }
+        } else useSecondaryExtender(direction);
     }
     public void useClaw(clawOptions option) {
         switch(option) {
@@ -180,13 +204,13 @@ public class CompBot extends MecanumDrive {
                 //This should be a button press to actuate to correct position
                 //each time.
 
-                //claw.setPosition(clawOpen);
+                claw.setPosition(clawOpen);
                 break;
             case CLOSE:
                 //This should be a button press to actuate to correct position
                 //each time.
 
-                //claw.setPosition(clawClose);
+                claw.setPosition(clawClose);
                 break;
         }
     }
@@ -219,9 +243,8 @@ public class CompBot extends MecanumDrive {
 
     //Extends secondary arm to sample then closes claw.
     //Calls prepCollection in case primary isn't already extended
-    public void collectSample() {
+    public void hover() {
         prepCollection();
-        useSecondaryExtender(extenderDirections.EXTEND);
-        useClaw(clawOptions.CLOSE);
+        useSecondaryExtender(extenderDirections.HOVER);
     }
 }
