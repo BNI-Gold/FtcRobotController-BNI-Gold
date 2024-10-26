@@ -186,7 +186,7 @@ public class CompBot extends MecanumDrive {
         }
     }
     public void useSecondaryExtender(boolean use, extenderDirections direction) {
-        double position = secondaryExtender.getPosition();
+        doubleposition = secondaryExtender.getPosition();
         if (use) {
             switch (direction) {
                 case EXTEND:
