@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.C
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.clawOptions;
 
 public abstract class AutoMain extends LinearOpMode {
+
         public CompBot Bot = new CompBot();
 
 
