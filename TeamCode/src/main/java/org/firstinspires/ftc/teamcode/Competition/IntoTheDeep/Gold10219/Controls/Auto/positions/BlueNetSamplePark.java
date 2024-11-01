@@ -4,14 +4,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.AutoBlueAlliance;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.extenderDirections;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.AutoRedAlliance;
 
 @Disabled
-@Autonomous(name = "BlueScoreNet")
-public class BlueScoreNet extends AutoBlueAlliance {
+@Autonomous(name = "Blue:Net:DropSample:Park")
+public class BlueNetSamplePark extends AutoBlueAlliance {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        autoStart();
 
         waitForStart();
         //wait for player to press start
@@ -22,12 +23,15 @@ public class BlueScoreNet extends AutoBlueAlliance {
             Bot.strafeRight(0.5, 1);
             sleep(1000);
             //stop for 1000ms=1sec
-            Bot.stopMotors();
-            Bot.driveForward(0.5, 1);
-            Bot.stopMotors();
-            Bot.useSecondaryExtender(true, extenderDirections.RETRACT);
+            Bot.driveForward(0.5, 11.5);
+            sleep(1000);
+          // put the claw mechanism here
 
-            // END AUTOPATH SEQUENCE
+            // Park in Observation
+            Bot.driveBack(0.5,34.5);
+
+            // END AUTO PATH SEQUENCE
+            requestOpModeStop();
 
         }
         idle();
