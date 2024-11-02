@@ -7,8 +7,10 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.c
 
 public abstract class AutoMain extends LinearOpMode {
 
+    // Constructor for the Competition Robot Class
     public CompBot Bot = new CompBot();
 
+    // Initialization, LinearOp, and Telemetry Update for all Auto Paths
     public void autoStart(){
         Bot.initRobot(hardwareMap);
         Bot.setLinearOp(this);
