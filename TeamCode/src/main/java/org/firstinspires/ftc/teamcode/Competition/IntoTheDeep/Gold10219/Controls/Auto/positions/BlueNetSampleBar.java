@@ -11,6 +11,8 @@ public class BlueNetSampleBar extends AutoBlueAlliance {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        // Global Method for Initializing Auto
         autoStart();
 
         waitForStart();
