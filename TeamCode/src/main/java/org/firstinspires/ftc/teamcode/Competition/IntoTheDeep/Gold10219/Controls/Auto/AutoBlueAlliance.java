@@ -12,11 +12,14 @@ public abstract class AutoBlueAlliance extends AutoMain {
     }
 
     // Helper Method to Park in Observation
+    public void parkObservation() {
 
-
+    }
 
     // Helper Method to Touch Bar
+    public void touchBar() {
 
+    }
 
 
 }
