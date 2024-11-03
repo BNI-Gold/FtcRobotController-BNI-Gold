@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.IntakeDirections;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.clawOptions;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.extenderDirections;
 
 @TeleOp(name = "A - Into the Deep")
 public class Bot_TeleOp extends OpMode {
@@ -26,6 +26,9 @@ public class Bot_TeleOp extends OpMode {
     double powerThreshold = 0;
     double speedMultiply = 1;
 
+    double rotationUpPower = 0;
+    double rotationDownPower = 0;
+
     public CompBot Bot = new CompBot();
 
     ElapsedTime timer = new ElapsedTime();
@@ -37,7 +40,8 @@ public class Bot_TeleOp extends OpMode {
     public void loop() {
         speedControl();
         drive();
-        clawMechanismsControl();
+        primaryArmControl();
+        intakeControl();
         telemetryOutput();
     }
 
@@ -103,15 +107,28 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
-    public void clawMechanismsControl() {
-        if (gamepad2.x) Bot.prepCollection(); //Should be left button
-        else if (gamepad2.a) Bot.hover(); //Should be bottom button
-        else if (gamepad2.y) Bot.driveWithSample(); //Should be top button
-        else if (gamepad2.b) Bot.retractAll(); //Should be right button
-        else if (gamepad2.dpad_up) Bot.useSecondaryExtender(true, extenderDirections.RETRACT);
-        else if (gamepad2.dpad_down) Bot.useSecondaryExtender(true, extenderDirections.EXTEND);
-        else if (gamepad2.dpad_left) Bot.useClaw(clawOptions.CLOSE);
-        else if (gamepad2.dpad_right) Bot.useClaw(clawOptions.OPEN);
+    PrimaryArm arm = new PrimaryArm(Bot, Bot.LinearOp);
+
+    Intake intake = new Intake(Bot, Bot.LinearOp);
+
+    public void intakeControl() {
+        if (gamepad2.a) intake.intakeUntilSample();
+        else if (gamepad2.b) intake.stop();
+        else if (gamepad2.x) intake.dropSample();
+
+        if (gamepad2.dpad_right) intake.rotateRight();
+        else if (gamepad2.dpad_left) intake.rotateLeft();
+        else if (gamepad2.y) intake.center();
+    }
+
+    public void primaryArmControl() {
+        if (gamepad2.right_trigger > 0.35) arm.extend(gamepad2.right_trigger);
+        else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger);
+        else arm.stop();
+
+        if (gamepad2.dpad_up) arm.up(rotationUpPower);
+        else if (gamepad2.dpad_down) arm.down(rotationDownPower);
+        else arm.stopRotation();
     }
 
     public void telemetryOutput() {
@@ -119,9 +136,24 @@ public class Bot_TeleOp extends OpMode {
         telemetry.addData("Front Right: ", Bot.frontRightMotor.getCurrentPosition());
         telemetry.addData("Rear Left: ", Bot.rearLeftMotor.getCurrentPosition());
         telemetry.addData("Rear Right: ", Bot.rearRightMotor.getCurrentPosition());
-        telemetry.addData("Primary Extender Position: ", Bot.primaryExtender.getPosition());
-        telemetry.addData("Secondary Extender Position: ", Bot.secondaryExtender.getPosition());
-        telemetry.addData("Claw Position: ", Bot.claw.getPosition());
+
+        double primaryArmPower = Bot.primaryArm.getPower();
+        if (primaryArmPower > 0) telemetry.addData("Primary Arm Extending: ", primaryArmPower);
+        else if (primaryArmPower < 0) telemetry.addData("Primary Arm Retracting: ", primaryArmPower);
+        else telemetry.addLine("Primary Arm Stopped");
+
+        double primaryArmRotatorPower = Bot.primaryArmRotator.getPower();
+        if (primaryArmRotatorPower > 0) telemetry.addData("Primary Arm Going Up: ", primaryArmRotatorPower);
+        else if (primaryArmRotatorPower < 0) telemetry.addData("Primary Arm Going Down: ", primaryArmRotatorPower);
+        else telemetry.addLine("Primary Arm Not Rotating");
+
+        double intakePower = Bot.intake.getPower();
+        if (intakePower > 0) telemetry.addData("Intake Running Inwards: ", intakePower);
+        else if (intakePower < 0) telemetry.addData("Intake Running Outwards: ", intakePower);
+        else telemetry.addLine("Intake Stopped");
+
+        telemetry.addData("Intake Rotation Position: ", Bot.intakeRotator.getPosition());
+
         telemetry.update();
     }
 

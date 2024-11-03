@@ -6,6 +6,8 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -18,9 +20,11 @@ public class CompBot extends MecanumDrive {
     public HardwareMap hwBot = null;
 
     //Mechanism motors and servos
-    public Servo primaryExtender = null;
-    public Servo secondaryExtender = null;
-    public Servo claw = null;
+    public DcMotor primaryArmRotator = null;
+    public DcMotor primaryArm = null;
+    public CRServo intake = null;
+    public Servo intakeRotator = null;
+    public DistanceSensor sampleSensor1 = null;
 
     //Set hub directions
     //TODO: confirm directions
@@ -34,7 +38,7 @@ public class CompBot extends MecanumDrive {
     public void initRobot(HardwareMap hwMap) {
         hwBot = hwMap;
 
-        //********** MOTOR CONFIG **********
+        //********** DRIVETRAIN CONFIG **********
         //Get motor ports & info from control hub config
         frontLeftMotor = hwBot.dcMotor.get("front_left_motor");
         frontRightMotor = hwBot.dcMotor.get("front_right_motor");
@@ -53,6 +57,7 @@ public class CompBot extends MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        //Set motor zero power behavior
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -60,16 +65,32 @@ public class CompBot extends MecanumDrive {
         //****************************************
 
 
-        //********** SERVO CONFIG **********
-        primaryExtender = hwBot.servo.get("primary_extender");
-        secondaryExtender = hwBot.servo.get("secondary_extender");
-        claw = hwBot.servo.get("claw");
+        //********** MECHANISM MOTOR & SERVO CONFIG **********
+        //Get servo ports & info from control hub config
+        intake = hwBot.crservo.get("intake");
+        intakeRotator = hwBot.servo.get("intake_rotator");
+
+        //Get motor ports & info from control hub config
+        primaryArmRotator = hwBot.dcMotor.get("primary_arm_rotator");
+        primaryArm = hwBot.dcMotor.get("viper_slide");
 
         //Assign direction to servos
         //TODO: confirm directions
-        primaryExtender.setDirection(Servo.Direction.REVERSE);
-        secondaryExtender.setDirection(Servo.Direction.FORWARD);
-        claw.setDirection(Servo.Direction.FORWARD);
+        intake.setDirection(CRServo.Direction.REVERSE);
+        intakeRotator.setDirection(Servo.Direction.FORWARD);
+        
+        //Assign direction to motors
+        //TODO: confirm directions
+        primaryArmRotator.setDirection(DcMotor.Direction.FORWARD);
+        primaryArm.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        //Set motor zero power behavior
+        primaryArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        primaryArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //****************************************
+
+        //********** SENSOR CONFIG **********
+        sampleSensor1 = hwBot.get(DistanceSensor.class, "sample_sensor");
         //****************************************
     }
 
@@ -109,142 +130,4 @@ public class CompBot extends MecanumDrive {
     //****************************************
 
 
-    //********** PERIPHERAL METHODS **********
-    //Values for peripheral positions
-    //TODO: determine these positions (use three below methods to figure out what they're for lol)
-    double primaryExtenderExtend = 1;
-    double primaryExtenderDrive = .7;
-    double primaryExtenderRetract = .3;
-    double primaryExtenderPastChassis = .6644;
-
-    double secondaryExtenderExtend = 1;
-    double secondaryExtenderHover = .9267;
-    double secondaryExtenderRetract = .81;
-    double secondaryExtenderJump = .001;
-
-    double clawOpen = .1989;
-    double clawClose = .4717;
-
-
-    //These first three methods *technically* can be used directly from
-    //controller button presses, however I'd prefer to use the methods
-    //defined after these first three.
-    public void usePrimaryExtender(extenderDirections direction) {
-        switch (direction) {
-            case EXTEND:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                primaryExtender.setPosition(primaryExtenderExtend);
-                break;
-            case DRIVE:
-                //to robot as possible
-
-                //This should be a button press to actuate to correct position
-                //each time.
-
-                primaryExtender.setPosition(primaryExtenderDrive);
-                break;
-            case RETRACT:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                primaryExtender.setPosition(primaryExtenderRetract);
-                break;
-        }
-    }
-    public void useSecondaryExtender(extenderDirections direction) {
-        switch (direction) {
-            case EXTEND:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                //Should only extend if primary extender is past robot chassis
-                if (primaryExtender.getPosition() >= primaryExtenderPastChassis) {
-                    secondaryExtender.setPosition(secondaryExtenderExtend);
-                }
-                break;
-            case HOVER:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                if (primaryExtender.getPosition() >= primaryExtenderPastChassis) {
-                    secondaryExtender.setPosition(secondaryExtenderHover);
-                }
-                break;
-            case RETRACT:
-                //I'd prefer to use these methods as a button press (not hold)
-                //to actuate to correct position each time, but another option
-                //is to allow for continuous operation based on button hold
-
-                secondaryExtender.setPosition(secondaryExtenderRetract);
-                break;
-        }
-    }
-    public void useSecondaryExtender(boolean use, extenderDirections direction) {
-        doubleposition = secondaryExtender.getPosition();
-        if (use) {
-            switch (direction) {
-                case EXTEND:
-                    secondaryExtender.setPosition(position + secondaryExtenderJump);
-                    break;
-                case RETRACT:
-                    secondaryExtender.setPosition(position - secondaryExtenderJump);
-                    break;
-            }
-        } else useSecondaryExtender(direction);
-    }
-    public void useClaw(clawOptions option) {
-        switch(option) {
-            case OPEN:
-                //This should be a button press to actuate to correct position
-                //each time.
-
-                claw.setPosition(clawOpen);
-                break;
-            case CLOSE:
-                //This should be a button press to actuate to correct position
-                //each time.
-
-                claw.setPosition(clawClose);
-                break;
-        }
-    }
-
-    //Sets extenders and claw to optimal driving position for when
-    //a sample is being held
-    public void driveWithSample() {
-        //Claw is closed, then primary
-        //extender is retracted as close to robot as possible while
-        //sample is being held (see comments in usePrimaryExtender
-        //method), then secondary extender is retracted completely.
-        useClaw(clawOptions.CLOSE);
-        useSecondaryExtender(extenderDirections.RETRACT);
-        usePrimaryExtender(extenderDirections.DRIVE);
-    }
-
-    //Retracts all peripherals
-    public void retractAll() {
-        useClaw(clawOptions.CLOSE);
-        useSecondaryExtender(extenderDirections.RETRACT);
-        usePrimaryExtender(extenderDirections.RETRACT);
-    }
-
-    //Extends primary arm, retracts secondary arm, opens claw
-    public void prepCollection() {
-        useClaw(clawOptions.OPEN);
-        useSecondaryExtender(extenderDirections.RETRACT);
-        usePrimaryExtender(extenderDirections.EXTEND);
-    }
-
-    //Extends secondary arm to sample then closes claw.
-    //Calls prepCollection in case primary isn't already extended
-    public void hover() {
-        prepCollection();
-        useSecondaryExtender(extenderDirections.HOVER);
-    }
 }

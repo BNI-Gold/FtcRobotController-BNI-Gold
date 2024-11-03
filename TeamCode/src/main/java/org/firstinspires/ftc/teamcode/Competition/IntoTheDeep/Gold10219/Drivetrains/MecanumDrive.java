@@ -20,6 +20,9 @@ public class MecanumDrive {
     //Motor ticks per rotation (for encoders in motor)
     public static final double MOTOR_TICKS_PER_ROTATION = 386.3;
 
+    //Wormgear ticks per rotation (for encoders in wormgear motor)
+    public static final double WORMGEAR_TICKS_PER_ROTATION = 386.3;
+
     //Odometry ticks per rotation (for encoders in odometry pods)
     public static final double ODO_TICKS_PER_ROTATION = 0;
 
