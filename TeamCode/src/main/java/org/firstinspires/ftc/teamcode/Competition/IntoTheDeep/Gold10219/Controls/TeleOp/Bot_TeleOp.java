@@ -114,9 +114,23 @@ public class Bot_TeleOp extends OpMode {
     Intake intake = new Intake(Bot, Bot.LinearOp);
 
     public void intakeControl() {
-        if (gamepad2.a) intake.intakeUntilSample();
+        if (gamepad2.a) {
+            Bot.isCollecting = true;
+            Bot.isDropping = false;
+        }
+        else if (gamepad2.x) {
+            Bot.isDropping = true;
+            Bot.isCollecting = false;
+        }
         else if (gamepad2.b) intake.stop();
-        else if (gamepad2.x) intake.dropSample();
+
+        if (Bot.isCollecting) {
+            intake.intakeUntilSample();
+        }
+
+        if (Bot.isDropping) {
+            intake.dropSample();
+        }
 
         if (gamepad2.dpad_right) intake.rotateRight();
         else if (gamepad2.dpad_left) intake.rotateLeft();

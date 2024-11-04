@@ -26,6 +26,8 @@ public class CompBot extends MecanumDrive {
     public CRServo intake = null;
     public Servo intakeRotator = null;
     public ColorRangeSensor sampleSensor1 = null;
+    public boolean isCollecting = false;
+    public boolean isDropping = false;
 
     //Set hub directions
     //TODO: confirm directions

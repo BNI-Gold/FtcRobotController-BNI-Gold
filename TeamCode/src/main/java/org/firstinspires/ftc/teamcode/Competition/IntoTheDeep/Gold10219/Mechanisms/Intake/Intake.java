@@ -48,19 +48,31 @@ public class Intake {
     }
 
     public void intakeUntilSample() {
+        Bot.isDropping = false;
+
         double distance = sensor.getDistance(DistanceUnit.INCH);
-        while (distance > sampleSecuredDistance) {
+        boolean doThis = distance > sampleSecuredDistance;
+        if (doThis) {
             start(IntakeDirections.IN);
+            Bot.isCollecting = true;
+        } else {
+            stop();
+            Bot.isCollecting = false;
         }
-        stop();
     }
 
     public void dropSample() {
+        Bot.isCollecting = false;
+
         double distance = sensor.getDistance(DistanceUnit.INCH);
-        while (distance < sampleSecuredDistance) {
+        boolean doThis = distance < sampleSecuredDistance;
+        if (doThis) {
             start(IntakeDirections.OUT);
+            Bot.isDropping = true;
+        } else {
+            stop();
+            Bot.isDropping = false;
         }
-        stop();
     }
 
     public void center() {
