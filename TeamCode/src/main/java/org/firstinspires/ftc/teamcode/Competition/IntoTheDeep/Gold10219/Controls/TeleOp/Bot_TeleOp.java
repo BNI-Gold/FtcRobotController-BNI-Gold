@@ -126,9 +126,7 @@ public class Bot_TeleOp extends OpMode {
 
         if (Bot.isCollecting) {
             intake.intakeUntilSample();
-        }
-
-        if (Bot.isDropping) {
+        } else if (Bot.isDropping) {
             intake.dropSample();
         }
 
