@@ -61,15 +61,12 @@ public class Bot_TeleOp extends OpMode {
     public void drive() {
         leftStickXVal = gamepad1.left_stick_x;
         leftStickXVal = Range.clip(leftStickXVal, -1, 1);
-        //Using negative value here because for some stupid reason up is negative
+
         leftStickYVal = -gamepad1.left_stick_y;
         leftStickYVal = Range.clip(leftStickYVal, -1, 1);
 
         rightStickXVal = gamepad1.right_stick_x;
         rightStickXVal = Range.clip(rightStickXVal, -1, 1);
-        //Using negative value here because for some stupid reason up is negative
-//        rightStickYVal = -gamepad1.right_stick_y;
-//        rightStickYVal = Range.clip(rightStickYVal, -1, 1);
 
         frontLeftSpeed = leftStickYVal + leftStickXVal + rightStickXVal;
         frontLeftSpeed = Range.clip(frontLeftSpeed, -1, 1);
@@ -127,8 +124,10 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void primaryArmControl() {
+        //Multiply triggers by speed multiplier
         double rightSpeed = gamepad1.right_trigger * armSpeedMultiplier;
         double leftSpeed = gamepad2.left_trigger * armSpeedMultiplier;
+
         if (gamepad2.right_trigger > 0.35) arm.extend(rightSpeed);
         else if (gamepad2.left_trigger > 0.35) arm.retract(leftSpeed);
         else arm.stop();

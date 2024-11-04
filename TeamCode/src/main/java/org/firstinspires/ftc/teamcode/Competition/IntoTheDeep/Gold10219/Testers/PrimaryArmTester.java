@@ -37,8 +37,10 @@ public class PrimaryArmTester extends OpMode {
     PrimaryArm arm = new PrimaryArm(Bot, Bot.LinearOp);
 
     public void primaryArmControl() {
+        //Multiply triggers by speed multiplier
         double rightSpeed = gamepad1.right_trigger * speedMultiplier;
         double leftSpeed = gamepad2.left_trigger * speedMultiplier;
+
         if (gamepad1.right_trigger > 0.35) arm.extend(rightSpeed);
         else if (gamepad1.left_trigger > 0.35) arm.retract(leftSpeed);
         else arm.stop();
