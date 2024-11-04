@@ -11,6 +11,8 @@ public class PrimaryArm {
     private LinearOpMode LinearOp;
     public DcMotor rotator = null;
     public DcMotor arm = null;
+    public double rotationUpPower = 0;
+    public double rotationDownPower = 0;
     
     public PrimaryArm(CompBot Bot, LinearOpMode LinearOp) {
         this.Bot = Bot;
@@ -19,30 +21,30 @@ public class PrimaryArm {
         arm = Bot.primaryArm;
     }
 
-    public void up(double power) {
-        rotator.setPower(Math.abs(power));
+    public void up(double multiplier) {
+        rotator.setPower(multiplier * rotationUpPower);
     }
-    public void down(double power) {
-        rotator.setPower(-Math.abs(power));
+    public void down(double multiplier) {
+        rotator.setPower(-multiplier * rotationDownPower);
     }
     public void stopRotation() {
         rotator.setPower(0);
     }
-    public void up(double power, double rotations) {
+    public void up(double multiplier, double rotations) {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            up(power);
+            up(multiplier);
         }
         stopRotation();
     }
-    public void down(double power, double rotations) {
+    public void down(double multiplier, double rotations) {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            down(power);
+            down(multiplier);
         }
         stopRotation();
     }
