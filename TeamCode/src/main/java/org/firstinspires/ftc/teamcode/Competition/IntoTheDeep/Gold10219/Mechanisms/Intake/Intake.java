@@ -22,6 +22,8 @@ public class Intake {
     double intakeRotatorStep = 0.0005;
     double sampleSecuredDistance = 0;
 
+    double position = 0.5;
+
     public Intake(CompBot Bot, LinearOpMode LinearOp) {
         this.Bot = Bot;
         this.LinearOp = LinearOp;
@@ -66,12 +68,12 @@ public class Intake {
     }
 
     public void rotateRight() {
-        double position = rotator.getPosition();
+        position = rotator.getPosition();
         rotator.setPosition(position + intakeRotatorStep);
     }
 
     public void rotateLeft() {
-        double position = rotator.getPosition();
+        position = rotator.getPosition();
         rotator.setPosition(position - intakeRotatorStep);
     }
 }
