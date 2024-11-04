@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
@@ -32,6 +33,12 @@ public class IntakeTester extends OpMode {
     }
 
     public void telemetry() {
+        telemetry.addData("Sensor Distance: ", intake.sensor.getDistance(DistanceUnit.INCH));
+        telemetry.addLine();
+        telemetry.addData("Sensor Color - Red: ", intake.sensor.getNormalizedColors().red);
+        telemetry.addData("Sensor Color - Blue: ", intake.sensor.getNormalizedColors().blue);
+        telemetry.addData("Sensor Color - Green", intake.sensor.getNormalizedColors().green);
+        telemetry.addLine();
         telemetry.addData("Intake Rotation Position: ", Bot.intakeRotator.getPosition());
 
         telemetry.update();

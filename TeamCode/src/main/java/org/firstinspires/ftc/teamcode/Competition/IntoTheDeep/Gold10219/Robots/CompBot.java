@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -24,7 +25,7 @@ public class CompBot extends MecanumDrive {
     public DcMotor primaryArm = null;
     public CRServo intake = null;
     public Servo intakeRotator = null;
-    public DistanceSensor sampleSensor1 = null;
+    public ColorRangeSensor sampleSensor1 = null;
 
     //Set hub directions
     //TODO: confirm directions
@@ -90,7 +91,7 @@ public class CompBot extends MecanumDrive {
         //****************************************
 
         //********** SENSOR CONFIG **********
-        sampleSensor1 = hwBot.get(DistanceSensor.class, "sample_sensor");
+        sampleSensor1 = hwBot.get(ColorRangeSensor.class, "sample_sensor");
         //****************************************
     }
 

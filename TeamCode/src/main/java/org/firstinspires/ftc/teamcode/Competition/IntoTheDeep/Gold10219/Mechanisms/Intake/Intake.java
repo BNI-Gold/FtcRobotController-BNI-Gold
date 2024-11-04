@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechani
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,7 +15,7 @@ public class Intake {
     private LinearOpMode LinearOp;
     public CRServo intake;
     public Servo rotator;
-    public DistanceSensor sensor;
+    public ColorRangeSensor sensor;
 
     double intakePower = 1;
     double intakeRotatorCenter = 0;
