@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,13 +11,13 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanis
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
+@Disabled
 @TeleOp(name = "A - Into the Deep")
 public class Bot_TeleOp extends OpMode {
 
     double leftStickXVal;
     double leftStickYVal;
     double rightStickXVal;
-    double rightStickYVal;
 
     double frontLeftSpeed;
     double frontRightSpeed;
@@ -25,9 +26,7 @@ public class Bot_TeleOp extends OpMode {
 
     double powerThreshold = 0;
     double speedMultiply = 1;
-
-    double rotationUpPower = 0;
-    double rotationDownPower = 0;
+    double armSpeedMultiplier = 1;
 
     public CompBot Bot = new CompBot();
 
@@ -50,6 +49,12 @@ public class Bot_TeleOp extends OpMode {
             speedMultiply = 0.3;
         } else {
             speedMultiply = 1;
+        }
+
+        if (gamepad2.left_trigger > 0.35) {
+            armSpeedMultiplier = 0.3;
+        } else {
+            armSpeedMultiplier = 1;
         }
     }
 
@@ -122,12 +127,14 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void primaryArmControl() {
-        if (gamepad2.right_trigger > 0.35) arm.extend(gamepad2.right_trigger);
-        else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger);
+        double rightSpeed = gamepad1.right_trigger * armSpeedMultiplier;
+        double leftSpeed = gamepad2.left_trigger * armSpeedMultiplier;
+        if (gamepad2.right_trigger > 0.35) arm.extend(rightSpeed);
+        else if (gamepad2.left_trigger > 0.35) arm.retract(leftSpeed);
         else arm.stop();
 
-        if (gamepad2.dpad_up) arm.up(rotationUpPower);
-        else if (gamepad2.dpad_down) arm.down(rotationDownPower);
+        if (gamepad2.dpad_up) arm.up(armSpeedMultiplier);
+        else if (gamepad2.dpad_down) arm.down(armSpeedMultiplier);
         else arm.stopRotation();
     }
 
