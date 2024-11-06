@@ -20,7 +20,7 @@ public class Intake {
     public Servo rotator = null;
     public RevColorSensorV3 sensor = null;
 
-    IndicatorStrip indicator = new IndicatorStrip();
+//    IndicatorStrip indicator = new IndicatorStrip();
 
     double intakePower = 1;
     double intakeRotatorCenter = 0;
@@ -40,12 +40,12 @@ public class Intake {
         intake = hwBot.crservo.get("intake");
         rotator = hwBot.servo.get("intake_rotator");
 
-        intake.setDirection(CRServo.Direction.REVERSE);
+        intake.setDirection(CRServo.Direction.FORWARD);
         rotator.setDirection(Servo.Direction.FORWARD);
 
         sensor = hwBot.get(RevColorSensorV3.class, "sample_sensor");
 
-        indicator.initIndicatorStrip(hwBot);
+//        indicator.initIndicatorStrip(hwBot);
     }
 
     public void start(IntakeDirections direction) {

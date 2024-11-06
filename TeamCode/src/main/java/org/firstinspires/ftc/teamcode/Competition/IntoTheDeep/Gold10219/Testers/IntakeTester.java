@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.IntakeDirections;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 @TeleOp(name = "B - Intake Tester")
@@ -29,7 +30,10 @@ public class IntakeTester extends OpMode {
 
     public void intakeControl() {
         if (gamepad1.dpad_right) intake.rotateRight();
-        else if (gamepad2.dpad_left) intake.rotateLeft();
+        else if (gamepad1.dpad_left) intake.rotateLeft();
+
+        if (gamepad1.a) intake.start(IntakeDirections.IN);
+        else if (gamepad1.b) intake.stop();
     }
 
     public void telemetry() {

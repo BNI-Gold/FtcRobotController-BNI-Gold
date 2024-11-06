@@ -13,8 +13,8 @@ public class PrimaryArm {
     public LinearOpMode LinearOp = null;
     public DcMotor rotator = null;
     public DcMotor arm = null;
-    public double rotationUpPower = 0;
-    public double rotationDownPower = 0;
+    public double rotationUpPower = .75;
+    public double rotationDownPower = .5;
     
     public PrimaryArm(LinearOpMode LinearOp) {
         this.LinearOp = LinearOp;
@@ -26,8 +26,8 @@ public class PrimaryArm {
         rotator = hwBot.dcMotor.get("primary_arm_rotator");
         arm = hwBot.dcMotor.get("viper_slide");
 
-        rotator.setDirection(DcMotor.Direction.FORWARD);
-        arm.setDirection(DcMotorSimple.Direction.FORWARD);
+        rotator.setDirection(DcMotor.Direction.REVERSE);
+        arm.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

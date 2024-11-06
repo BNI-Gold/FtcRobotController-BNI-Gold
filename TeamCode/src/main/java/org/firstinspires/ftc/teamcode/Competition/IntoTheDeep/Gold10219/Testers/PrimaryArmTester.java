@@ -38,7 +38,10 @@ public class PrimaryArmTester extends OpMode {
     public void primaryArmControl() {
         //Multiply triggers by speed multiplier
         double rightSpeed = gamepad1.right_trigger * speedMultiplier;
-        double leftSpeed = gamepad2.left_trigger * speedMultiplier;
+        double leftSpeed = gamepad1.left_trigger * speedMultiplier;
+
+        telemetry.addData("Right Speed: ", rightSpeed);
+        telemetry.addData("Left Speed: ", leftSpeed);
 
         if (gamepad1.right_trigger > 0.35) arm.extend(rightSpeed);
         else if (gamepad1.left_trigger > 0.35) arm.retract(leftSpeed);
@@ -55,7 +58,7 @@ public class PrimaryArmTester extends OpMode {
         else if (primaryArmPower < 0) telemetry.addData("Primary Arm Retracting: ", primaryArmPower);
         else telemetry.addLine("Primary Arm Stopped");
 
-        double primaryArmRotatorPower = arm.arm.getPower();
+        double primaryArmRotatorPower = arm.rotator.getPower();
         if (primaryArmRotatorPower > 0) telemetry.addData("Primary Arm Going Up: ", primaryArmRotatorPower);
         else if (primaryArmRotatorPower < 0) telemetry.addData("Primary Arm Going Down: ", primaryArmRotatorPower);
         else telemetry.addLine("Primary Arm Not Rotating");
