@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetra
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 public class PrimaryArm {
-    public CompBot Bot;
-    private LinearOpMode LinearOp;
+    public CompBot Bot = null;
+    private LinearOpMode LinearOp = null;
     public DcMotor rotator = null;
     public DcMotor arm = null;
     public double rotationUpPower = 0;

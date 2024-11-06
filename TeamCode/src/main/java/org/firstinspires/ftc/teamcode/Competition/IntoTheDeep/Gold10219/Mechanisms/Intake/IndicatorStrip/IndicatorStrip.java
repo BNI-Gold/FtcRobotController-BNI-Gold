@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechani
 import static java.lang.Thread.sleep;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 import java.util.concurrent.TimeUnit;
 
+@Disabled
 public class IndicatorStrip {
     public CompBot Bot;
     public RevBlinkinLedDriver strip;

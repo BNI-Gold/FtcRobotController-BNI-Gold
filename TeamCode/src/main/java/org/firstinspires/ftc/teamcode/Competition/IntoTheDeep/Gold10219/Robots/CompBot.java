@@ -4,6 +4,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
@@ -26,7 +27,7 @@ public class CompBot extends MecanumDrive {
     public DcMotor primaryArm = null;
     public CRServo intake = null;
     public Servo intakeRotator = null;
-    public ColorRangeSensor sampleSensor1 = null;
+    public RevColorSensorV3 sampleSensor1 = null;
     public RevBlinkinLedDriver indicatorStrip = null;
 
 
@@ -75,8 +76,6 @@ public class CompBot extends MecanumDrive {
 
         //********** MECHANISM MOTOR & SERVO CONFIG **********
         //Get servo ports & info from control hub config
-        intake = hwBot.crservo.get("intake");
-        intakeRotator = hwBot.servo.get("intake_rotator");
 
         //Get motor ports & info from control hub config
         primaryArmRotator = hwBot.dcMotor.get("primary_arm_rotator");
@@ -98,11 +97,10 @@ public class CompBot extends MecanumDrive {
         //****************************************
 
         //********** SENSOR CONFIG **********
-        sampleSensor1 = hwBot.get(ColorRangeSensor.class, "sample_sensor");
         //****************************************
 
         //********** LED CONFIG **********
-        indicatorStrip = hwBot.get(RevBlinkinLedDriver.class, "indicator_strip");
+//        indicatorStrip = hwBot.get(RevBlinkinLedDriver.class, "indicator_strip");
         //****************************************
     }
 
