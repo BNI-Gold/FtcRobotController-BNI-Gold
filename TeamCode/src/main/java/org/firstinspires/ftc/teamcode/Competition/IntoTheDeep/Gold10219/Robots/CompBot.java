@@ -3,6 +3,7 @@
 
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
@@ -26,6 +27,10 @@ public class CompBot extends MecanumDrive {
     public CRServo intake = null;
     public Servo intakeRotator = null;
     public ColorRangeSensor sampleSensor1 = null;
+    public RevBlinkinLedDriver indicatorStrip = null;
+
+
+    //TODO: Move to intake class?
     public boolean isCollecting = false;
     public boolean isDropping = false;
 
@@ -94,6 +99,10 @@ public class CompBot extends MecanumDrive {
 
         //********** SENSOR CONFIG **********
         sampleSensor1 = hwBot.get(ColorRangeSensor.class, "sample_sensor");
+        //****************************************
+
+        //********** LED CONFIG **********
+        indicatorStrip = hwBot.get(RevBlinkinLedDriver.class, "indicator_strip");
         //****************************************
     }
 

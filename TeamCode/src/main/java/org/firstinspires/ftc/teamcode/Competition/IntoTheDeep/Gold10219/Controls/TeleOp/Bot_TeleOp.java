@@ -111,7 +111,7 @@ public class Bot_TeleOp extends OpMode {
 
     PrimaryArm arm = new PrimaryArm(Bot, Bot.LinearOp);
 
-    Intake intake = new Intake(Bot, Bot.LinearOp);
+    Intake intake = new Intake(Bot);
 
     public void intakeControl() {
         if (gamepad2.a) {

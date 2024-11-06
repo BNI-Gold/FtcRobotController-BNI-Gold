@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 @TeleOp(name = "B - Intake Tester")
@@ -25,7 +24,7 @@ public class IntakeTester extends OpMode {
         telemetry();
     }
 
-    Intake intake = new Intake(Bot, Bot.LinearOp);
+    Intake intake = new Intake(Bot);
 
     public void intakeControl() {
         if (gamepad1.dpad_right) intake.rotateRight();
