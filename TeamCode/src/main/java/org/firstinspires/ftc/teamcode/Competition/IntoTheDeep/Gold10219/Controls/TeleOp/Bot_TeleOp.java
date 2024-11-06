@@ -30,10 +30,16 @@ public class Bot_TeleOp extends OpMode {
 
     public CompBot Bot = new CompBot();
 
+    PrimaryArm arm = new PrimaryArm(Bot.LinearOp);
+
+    Intake intake = new Intake();
+
     ElapsedTime timer = new ElapsedTime();
 
     public void init() {
         Bot.initRobot(hardwareMap);
+        arm.initPrimaryArm(hardwareMap);
+        intake.initIntake(hardwareMap);
     }
 
     public void loop() {
@@ -109,10 +115,6 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
-    PrimaryArm arm = new PrimaryArm(Bot, Bot.LinearOp);
-
-    Intake intake = new Intake(Bot);
-
     public void intakeControl() {
         if (gamepad2.a) {
 //            Bot.isCollecting = true;
@@ -151,6 +153,7 @@ public class Bot_TeleOp extends OpMode {
         else arm.stopRotation();
     }
 
+
     public void telemetryOutput() {
         telemetry.addData("Front Left: ", Bot.frontLeftMotor.getCurrentPosition());
         telemetry.addData("Front Right: ", Bot.frontRightMotor.getCurrentPosition());
@@ -159,28 +162,28 @@ public class Bot_TeleOp extends OpMode {
 
         telemetry.addLine();
 
-        double primaryArmPower = Bot.primaryArm.getPower();
+        double primaryArmPower = arm.arm.getPower();
         if (primaryArmPower > 0) telemetry.addData("Primary Arm Extending: ", primaryArmPower);
         else if (primaryArmPower < 0) telemetry.addData("Primary Arm Retracting: ", primaryArmPower);
         else telemetry.addLine("Primary Arm Stopped");
 
         telemetry.addLine();
 
-        double primaryArmRotatorPower = Bot.primaryArmRotator.getPower();
+        double primaryArmRotatorPower = arm.rotator.getPower();
         if (primaryArmRotatorPower > 0) telemetry.addData("Primary Arm Going Up: ", primaryArmRotatorPower);
         else if (primaryArmRotatorPower < 0) telemetry.addData("Primary Arm Going Down: ", primaryArmRotatorPower);
         else telemetry.addLine("Primary Arm Not Rotating");
 
         telemetry.addLine();
 
-        double intakePower = Bot.intake.getPower();
+        double intakePower = intake.intake.getPower();
         if (intakePower > 0) telemetry.addData("Intake Running Inwards: ", intakePower);
         else if (intakePower < 0) telemetry.addData("Intake Running Outwards: ", intakePower);
         else telemetry.addLine("Intake Stopped");
 
         telemetry.addLine();
 
-        telemetry.addData("Intake Rotation Position: ", Bot.intakeRotator.getPosition());
+        telemetry.addData("Intake Rotation Position: ", intake.rotator.getPosition());
 
         telemetry.update();
     }

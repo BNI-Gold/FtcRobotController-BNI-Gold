@@ -10,10 +10,12 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.C
 public class PrimaryArmTester extends OpMode {
 
     public CompBot Bot = new CompBot();
+    public PrimaryArm arm = new PrimaryArm(Bot.LinearOp);
 
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
+        arm.initPrimaryArm(hardwareMap);
     }
 
     double speedMultiplier = 1;
@@ -33,8 +35,6 @@ public class PrimaryArmTester extends OpMode {
         }
     }
 
-    PrimaryArm arm = new PrimaryArm(Bot, Bot.LinearOp);
-
     public void primaryArmControl() {
         //Multiply triggers by speed multiplier
         double rightSpeed = gamepad1.right_trigger * speedMultiplier;
@@ -50,12 +50,12 @@ public class PrimaryArmTester extends OpMode {
     }
 
     public void telemetry() {
-        double primaryArmPower = Bot.primaryArm.getPower();
+        double primaryArmPower = arm.arm.getPower();
         if (primaryArmPower > 0) telemetry.addData("Primary Arm Extending: ", primaryArmPower);
         else if (primaryArmPower < 0) telemetry.addData("Primary Arm Retracting: ", primaryArmPower);
         else telemetry.addLine("Primary Arm Stopped");
 
-        double primaryArmRotatorPower = Bot.primaryArmRotator.getPower();
+        double primaryArmRotatorPower = arm.arm.getPower();
         if (primaryArmRotatorPower > 0) telemetry.addData("Primary Arm Going Up: ", primaryArmRotatorPower);
         else if (primaryArmRotatorPower < 0) telemetry.addData("Primary Arm Going Down: ", primaryArmRotatorPower);
         else telemetry.addLine("Primary Arm Not Rotating");

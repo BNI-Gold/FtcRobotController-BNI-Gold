@@ -20,14 +20,19 @@ public class Intake {
     public Servo rotator = null;
     public RevColorSensorV3 sensor = null;
 
+    IndicatorStrip indicator = new IndicatorStrip();
+
     double intakePower = 1;
     double intakeRotatorCenter = 0;
     double intakeRotatorStep = 0.0005;
     double sampleSecuredDistance = 0;
 
+    boolean isCollecting = false;
+    boolean isDropping = false;
+
     double position = 0.5;
 
-    public Intake(CompBot Bot) {}
+    public Intake() {}
 
     public void initIntake(HardwareMap hwMap) {
         hwBot = hwMap;
@@ -40,6 +45,7 @@ public class Intake {
 
         sensor = hwBot.get(RevColorSensorV3.class, "sample_sensor");
 
+        indicator.initIndicatorStrip(hwBot);
     }
 
     public void start(IntakeDirections direction) {
@@ -57,19 +63,17 @@ public class Intake {
         intake.setPower(0);
     }
 
-//    IndicatorStrip indicator = new IndicatorStrip(Bot);
-
     public void intakeUntilSample() {
-        Bot.isDropping = false;
+        isDropping = false;
 
         double distance = sensor.getDistance(DistanceUnit.INCH);
         boolean doThis = distance > sampleSecuredDistance;
         if (doThis) {
             start(IntakeDirections.IN);
-            Bot.isCollecting = true;
+            isCollecting = true;
         } else {
             stop();
-            Bot.isCollecting = false;
+            isCollecting = false;
 
             calcIntake();
         }
@@ -94,16 +98,16 @@ public class Intake {
     }
 
     public void dropSample() {
-        Bot.isCollecting = false;
+        isCollecting = false;
 
         double distance = sensor.getDistance(DistanceUnit.INCH);
         boolean doThis = distance < sampleSecuredDistance;
         if (doThis) {
             start(IntakeDirections.OUT);
-            Bot.isDropping = true;
+            isDropping = true;
         } else {
             stop();
-            Bot.isDropping = false;
+            isDropping = false;
         }
     }
 

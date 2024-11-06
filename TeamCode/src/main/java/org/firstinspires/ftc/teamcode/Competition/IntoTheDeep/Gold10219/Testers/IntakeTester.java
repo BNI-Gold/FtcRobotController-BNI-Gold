@@ -13,9 +13,12 @@ public class IntakeTester extends OpMode {
 
     public CompBot Bot = new CompBot();
 
+    Intake intake = new Intake();
+
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
+        intake.initIntake(hardwareMap);
     }
 
     @Override
@@ -23,8 +26,6 @@ public class IntakeTester extends OpMode {
         intakeControl();
         telemetry();
     }
-
-    Intake intake = new Intake(Bot);
 
     public void intakeControl() {
         if (gamepad1.dpad_right) intake.rotateRight();
@@ -38,7 +39,7 @@ public class IntakeTester extends OpMode {
         telemetry.addData("Sensor Color - Blue: ", intake.sensor.getNormalizedColors().blue);
         telemetry.addData("Sensor Color - Green", intake.sensor.getNormalizedColors().green);
         telemetry.addLine();
-        telemetry.addData("Intake Rotation Position: ", Bot.intakeRotator.getPosition());
+        telemetry.addData("Intake Rotation Position: ", intake.rotator.getPosition());
 
         telemetry.update();
     }

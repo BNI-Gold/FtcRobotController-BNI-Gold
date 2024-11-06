@@ -2,23 +2,35 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechani
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetrains.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 public class PrimaryArm {
-    public CompBot Bot = null;
-    private LinearOpMode LinearOp = null;
+    public HardwareMap hwBot = null;
+    public LinearOpMode LinearOp = null;
     public DcMotor rotator = null;
     public DcMotor arm = null;
     public double rotationUpPower = 0;
     public double rotationDownPower = 0;
     
-    public PrimaryArm(CompBot Bot, LinearOpMode LinearOp) {
-        this.Bot = Bot;
+    public PrimaryArm(LinearOpMode LinearOp) {
         this.LinearOp = LinearOp;
-        rotator = Bot.primaryArmRotator;
-        arm = Bot.primaryArm;
+    }
+
+    public void initPrimaryArm(HardwareMap hwMap) {
+        hwBot = hwMap;
+
+        rotator = hwBot.dcMotor.get("primary_arm_rotator");
+        arm = hwBot.dcMotor.get("viper_slide");
+
+        rotator.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        rotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void up(double multiplier) {

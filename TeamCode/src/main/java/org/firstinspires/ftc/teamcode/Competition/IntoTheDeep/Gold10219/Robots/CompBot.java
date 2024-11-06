@@ -22,19 +22,6 @@ public class CompBot extends MecanumDrive {
 
     public HardwareMap hwBot = null;
 
-    //Mechanism motors and servos
-    public DcMotor primaryArmRotator = null;
-    public DcMotor primaryArm = null;
-    public CRServo intake = null;
-    public Servo intakeRotator = null;
-    public RevColorSensorV3 sampleSensor1 = null;
-    public RevBlinkinLedDriver indicatorStrip = null;
-
-
-    //TODO: Move to intake class?
-    public boolean isCollecting = false;
-    public boolean isDropping = false;
-
     //Set hub directions
     //TODO: confirm directions
     //Why do we have this? `orientationOnRobot` is never referenced...
@@ -71,36 +58,6 @@ public class CompBot extends MecanumDrive {
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //****************************************
-
-
-        //********** MECHANISM MOTOR & SERVO CONFIG **********
-        //Get servo ports & info from control hub config
-
-        //Get motor ports & info from control hub config
-        primaryArmRotator = hwBot.dcMotor.get("primary_arm_rotator");
-        primaryArm = hwBot.dcMotor.get("viper_slide");
-
-        //Assign direction to servos
-        //TODO: confirm directions
-        intake.setDirection(CRServo.Direction.REVERSE);
-        intakeRotator.setDirection(Servo.Direction.FORWARD);
-        
-        //Assign direction to motors
-        //TODO: confirm directions
-        primaryArmRotator.setDirection(DcMotor.Direction.FORWARD);
-        primaryArm.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        //Set motor zero power behavior
-        primaryArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        primaryArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //****************************************
-
-        //********** SENSOR CONFIG **********
-        //****************************************
-
-        //********** LED CONFIG **********
-//        indicatorStrip = hwBot.get(RevBlinkinLedDriver.class, "indicator_strip");
         //****************************************
     }
 
