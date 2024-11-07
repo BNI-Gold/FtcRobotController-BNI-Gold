@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.IndicatorStrip.IndicatorStrip;
@@ -117,11 +118,11 @@ public class Intake {
 
     public void rotateRight() {
         position = rotator.getPosition();
-        rotator.setPosition(position + intakeRotatorStep);
+        rotator.setPosition(Range.clip(position + intakeRotatorStep, 0, 1));
     }
 
     public void rotateLeft() {
         position = rotator.getPosition();
-        rotator.setPosition(position - intakeRotatorStep);
+        rotator.setPosition(Range.clip(position - intakeRotatorStep, 0, 1));
     }
 }
