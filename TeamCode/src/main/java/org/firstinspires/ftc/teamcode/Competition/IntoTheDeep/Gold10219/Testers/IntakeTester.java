@@ -16,10 +16,13 @@ public class IntakeTester extends OpMode {
 
     Intake intake = new Intake();
 
+
+
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
         intake.initIntake(hardwareMap);
+        intake.center();
     }
 
     @Override
@@ -32,8 +35,11 @@ public class IntakeTester extends OpMode {
         if (gamepad1.dpad_right) intake.rotateRight();
         else if (gamepad1.dpad_left) intake.rotateLeft();
 
-        if (gamepad1.a) intake.start(IntakeDirections.IN);
+        if (gamepad1.a) intake.intakeUntilSample();
+        else if (gamepad1.x) intake.dropSample();
         else if (gamepad1.b) intake.stop();
+
+        if (gamepad1.y) intake.center();
     }
 
     public void telemetry() {

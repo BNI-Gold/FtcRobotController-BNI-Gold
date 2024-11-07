@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechani
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -23,9 +24,9 @@ public class Intake {
 //    IndicatorStrip indicator = new IndicatorStrip();
 
     double intakePower = 1;
-    double intakeRotatorCenter = 0;
-    double intakeRotatorStep = 0.0005;
-    double sampleSecuredDistance = 0;
+    double intakeRotatorCenter = 0.3494;
+    double intakeRotatorStep = 0.001;
+    double sampleSecuredDistance = 1.45;
 
     boolean isCollecting = false;
     boolean isDropping = false;
@@ -41,7 +42,7 @@ public class Intake {
         rotator = hwBot.servo.get("intake_rotator");
 
         intake.setDirection(CRServo.Direction.FORWARD);
-        rotator.setDirection(Servo.Direction.FORWARD);
+        rotator.setDirection(Servo.Direction.REVERSE);
 
         sensor = hwBot.get(RevColorSensorV3.class, "sample_sensor");
 
@@ -77,6 +78,13 @@ public class Intake {
 
             calcIntake();
         }
+//
+//        while (distance > sampleSecuredDistance && Op) {
+//            start(IntakeDirections.IN);
+//            isCollecting = true;
+//            if (distance <= sampleSecuredDistance) break;
+//        }
+//        stop();
     }
 
     public void calcIntake() {
