@@ -57,7 +57,7 @@ public class Bot_TeleOp extends OpMode {
             speedMultiply = 1;
         }
 
-        if (gamepad2.left_trigger > 0.35) {
+        if (gamepad2.left_bumper) {
             armSpeedMultiplier = 0.3;
         } else {
             armSpeedMultiplier = 1;
@@ -148,8 +148,8 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.left_trigger > 0.35) arm.retract(leftSpeed);
         else arm.stop();
 
-        if (gamepad2.dpad_up) arm.up(armSpeedMultiplier);
-        else if (gamepad2.dpad_down) arm.down(armSpeedMultiplier);
+        if (gamepad2.dpad_up) arm.up();
+        else if (gamepad2.dpad_down) arm.down();
         else arm.stopRotation();
     }
 

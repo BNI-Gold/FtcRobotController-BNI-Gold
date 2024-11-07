@@ -47,8 +47,8 @@ public class PrimaryArmTester extends OpMode {
         else if (gamepad1.left_trigger > 0.35) arm.retract(leftSpeed);
         else arm.stop();
 
-        if (gamepad1.dpad_up) arm.up(speedMultiplier);
-        else if (gamepad1.dpad_down) arm.down(speedMultiplier);
+        if (gamepad1.dpad_up) arm.up();
+        else if (gamepad1.dpad_down) arm.down();
         else arm.stopRotation();
     }
 
