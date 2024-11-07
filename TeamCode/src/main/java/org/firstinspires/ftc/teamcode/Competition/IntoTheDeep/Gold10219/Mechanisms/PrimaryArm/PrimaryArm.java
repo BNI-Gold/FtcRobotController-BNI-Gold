@@ -33,30 +33,30 @@ public class PrimaryArm {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void up(double multiplier) {
-        rotator.setPower(multiplier * rotationUpPower);
+    public void up() {
+        rotator.setPower(rotationUpPower);
     }
-    public void down(double multiplier) {
-        rotator.setPower(-multiplier * rotationDownPower);
+    public void down() {
+        rotator.setPower(-rotationDownPower);
     }
     public void stopRotation() {
         rotator.setPower(0);
     }
-    public void up(double multiplier, double rotations) {
+    public void up(double rotations) {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            up(multiplier);
+            up();
         }
         stopRotation();
     }
-    public void down(double multiplier, double rotations) {
+    public void down(double rotations) {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            down(multiplier);
+            down();
         }
         stopRotation();
     }
