@@ -18,7 +18,7 @@ public class CompBot extends MecanumDrive {
         hwBot = hwMap;
 
         //********** DRIVETRAIN CONFIG **********
-        //Get motor ports & info from control hub config
+        //Get motor ports & info from control hub configu
         frontLeftMotor = hwBot.dcMotor.get("front_left_motor");
         frontRightMotor = hwBot.dcMotor.get("front_right_motor");
         rearLeftMotor = hwBot.dcMotor.get("rear_left_motor");
