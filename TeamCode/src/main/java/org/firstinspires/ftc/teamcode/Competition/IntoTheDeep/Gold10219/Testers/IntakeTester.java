@@ -39,6 +39,7 @@ public class IntakeTester extends OpMode {
         else if (gamepad1.x) intake.dropSample();
         else if (gamepad1.b) intake.stop();
 
+
         if (gamepad1.y) intake.center();
     }
 
