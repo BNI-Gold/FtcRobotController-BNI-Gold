@@ -40,14 +40,11 @@ public class PrimaryArmTester extends OpMode {
         double rightSpeed = gamepad1.right_trigger * speedMultiplier;
         double leftSpeed = gamepad1.left_trigger * speedMultiplier;
 
-        telemetry.addData("Right Speed: ", rightSpeed);
-        telemetry.addData("Left Speed: ", leftSpeed);
-
         if (gamepad1.right_trigger > 0.35) arm.extend(rightSpeed);
         else if (gamepad1.left_trigger > 0.35) arm.retract(leftSpeed);
         else arm.stop();
 
-        if (gamepad1.dpad_up) arm.up();
+        if (gamepad1.dpad_up) arm.up(false);
         else if (gamepad1.dpad_down) arm.down();
         else arm.stopRotation();
     }

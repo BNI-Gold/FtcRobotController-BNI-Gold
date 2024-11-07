@@ -27,7 +27,7 @@ public class IntakeTester extends OpMode {
     @Override
     public void loop() {
         intakeControl();
-        stateCheck();
+        intake.stateCheck();
         telemetry();
     }
 
@@ -40,14 +40,6 @@ public class IntakeTester extends OpMode {
         else if (gamepad1.b) intake.stop();
 
         if (gamepad1.y) intake.center();
-    }
-
-    public void stateCheck() {
-        if (intake.isCollecting) {
-            intake.intakeUntilSample();
-        } else if (intake.isDropping) {
-            intake.dropSample();
-        }
     }
 
     public void telemetry() {

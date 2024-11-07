@@ -17,11 +17,10 @@ public class Intake {
 
     double intakePower = 1;
     double intakeRotatorCenter = 0.3494;
-    double intakeRotatorStep = 0.001;
-    double sampleSecuredDistance = 1.45;
+    double intakeRotatorStep = 0.003;
+    double sampleSecuredDistance = 1.3;
 
-    public boolean isCollecting = false;
-    public boolean isDropping = false;
+    IntakeDirections state = IntakeDirections.STOP;
 
     double position = 0.5;
 
@@ -41,6 +40,14 @@ public class Intake {
 //        indicator.initIndicatorStrip(hwBot);
     }
 
+    public void stateCheck() {
+        if (state == IntakeDirections.IN) {
+            intakeUntilSample();
+        } else if (state == IntakeDirections.OUT) {
+            dropSample();
+        }
+    }
+
     public void start(IntakeDirections direction) {
         switch (direction) {
             case IN:
@@ -53,19 +60,18 @@ public class Intake {
     }
 
     public void stop() {
+        state = IntakeDirections.STOP;
         intake.setPower(0);
     }
 
     public void intakeUntilSample() {
-        isDropping = false;
-
         double distance = sensor.getDistance(DistanceUnit.INCH);
         if (distance > sampleSecuredDistance) {
             start(IntakeDirections.IN);
-            isCollecting = true;
+            state = IntakeDirections.IN;
         } else {
             stop();
-            isCollecting = false;
+            state = IntakeDirections.STOP;
 
             calcIntake();
         }
@@ -97,15 +103,13 @@ public class Intake {
     }
 
     public void dropSample() {
-        isCollecting = false;
-
         double distance = sensor.getDistance(DistanceUnit.INCH);
         if (distance < sampleSecuredDistance) {
             start(IntakeDirections.OUT);
-            isDropping = true;
+            state = IntakeDirections.OUT;
         } else {
             stop();
-            isDropping = false;
+            state = IntakeDirections.STOP;
         }
     }
 

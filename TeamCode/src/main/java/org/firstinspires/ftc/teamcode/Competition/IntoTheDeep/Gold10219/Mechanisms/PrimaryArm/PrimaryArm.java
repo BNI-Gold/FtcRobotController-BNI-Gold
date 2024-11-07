@@ -14,6 +14,7 @@ public class PrimaryArm {
     public DcMotor rotator = null;
     public DcMotor arm = null;
     public double rotationUpPower = .75;
+    public double rotationUpSuperPower = 1;
     public double rotationDownPower = .5;
     
     public PrimaryArm(LinearOpMode LinearOp) {
@@ -33,8 +34,12 @@ public class PrimaryArm {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void up() {
-        rotator.setPower(rotationUpPower);
+    public void up(boolean s) {
+        if (s) {
+            rotator.setPower(rotationUpSuperPower);
+        } else {
+            rotator.setPower(rotationUpPower);
+        }
     }
     public void down() {
         rotator.setPower(-rotationDownPower);
@@ -47,7 +52,7 @@ public class PrimaryArm {
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            up();
+            up(false);
         }
         stopRotation();
     }
