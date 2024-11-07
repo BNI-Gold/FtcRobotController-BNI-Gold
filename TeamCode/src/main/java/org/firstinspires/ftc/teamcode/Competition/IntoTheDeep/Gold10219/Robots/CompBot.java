@@ -3,31 +3,14 @@
 
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots;
 
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetrains.MecanumDrive;
 
 public class CompBot extends MecanumDrive {
 
     public HardwareMap hwBot = null;
-
-    //Set hub directions
-    //TODO: confirm directions
-    //Why do we have this? `orientationOnRobot` is never referenced...
-    RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
-    RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
-    RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
     public CompBot() {}
 
@@ -61,39 +44,6 @@ public class CompBot extends MecanumDrive {
         //****************************************
     }
 
-    //********** GYRO METHODS **********
-    public void gyroCorrection(double speed, double targetAngle) {
-        imu.resetYaw();
-        currentHeading = getHeading();
-        if (currentHeading >= targetAngle + headingTolerance && LinearOp.opModeIsActive()) {
-            while (currentHeading >= targetAngle + headingTolerance && LinearOp.opModeIsActive()) {
-                rotateRight(speed);
-
-                currentHeading = getHeading();
-                LinearOp.telemetry.addData("Current Angle: ", currentHeading);
-                LinearOp.telemetry.addData("Target Angle: ", targetAngle);
-                LinearOp.telemetry.update();
-            }
-        } else if (currentHeading <= targetAngle - headingTolerance && LinearOp.opModeIsActive()) ;
-        {
-            while (currentHeading <= targetAngle - headingTolerance && LinearOp.opModeIsActive()) {
-                rotateLeft(speed);
-
-                currentHeading = getHeading();
-                LinearOp.telemetry.addData("Current Angle: ", currentHeading);
-                LinearOp.telemetry.addData("Target Angle: ", targetAngle);
-                LinearOp.telemetry.update();
-            }
-        }
-
-        stopMotors();
-        currentHeading = getHeading();
-    }
-
-    public double getHeading() {
-        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        return orientation.getYaw(AngleUnit.DEGREES);
-    }
     //****************************************
 
 

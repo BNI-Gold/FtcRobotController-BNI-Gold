@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Control
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.clawOptions;
 
 public abstract class AutoMain extends LinearOpMode {
 
