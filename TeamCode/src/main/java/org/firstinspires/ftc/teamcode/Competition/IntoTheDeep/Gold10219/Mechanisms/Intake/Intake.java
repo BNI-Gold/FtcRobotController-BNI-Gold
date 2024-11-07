@@ -1,19 +1,11 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake;
 
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorRangeSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.IndicatorStrip.IndicatorStrip;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 public class Intake {
     public HardwareMap hwBot = null;
@@ -28,8 +20,8 @@ public class Intake {
     double intakeRotatorStep = 0.001;
     double sampleSecuredDistance = 1.45;
 
-    boolean isCollecting = false;
-    boolean isDropping = false;
+    public boolean isCollecting = false;
+    public boolean isDropping = false;
 
     double position = 0.5;
 
@@ -68,8 +60,7 @@ public class Intake {
         isDropping = false;
 
         double distance = sensor.getDistance(DistanceUnit.INCH);
-        boolean doThis = distance > sampleSecuredDistance;
-        if (doThis) {
+        if (distance > sampleSecuredDistance) {
             start(IntakeDirections.IN);
             isCollecting = true;
         } else {
@@ -109,8 +100,7 @@ public class Intake {
         isCollecting = false;
 
         double distance = sensor.getDistance(DistanceUnit.INCH);
-        boolean doThis = distance < sampleSecuredDistance;
-        if (doThis) {
+        if (distance < sampleSecuredDistance) {
             start(IntakeDirections.OUT);
             isDropping = true;
         } else {
