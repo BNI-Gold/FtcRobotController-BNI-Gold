@@ -14,7 +14,7 @@ public class PrimaryArm {
     public DcMotor rotator = null;
     public DcMotor arm = null;
     public double rotationUpPower = .75;
-    public double rotationUpSuperPower = 1;
+    public double rotationUpSuperPower = 1.25;
     public double rotationDownPower = .5;
     
     public PrimaryArm(LinearOpMode LinearOp) {
