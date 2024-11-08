@@ -18,7 +18,7 @@ public class Intake {
 
     double intakeInPower = 1;
     double intakeOutPower = .75;
-    double intakeRotatorCenter = 0.4344;
+    double intakeRotatorCenter = 0.4044;
     double intakeRotatorStep = 0.005;
     double sampleSecuredDistance = 1.3;
 
