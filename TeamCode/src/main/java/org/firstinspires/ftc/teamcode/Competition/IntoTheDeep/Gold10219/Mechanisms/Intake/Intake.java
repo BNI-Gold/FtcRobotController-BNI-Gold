@@ -17,13 +17,13 @@ public class Intake {
 //    IndicatorStrip indicator = new IndicatorStrip();
 
     double intakeInPower = 1;
-    double intakeOutPower = .75;
+    double intakeOutPower = .5;
     double intakeRotatorCenter = 0.4044;
     double intakeRotatorStep = 0.005;
     double sampleSecuredDistance = 1.3;
 
-    double intakeMaxRight = 0.775;
-    double intakeMaxLeft = 0.1333;
+    double intakeMaxRight = 0.75;
+    double intakeMaxLeft = 0.1083;
 
     IntakeDirections state = IntakeDirections.STOP;
 

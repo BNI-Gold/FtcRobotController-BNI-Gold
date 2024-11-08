@@ -118,16 +118,16 @@ public class Bot_TeleOp extends OpMode {
 
     public void intakeControl() {
         if (gamepad2.a && gamepad2.b) {
-            intake.start(IntakeDirections.IN);
-        }
-        else if (gamepad2.a) {
             intake.intakeUntilSample();
         }
+        else if (gamepad2.a) {
+            intake.start(IntakeDirections.IN);
+        }
         else if (gamepad2.x && gamepad2.b) {
-            intake.start(IntakeDirections.OUT);
+            intake.dropSample();
         }
         else if (gamepad2.x) {
-            intake.dropSample();
+            intake.start(IntakeDirections.OUT);
         }
         else if (gamepad2.b) intake.stop();
 
