@@ -45,7 +45,7 @@ public class PrimaryArmTester extends OpMode {
         else arm.stop();
 
         if (gamepad1.dpad_up) arm.up(false);
-        else if (gamepad1.dpad_down) arm.down();
+        else if (gamepad1.dpad_down) arm.down(false);
         else arm.stopRotation();
     }
 

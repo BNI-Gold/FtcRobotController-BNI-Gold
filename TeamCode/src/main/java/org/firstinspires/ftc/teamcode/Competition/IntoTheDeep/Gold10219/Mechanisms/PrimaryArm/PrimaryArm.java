@@ -66,7 +66,7 @@ public class PrimaryArm {
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            down();
+            down(false);
         }
         stopRotation();
     }
