@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetrains.MecanumDrive;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
 public class PrimaryArm {
     public HardwareMap hwBot = null;
@@ -52,21 +51,21 @@ public class PrimaryArm {
     public void stopRotation() {
         rotator.setPower(0);
     }
-    public void up(double rotations) {
+    public void up(double rotations, boolean s) {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            up(false);
+            up(s);
         }
         stopRotation();
     }
-    public void down(double rotations) {
+    public void down(double rotations, boolean s) {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
-            down(false);
+            down(s);
         }
         stopRotation();
     }

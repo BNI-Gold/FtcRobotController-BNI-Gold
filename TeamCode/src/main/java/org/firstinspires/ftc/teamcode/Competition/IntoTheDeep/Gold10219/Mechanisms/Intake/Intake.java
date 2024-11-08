@@ -61,6 +61,9 @@ public class Intake {
             case OUT:
                 intake.setPower(-intakeOutPower);
                 break;
+            case STOP:
+                intake.setPower(0);
+                break;
         }
     }
 
