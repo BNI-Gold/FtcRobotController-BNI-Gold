@@ -16,6 +16,7 @@ public class PrimaryArm {
     public double rotationUpPower = .75;
     public double rotationUpSuperPower = 1.25;
     public double rotationDownPower = .5;
+    public double rotationDownSuperPower = .75;
     
     public PrimaryArm(LinearOpMode LinearOp) {
         this.LinearOp = LinearOp;
@@ -41,8 +42,12 @@ public class PrimaryArm {
             rotator.setPower(rotationUpPower);
         }
     }
-    public void down() {
-        rotator.setPower(-rotationDownPower);
+    public void down(boolean s) {
+        if (s) {
+            rotator.setPower(rotationDownSuperPower);
+        } else {
+            rotator.setPower(-rotationDownPower);
+        }
     }
     public void stopRotation() {
         rotator.setPower(0);

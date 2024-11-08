@@ -132,7 +132,7 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.b) intake.stop();
 
 
-        if (gamepad2.right_bumper && !gamepad2.dpad_up) intake.rotateRight();
+        if (gamepad2.right_bumper && !(gamepad2.dpad_up || gamepad2.dpad_down)) intake.rotateRight();
         else if (gamepad2.left_bumper) intake.rotateLeft();
         else if (gamepad2.y) intake.center();
     }
@@ -148,7 +148,8 @@ public class Bot_TeleOp extends OpMode {
 
         if (gamepad2.dpad_up && gamepad2.right_bumper) arm.up(true);
         else if (gamepad2.dpad_up) arm.up(false);
-        else if (gamepad2.dpad_down) arm.down();
+        else if (gamepad2.dpad_down && gamepad2.right_bumper) arm.down(true);
+        else if (gamepad2.dpad_down) arm.down(false);
         else arm.stopRotation();
     }
 

@@ -4,6 +4,7 @@ import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -17,8 +18,11 @@ public class Intake {
 
     double intakePower = 1;
     double intakeRotatorCenter = 0.4344;
-    double intakeRotatorStep = 0.003;
+    double intakeRotatorStep = 0.005;
     double sampleSecuredDistance = 1.3;
+
+    double intakeMaxRight = 0.775;
+    double intakeMaxLeft = 0.1333;
 
     IntakeDirections state = IntakeDirections.STOP;
 
@@ -119,11 +123,11 @@ public class Intake {
 
     public void rotateRight() {
         position = rotator.getPosition();
-        rotator.setPosition(position + intakeRotatorStep);
+        rotator.setPosition(Range.clip(position + intakeRotatorStep, intakeMaxLeft, intakeMaxRight));
     }
 
     public void rotateLeft() {
         position = rotator.getPosition();
-        rotator.setPosition(position - intakeRotatorStep);
+        rotator.setPosition(Range.clip(position - intakeRotatorStep, intakeMaxLeft, intakeMaxRight));
     }
 }
