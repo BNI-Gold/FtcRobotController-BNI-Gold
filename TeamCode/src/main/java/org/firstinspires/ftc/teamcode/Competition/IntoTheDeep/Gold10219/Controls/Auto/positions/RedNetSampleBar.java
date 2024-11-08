@@ -26,7 +26,9 @@ public class RedNetSampleBar extends AutoRedAlliance {
             //stop for 1000ms=1sec
             Bot.driveForward(0.5, 11.5);
             sleep(1000);
-          // put the claw mechanism here
+            // put the claw mechanism here
+            arm.up(500, false);
+            arm.extend(.5, 500);
             Bot.driveBack(0.5,5.75);
             Bot.strafeRight(0.8,20.125);
             Bot.rotateLeft(0.5,0.5);

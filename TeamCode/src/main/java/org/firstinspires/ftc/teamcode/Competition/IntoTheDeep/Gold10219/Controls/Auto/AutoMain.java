@@ -11,9 +11,9 @@ public abstract class AutoMain extends LinearOpMode {
     // Constructor for the Competition Robot Class
     public CompBot Bot = new CompBot();
 
-    PrimaryArm arm = new PrimaryArm(Bot.LinearOp);
+    public PrimaryArm arm = new PrimaryArm(Bot.LinearOp);
 
-    Intake intake = new Intake();
+    public Intake intake = new Intake();
 
     // Initialization, LinearOp, and Telemetry Update for all Auto Paths
     public void autoStart(){
