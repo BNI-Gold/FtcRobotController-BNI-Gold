@@ -16,7 +16,8 @@ public class Intake {
 
 //    IndicatorStrip indicator = new IndicatorStrip();
 
-    double intakePower = 1;
+    double intakeInPower = 1;
+    double intakeOutPower = .75;
     double intakeRotatorCenter = 0.4344;
     double intakeRotatorStep = 0.005;
     double sampleSecuredDistance = 1.3;
@@ -55,10 +56,10 @@ public class Intake {
     public void start(IntakeDirections direction) {
         switch (direction) {
             case IN:
-                intake.setPower(intakePower);
+                intake.setPower(intakeInPower);
                 break;
             case OUT:
-                intake.setPower(-intakePower);
+                intake.setPower(-intakeOutPower);
                 break;
         }
     }

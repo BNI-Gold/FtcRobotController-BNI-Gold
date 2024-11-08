@@ -44,7 +44,7 @@ public class PrimaryArm {
     }
     public void down(boolean s) {
         if (s) {
-            rotator.setPower(rotationDownSuperPower);
+            rotator.setPower(-rotationDownSuperPower);
         } else {
             rotator.setPower(-rotationDownPower);
         }
