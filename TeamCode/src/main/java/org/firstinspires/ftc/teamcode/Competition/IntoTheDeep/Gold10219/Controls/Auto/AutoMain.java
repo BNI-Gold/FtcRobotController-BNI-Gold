@@ -11,7 +11,7 @@ public abstract class AutoMain extends LinearOpMode {
     // Constructor for the Competition Robot Class
     public CompBot Bot = new CompBot();
 
-    public PrimaryArm arm = new PrimaryArm(Bot.LinearOp);
+    public PrimaryArm arm = new PrimaryArm();
 
     public Intake intake = new Intake();
 
@@ -19,7 +19,7 @@ public abstract class AutoMain extends LinearOpMode {
     public void autoStart(){
         Bot.initRobot(hardwareMap);
         Bot.setLinearOp(this);
-        arm.initPrimaryArm(hardwareMap);
+        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         intake.initIntake(hardwareMap);
         intake.center();
         telemetry.addLine("Awaiting Start");

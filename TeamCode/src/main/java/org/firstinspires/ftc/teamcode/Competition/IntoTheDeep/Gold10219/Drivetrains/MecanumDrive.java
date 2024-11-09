@@ -214,6 +214,8 @@ public class MecanumDrive {
 
         while ((Math.abs(frontLeftMotor.getCurrentPosition()) < ticks && LinearOp.opModeIsActive())) {
             driveForward(speed);
+            LinearOp.telemetry.addData("ForwardRotations: ", frontLeftMotor.getCurrentPosition());
+            LinearOp.telemetry.update();
         }
         stopMotors();
     }
@@ -251,6 +253,35 @@ public class MecanumDrive {
         stopMotors();
 
 
+    }
+
+    public void gyroTurn(double speed, int targetAngle) {
+        imu.resetYaw();
+        currentHeading = getHeading();
+
+        if (currentHeading >= targetAngle + headingTolerance && LinearOp.opModeIsActive()) {
+            while (currentHeading >= targetAngle + headingTolerance && LinearOp.opModeIsActive()) {
+                rotateLeft(speed);
+
+                currentHeading = getHeading();
+                LinearOp.telemetry.addData("Current Angle: ", currentHeading);
+                LinearOp.telemetry.addData("Target Angle: ", targetAngle);
+                LinearOp.telemetry.update();
+            }
+        } else if (currentHeading <= targetAngle - headingTolerance && LinearOp.opModeIsActive()) ;
+        {
+            while (currentHeading <= targetAngle - headingTolerance && LinearOp.opModeIsActive()) {
+                rotateRight(speed);
+
+                currentHeading = getHeading();
+                LinearOp.telemetry.addData("Current Angle: ", currentHeading);
+                LinearOp.telemetry.addData("Target Angle: ", targetAngle);
+                LinearOp.telemetry.update();
+            }
+        }
+
+        stopMotors();
+        currentHeading = getHeading();
     }
 
     //Strafing with rotations methods

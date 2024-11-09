@@ -17,12 +17,11 @@ public class PrimaryArm {
     public double rotationDownPower = .5;
     public double rotationDownSuperPower = .75;
     
-    public PrimaryArm(LinearOpMode LinearOp) {
-        this.LinearOp = LinearOp;
-    }
+    public PrimaryArm() {}
 
-    public void initPrimaryArm(HardwareMap hwMap) {
+    public void initPrimaryArm(HardwareMap hwMap, LinearOpMode LinearOp) {
         hwBot = hwMap;
+        this.LinearOp = LinearOp;
 
         rotator = hwBot.dcMotor.get("primary_arm_rotator");
         arm = hwBot.dcMotor.get("viper_slide");
@@ -84,6 +83,8 @@ public class PrimaryArm {
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while(Math.abs(arm.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
             extend(power);
+            LinearOp.telemetry.addData("ArmRotations: ", arm.getCurrentPosition());
+            LinearOp.telemetry.update();
         }
         stop();
     }

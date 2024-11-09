@@ -29,7 +29,7 @@ public class Bot_TeleOp extends OpMode {
 
     public CompBot Bot = new CompBot();
 
-    PrimaryArm arm = new PrimaryArm(Bot.LinearOp);
+    PrimaryArm arm = new PrimaryArm();
 
     Intake intake = new Intake();
 
@@ -37,7 +37,7 @@ public class Bot_TeleOp extends OpMode {
 
     public void init() {
         Bot.initRobot(hardwareMap);
-        arm.initPrimaryArm(hardwareMap);
+        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         intake.initIntake(hardwareMap);
         intake.center();
     }
@@ -118,16 +118,16 @@ public class Bot_TeleOp extends OpMode {
 
     public void intakeControl() {
         if (gamepad2.a && gamepad2.b) {
-            intake.intakeUntilSample();
-        }
-        else if (gamepad2.a) {
             intake.start(IntakeDirections.IN);
         }
+        else if (gamepad2.a) {
+            intake.intakeUntilSample();
+        }
         else if (gamepad2.x && gamepad2.b) {
-            intake.dropSample();
+            intake.start(IntakeDirections.OUT);
         }
         else if (gamepad2.x) {
-            intake.start(IntakeDirections.OUT);
+            intake.dropSample();
         }
         else if (gamepad2.b) intake.stop();
 

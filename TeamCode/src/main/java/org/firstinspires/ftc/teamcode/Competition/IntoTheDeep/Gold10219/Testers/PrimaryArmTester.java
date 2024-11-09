@@ -10,12 +10,12 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.C
 public class PrimaryArmTester extends OpMode {
 
     public CompBot Bot = new CompBot();
-    public PrimaryArm arm = new PrimaryArm(Bot.LinearOp);
+    public PrimaryArm arm = new PrimaryArm();
 
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
-        arm.initPrimaryArm(hardwareMap);
+        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
     }
 
     double speedMultiplier = 1;
