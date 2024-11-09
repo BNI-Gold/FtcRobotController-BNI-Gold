@@ -233,6 +233,35 @@ public class MecanumDrive {
 
     }
 
+    //Linear drive with rotations methods using inches
+    public void driveForwardInches(double speed, double inches) {
+        double rotations = inches/6;
+        double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while ((Math.abs(frontLeftMotor.getCurrentPosition()) < ticks && LinearOp.opModeIsActive())) {
+            driveForward(speed);
+            LinearOp.telemetry.addData("Forward Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
+            LinearOp.telemetry.update();
+        }
+        stopMotors();
+    }
+    public void driveBackInches(double speed, double inches) {
+        double rotations = inches/6;
+        double ticks = rotations  * MOTOR_TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks && LinearOp.opModeIsActive() ) ){
+            driveBack(speed);
+            LinearOp.telemetry.addData("Backward Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
+            LinearOp.telemetry.update();
+        }
+        stopMotors();
+
+    }
+
     //Rotating with rotations methods
     public void rotateRight(double speed, double rotations) {
         double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
@@ -300,6 +329,35 @@ public class MecanumDrive {
         stopMotors();
     }
     public void strafeRight(double speed, double rotations) {
+        double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks && LinearOp.opModeIsActive()) ) {
+            strafeRight(speed);
+            LinearOp.telemetry.addData("Strafe Right Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
+            LinearOp.telemetry.update();
+        }
+        stopMotors();
+
+    }
+
+    //Strafing with rotations methods, using inches
+    public void strafeLeftInches(double speed, double inches) {
+        double rotations = inches/6;
+        double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks && LinearOp.opModeIsActive()) ){
+            strafeLeft(speed);
+            LinearOp.telemetry.addData("Strafe Left Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
+            LinearOp.telemetry.update();
+        }
+        stopMotors();
+    }
+    public void strafeRightInches(double speed, double inches) {
+        double rotations = inches/6;
         double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
