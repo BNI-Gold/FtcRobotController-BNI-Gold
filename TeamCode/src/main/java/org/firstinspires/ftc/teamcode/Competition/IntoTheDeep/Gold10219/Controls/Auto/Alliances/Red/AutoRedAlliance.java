@@ -21,14 +21,4 @@ public  abstract class AutoRedAlliance extends AutoMain {
         sleep(500);
         arm.retract(.75, 5.1);
     }
-
-    //Helper Method to Raise, Extend, and finish Raising Arm
-    public void safeExtendAndRaise() {
-        arm.up(3, false);
-        sleep(500);
-        //stop for 1000ms=1sec
-        arm.extend(.75, 5.1);
-        sleep(500);
-        arm.up(5.5, true);
-    }
 }
