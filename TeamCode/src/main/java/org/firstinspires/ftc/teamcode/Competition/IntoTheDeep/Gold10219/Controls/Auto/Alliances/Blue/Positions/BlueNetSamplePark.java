@@ -13,12 +13,11 @@ public class BlueNetSamplePark extends AutoBlueAlliance {
         // Global Method for Initializing Auto
         autoStart();
 
-        waitForStart();
         //wait for player to press start
+        waitForStart();
         while (opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
-
             Bot.strafeRight(0.5, 0.4);
             sleep(500);
             safeExtendAndRaise();
@@ -35,7 +34,6 @@ public class BlueNetSamplePark extends AutoBlueAlliance {
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();
-
         }
         idle();
     }

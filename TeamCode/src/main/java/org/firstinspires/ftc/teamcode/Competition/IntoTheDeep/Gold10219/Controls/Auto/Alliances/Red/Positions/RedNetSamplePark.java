@@ -13,8 +13,8 @@ public class RedNetSamplePark extends AutoRedAlliance {
         // Global Method for Initializing Auto
         autoStart();
 
-        waitForStart();
         //wait for player to press start
+        waitForStart();
         while (opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
@@ -34,7 +34,6 @@ public class RedNetSamplePark extends AutoRedAlliance {
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();
-
         }
         idle();
     }

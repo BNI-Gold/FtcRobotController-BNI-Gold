@@ -214,7 +214,7 @@ public class MecanumDrive {
 
         while ((Math.abs(frontLeftMotor.getCurrentPosition()) < ticks && LinearOp.opModeIsActive())) {
             driveForward(speed);
-            LinearOp.telemetry.addData("ForwardRotations: ", frontLeftMotor.getCurrentPosition());
+            LinearOp.telemetry.addData("Forward Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
             LinearOp.telemetry.update();
         }
         stopMotors();
@@ -226,6 +226,8 @@ public class MecanumDrive {
 
         while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks && LinearOp.opModeIsActive() ) ){
             driveBack(speed);
+            LinearOp.telemetry.addData("Backward Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
+            LinearOp.telemetry.update();
         }
         stopMotors();
 
@@ -292,6 +294,8 @@ public class MecanumDrive {
 
         while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks && LinearOp.opModeIsActive()) ){
             strafeLeft(speed);
+            LinearOp.telemetry.addData("Strafe Left Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
+            LinearOp.telemetry.update();
         }
         stopMotors();
     }
@@ -302,6 +306,8 @@ public class MecanumDrive {
 
         while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks && LinearOp.opModeIsActive()) ) {
             strafeRight(speed);
+            LinearOp.telemetry.addData("Strafe Right Rotations: ", frontLeftMotor.getCurrentPosition()/MOTOR_TICKS_PER_ROTATION);
+            LinearOp.telemetry.update();
         }
         stopMotors();
 

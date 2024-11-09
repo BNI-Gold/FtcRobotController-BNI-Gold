@@ -13,8 +13,8 @@ public class BlueObservationPark extends AutoBlueAlliance {
         //Global Method for Initializing Auto
         autoStart();
 
-        waitForStart();
         //wait for player to press start
+        waitForStart();
         while(opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
@@ -25,5 +25,6 @@ public class BlueObservationPark extends AutoBlueAlliance {
             // END AUTO PATH SEQUENCE
             requestOpModeStop();
         }
+        idle();
     }
 }
