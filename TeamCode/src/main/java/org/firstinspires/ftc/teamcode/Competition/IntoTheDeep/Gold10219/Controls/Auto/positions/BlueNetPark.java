@@ -2,10 +2,10 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Control
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.AutoRedAlliance;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.AutoBlueAlliance;
 
-@Autonomous(name = "Red:Net:Park")
-public class RedNetPark extends AutoRedAlliance {
+@Autonomous(name = "Blue:Net:Park")
+public class BlueNetPark extends AutoBlueAlliance {
 
     @Override
     public void runOpMode() throws InterruptedException {
