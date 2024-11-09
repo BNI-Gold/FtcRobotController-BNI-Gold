@@ -24,7 +24,6 @@ public abstract class AutoMain extends LinearOpMode {
         intake.center();
         telemetry.addLine("Awaiting Start");
         telemetry.update();
-
     }
 
 
