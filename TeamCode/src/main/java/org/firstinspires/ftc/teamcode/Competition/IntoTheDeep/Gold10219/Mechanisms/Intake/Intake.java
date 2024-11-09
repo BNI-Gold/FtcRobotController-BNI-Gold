@@ -17,7 +17,7 @@ public class Intake {
 //    IndicatorStrip indicator = new IndicatorStrip();
 
     double intakeInPower = 1;
-    double intakeOutPower = .25;
+    double intakeOutPower = .5;
     double intakeRotatorCenter = 0.4044;
     double intakeRotatorStep = 0.005;
     double sampleSecuredDistance = 1.3;
