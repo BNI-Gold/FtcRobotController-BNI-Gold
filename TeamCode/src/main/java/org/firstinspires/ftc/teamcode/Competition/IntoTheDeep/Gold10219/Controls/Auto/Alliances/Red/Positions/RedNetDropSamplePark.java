@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Alliances.Red.AutoRedAlliance;
 
 @Autonomous(name = "Red:Net:DropSample:Park")
-public class RedNetSamplePark extends AutoRedAlliance {
+public class RedNetDropSamplePark extends AutoRedAlliance {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -30,7 +30,8 @@ public class RedNetSamplePark extends AutoRedAlliance {
             sleep(500);
             Bot.driveForwardInches(.5, 3);
             sleep(1000);
-            dropSampleAndRetreat();
+            dropAndRetreatFromBucket();
+            sleep(500);
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();

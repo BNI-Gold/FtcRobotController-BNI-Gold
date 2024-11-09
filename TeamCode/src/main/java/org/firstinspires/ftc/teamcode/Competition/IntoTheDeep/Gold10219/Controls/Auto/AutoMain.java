@@ -38,7 +38,7 @@ public abstract class AutoMain extends LinearOpMode {
     }
 
     // Helper Method to Drop Sample in Net Area
-    public void dropSampleAndRetreat() {
+    public void dropAndRetreatFromBucket() {
         // Must be called once intake is positioned at top bucket.
         // After dropping, will rotate, back, then strafe robot to be against wall after dropping, and retract arm. Arm stays up.
         intake.start(IntakeDirections.OUT);
