@@ -30,7 +30,7 @@ public class BlueNetSamplePark extends AutoBlueAlliance {
             Bot.strafeRight(0.5, 0.4);
             sleep(500);
             Bot.driveForward(.5, .5);
-            sleep(500);
+            sleep(1000);
             dropSampleAndRetreat();
 
             // END AUTO PATH SEQUENCE

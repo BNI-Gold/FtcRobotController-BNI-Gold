@@ -19,6 +19,6 @@ public abstract class  AutoBlueAlliance extends AutoMain {
         sleep(500);
         Bot.driveBack(0.5, 0.4);
         sleep(500);
-        arm.retract(.75, 5.1);
+        arm.retract(.75, 5);
     }
 }
