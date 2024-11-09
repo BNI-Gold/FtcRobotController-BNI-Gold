@@ -24,7 +24,7 @@ public class RedNetSamplePark extends AutoRedAlliance {
             sleep(500);
             Bot.driveForwardInches(0.5, 27);
             sleep(500);
-            Bot.rotateLeft(0.5, 0.8);
+            Bot.rotateLeftDegrees(0.5, 36);
             sleep(500);
             Bot.strafeRightInches(0.5, 2.4);
             sleep(500);

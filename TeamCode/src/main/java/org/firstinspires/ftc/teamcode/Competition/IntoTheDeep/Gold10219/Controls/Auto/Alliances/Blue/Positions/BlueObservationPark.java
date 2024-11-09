@@ -18,9 +18,9 @@ public class BlueObservationPark extends AutoBlueAlliance {
         while(opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
-            Bot.strafeRight(0.5, 0.4);
+            Bot.strafeRightInches(0.5, 2.4);
             sleep(500);
-            Bot.driveBack(0.5, 5.5);
+            Bot.driveBackInches(0.5, 33);
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();

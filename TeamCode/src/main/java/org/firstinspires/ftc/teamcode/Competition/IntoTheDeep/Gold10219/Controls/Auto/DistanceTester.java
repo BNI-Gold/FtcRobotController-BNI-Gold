@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+@Disabled
 @Autonomous(name = "DistanceTester")
 public class DistanceTester extends AutoMain{
 
@@ -30,9 +32,11 @@ public class DistanceTester extends AutoMain{
 //            Bot.driveBack(0.5, 0.5);
 //            sleep(500);
 
-            Bot.rotateLeft(0.5, 1);
+            //1 Rotation is 45 deg
+            Bot.rotateLeftDegrees(0.5, 45);
             sleep(500);
-            Bot.rotateRight(0.5, .5);
+            //.5 Rotation is 22.5 deg
+            Bot.rotateRightDegrees(0.5, 22.5);
             sleep(500);
 
             // END AUTO PATH SEQUENCE

@@ -18,11 +18,11 @@ public class RedNetPark extends AutoRedAlliance {
         while (opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
-            Bot.strafeRight(0.5, 0.4);
+            Bot.strafeRightInches(0.5, 2.4);
             sleep(500);
-            Bot.driveForward(0.5, 4.5);
+            Bot.driveForwardInches(0.5, 27);
             sleep(500);
-            Bot.strafeLeft(0.5, 0.4);
+            Bot.strafeLeftInches(0.5, 2.4);
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();

@@ -47,7 +47,7 @@ public abstract class AutoMain extends LinearOpMode {
         sleep(500);
         Bot.driveBackInches(0.5, 3);
         sleep(500);
-        Bot.rotateRight(0.5, 1);
+        Bot.rotateRightDegrees(0.5, 45);
         sleep(500);
         Bot.strafeLeftInches(0.5, 7.5);
         sleep(500);

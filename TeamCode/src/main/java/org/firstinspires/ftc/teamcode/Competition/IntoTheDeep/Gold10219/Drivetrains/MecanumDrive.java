@@ -286,6 +286,32 @@ public class MecanumDrive {
 
     }
 
+    //Rotating with rotations methods using inches
+    public void rotateRightDegrees(double speed, double degrees) {
+        double rotations = degrees/45;
+        double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks) && LinearOp.opModeIsActive()) {
+            rotateRight(speed);
+        }
+        stopMotors();
+    }
+    public void rotateLeftDegrees(double speed, double degrees) {
+        double rotations = degrees/45;
+        double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while ((Math.abs(frontLeftMotor.getCurrentPosition() ) < ticks ) && LinearOp.opModeIsActive()) {
+            rotateLeft(speed);
+        }
+        stopMotors();
+
+
+    }
+
     public void gyroTurn(double speed, int targetAngle) {
         imu.resetYaw();
         currentHeading = getHeading();
