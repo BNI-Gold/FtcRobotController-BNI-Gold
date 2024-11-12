@@ -84,7 +84,7 @@ public class Vision {
         return null;
     }
 
-    public int determineClosestPipeline(Pipelines[] pipelines) {
+    public double[] getClosestOffsets(Pipelines[] pipelines) {
         //Define arraylist of sample pipeline results
         ArrayList<SamplePipelineResult> results = new ArrayList<SamplePipelineResult>();
 
@@ -104,8 +104,6 @@ public class Vision {
             //Set pipeline
             setPipeline(pipelineId);
 
-
-
             //Get pipeline result
             getResult();
 
@@ -115,10 +113,10 @@ public class Vision {
                 double ty = getOffsets()[1];
                 double ta = getOffsets()[2];
 
-                LinearOp.telemetry.addLine("P" + pipelineId + " Valid");
-                LinearOp.telemetry.addData("L" + pipelineId + " X: ", tx);
-                LinearOp.telemetry.addData("L" + pipelineId + " Y: ", ty);
-                LinearOp.telemetry.addData("L" + pipelineId + " A: ", ta);
+//                LinearOp.telemetry.addLine("P" + pipelineId + " Valid");
+//                LinearOp.telemetry.addData("L" + pipelineId + " X: ", tx);
+//                LinearOp.telemetry.addData("L" + pipelineId + " Y: ", ty);
+//                LinearOp.telemetry.addData("L" + pipelineId + " A: ", ta);
 
                 //Instantiate new result object with tx, ty, ta, and pipeline id
                 SamplePipelineResult result = new SamplePipelineResult(tx, ty, ta, pipelineId);
@@ -128,19 +126,36 @@ public class Vision {
             }
         }
 
-        LinearOp.telemetry.update();
+//        LinearOp.telemetry.update();
 
         //For each result, determine smallest ta value, then output pipeline id
-        double smallestTa = 100;
-        int smallestPipeline = 0;
+        double closestTa = 0;
+        int closestPipeline = 0;
         for (SamplePipelineResult result : results) {
-            if (result.ta < smallestTa) {
-                smallestTa = result.ta;
-                smallestPipeline = result.pipeline;
+            if (result.ta > closestTa) {
+                closestTa = result.ta;
+                closestPipeline = result.pipeline;
             }
         }
 
-        return smallestPipeline;
+        double closestTx = 0;
+        double closestTy = 0;
+
+        for (SamplePipelineResult result : results) {
+            if (result.pipeline == closestPipeline) {
+                closestTx = result.tx;
+                closestTy = result.ty;
+            }
+        }
+
+        LinearOp.telemetry.addData("Closest Pipeline: ", closestPipeline);
+        LinearOp.telemetry.addData("Closest TX: ", closestTx);
+        LinearOp.telemetry.addData("Closest TY: ", closestTy);
+        LinearOp.telemetry.addData("Closest TA: ", closestTa);
+
+        LinearOp.telemetry.update();
+
+        return new double[]{closestTx, closestTy};
     }
 
     public void captureSnapshot() {
