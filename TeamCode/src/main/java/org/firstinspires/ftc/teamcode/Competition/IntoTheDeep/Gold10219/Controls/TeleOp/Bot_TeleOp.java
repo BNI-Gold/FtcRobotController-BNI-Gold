@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanis
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
-@TeleOp(name = "A - Into the Deep")
+@TeleOp(name = "A - Into the Deep", group = "competition")
 public class Bot_TeleOp extends OpMode {
 
     double leftStickXVal;
