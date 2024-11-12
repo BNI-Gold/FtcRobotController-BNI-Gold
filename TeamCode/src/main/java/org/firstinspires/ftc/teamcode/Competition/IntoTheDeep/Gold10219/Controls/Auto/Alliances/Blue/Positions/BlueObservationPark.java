@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Alliances.Blue.AutoBlueAlliance;
 
-@Autonomous(name = "Blue:Observation:Park")
+@Autonomous(name = "Blue:Observation:Park", group = "blue")
 public class BlueObservationPark extends AutoBlueAlliance {
 
     @Override

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Alliances.Red.AutoRedAlliance;
 
-@Autonomous(name = "Red:Net:DropSample:Park")
+@Autonomous(name = "Red:Net:DropSample:Park", group = "red")
 public class RedNetDropSamplePark extends AutoRedAlliance {
 
     @Override
