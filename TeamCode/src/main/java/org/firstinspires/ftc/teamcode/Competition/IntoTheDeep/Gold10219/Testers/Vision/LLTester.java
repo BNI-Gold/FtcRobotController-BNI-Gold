@@ -31,28 +31,30 @@ public class LLTester extends LinearOpMode {
 
         telemetry.setMsTransmissionInterval(11);
 
-        vision.setPipeline(0);
-
         vision.start();
 
         waitForStart();
 
+        Pipelines[] pipelinesToTest = new Pipelines[]{Pipelines.RED, Pipelines.YELLOW, Pipelines.BLUE};
+        int closestPipeline = vision.getClosestPipeline(pipelinesToTest);
+
+        vision.setPipeline(closestPipeline);
+
         while (opModeIsActive()) {
-//            telemetry.addLine("OpMode Active");
-            Pipelines[] pipelinesToTest = new Pipelines[]{Pipelines.RED, Pipelines.YELLOW, Pipelines.BLUE};
-            double[] offsets = vision.getClosestOffsets(pipelinesToTest);
+            telemetry.addLine("OpMode Active");
 
-
+            vision.getResult();
 
             if (vision.lastResultValid()) {
-//                telemetry.addLine("Result Valid");
+                telemetry.addLine("Result Valid");
+                double[] offsets = vision.getOffsets();
                 Pose3D pose = vision.getPose();
 
                 double tx = offsets[0];
                 double ty = offsets[1];
 
-//                telemetry.addData("tx", tx);
-//                telemetry.addData("ty", ty);
+                telemetry.addData("tx", tx);
+                telemetry.addData("ty", ty);
 
                 double rotationSpeed = Math.abs(tx) * vision.errorMultiplier;
                 if (rotationSpeed > vision.minimumCommand && rotationSpeed < vision.maximumCommand) {
@@ -73,10 +75,10 @@ public class LLTester extends LinearOpMode {
 
 //                telemetry.addData("pose", pose.toString());
             } else {
-//                telemetry.addLine("Invalid Result");
+                telemetry.addLine("Invalid Result");
             }
 
-//            telemetry.update();
+            telemetry.update();
         }
         vision.stop();
     }

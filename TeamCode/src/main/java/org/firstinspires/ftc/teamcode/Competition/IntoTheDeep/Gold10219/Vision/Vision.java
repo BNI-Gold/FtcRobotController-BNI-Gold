@@ -84,7 +84,7 @@ public class Vision {
         return null;
     }
 
-    public double[] getClosestOffsets(Pipelines[] pipelines) {
+    public int getClosestPipeline(Pipelines[] pipelines) {
         //Define arraylist of sample pipeline results
         ArrayList<SamplePipelineResult> results = new ArrayList<SamplePipelineResult>();
 
@@ -113,11 +113,6 @@ public class Vision {
                 double ty = getOffsets()[1];
                 double ta = getOffsets()[2];
 
-//                LinearOp.telemetry.addLine("P" + pipelineId + " Valid");
-//                LinearOp.telemetry.addData("L" + pipelineId + " X: ", tx);
-//                LinearOp.telemetry.addData("L" + pipelineId + " Y: ", ty);
-//                LinearOp.telemetry.addData("L" + pipelineId + " A: ", ta);
-
                 //Instantiate new result object with tx, ty, ta, and pipeline id
                 SamplePipelineResult result = new SamplePipelineResult(tx, ty, ta, pipelineId);
 
@@ -138,24 +133,7 @@ public class Vision {
             }
         }
 
-        double closestTx = 0;
-        double closestTy = 0;
-
-        for (SamplePipelineResult result : results) {
-            if (result.pipeline == closestPipeline) {
-                closestTx = result.tx;
-                closestTy = result.ty;
-            }
-        }
-
-        LinearOp.telemetry.addData("Closest Pipeline: ", closestPipeline);
-        LinearOp.telemetry.addData("Closest TX: ", closestTx);
-        LinearOp.telemetry.addData("Closest TY: ", closestTy);
-        LinearOp.telemetry.addData("Closest TA: ", closestTa);
-
-        LinearOp.telemetry.update();
-
-        return new double[]{closestTx, closestTy};
+        return closestPipeline;
     }
 
     public void captureSnapshot() {
