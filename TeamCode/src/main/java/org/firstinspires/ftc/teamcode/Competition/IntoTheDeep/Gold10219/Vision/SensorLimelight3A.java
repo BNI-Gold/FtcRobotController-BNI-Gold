@@ -41,6 +41,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamClient;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamServer;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot;
 
 import java.util.List;
 
@@ -71,9 +76,19 @@ public class SensorLimelight3A extends LinearOpMode {
 
     private Limelight3A limelight;
 
+//    public CompBot Bot = new CompBot();
+    public ProgrammingBot Bot = new ProgrammingBot();
+
+    public void autoStart() {
+        Bot.initRobot(hardwareMap);
+        Bot.setLinearOp(this);
+    }
+
     @Override
     public void runOpMode() throws InterruptedException
     {
+        autoStart();
+
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
         telemetry.setMsTransmissionInterval(11);
@@ -89,7 +104,10 @@ public class SensorLimelight3A extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
+        int r = 0;
+
         while (opModeIsActive()) {
+            r++;
             LLStatus status = limelight.getStatus();
             telemetry.addData("Name", "%s",
                     status.getName());
@@ -101,19 +119,32 @@ public class SensorLimelight3A extends LinearOpMode {
             LLResult result = limelight.getLatestResult();
             if (result != null) {
                 // Access general information
-                Pose3D botpose = result.getBotpose();
+//                Pose3D botpose = result.getBotpose();
                 double captureLatency = result.getCaptureLatency();
                 double targetingLatency = result.getTargetingLatency();
                 double parseLatency = result.getParseLatency();
                 telemetry.addData("LL Latency", captureLatency + targetingLatency);
 
                 if (result.isValid()) {
-                    telemetry.addData("tx", result.getTx());
-                    telemetry.addData("txnc", result.getTxNC());
-                    telemetry.addData("ty", result.getTy());
-                    telemetry.addData("tync", result.getTyNC());
+                    double tx = result.getTx();
+                    double ty = result.getTy();
+                    telemetry.addData("tx", tx);
+                    telemetry.addData("ty", ty);
 
-                    telemetry.addData("Botpose", botpose.toString());
+//                    telemetry.addData("Botpose", botpose.toString());
+
+                    double errorOffset = 4;
+
+                    if (tx < 0-errorOffset) {
+                        Bot.rotateRight(0.5);
+                    } else if (tx > 0+errorOffset) {
+                        Bot.rotateRight(0.5);
+                    } else {
+                        Bot.stopMotors();
+                    }
+
+                    limelight.captureSnapshot("pov_" + r);
+
                 }
             } else {
                 telemetry.addData("Limelight", "No data available");
