@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision;
 
-import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
@@ -41,6 +40,8 @@ public class LLTester extends LinearOpMode {
         while (opModeIsActive()) {
             Pipelines[] pipelinesToTest = new Pipelines[]{Pipelines.RED, Pipelines.YELLOW, Pipelines.BLUE};
             int pipeline = vision.determineClosestPipeline(pipelinesToTest);
+            telemetry.addLine("Switching to pipeline: " + pipeline);
+            telemetry.update();
             vision.setPipeline(pipeline);
 
             vision.getResult();
