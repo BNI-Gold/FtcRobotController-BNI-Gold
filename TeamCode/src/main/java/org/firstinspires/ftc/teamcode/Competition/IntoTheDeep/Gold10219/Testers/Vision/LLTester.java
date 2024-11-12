@@ -39,32 +39,46 @@ public class LLTester extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            LLResult result = vision.getResult();
-            Pose3D pose = vision.getPose();
-            double[] offsets = vision.getOffsets();
+            Pipelines[] pipelinesToTest = new Pipelines[]{Pipelines.RED, Pipelines.YELLOW, Pipelines.BLUE};
+            int pipeline = vision.determineClosestPipeline(pipelinesToTest);
+            vision.setPipeline(pipeline);
 
-            double tx = offsets[0];
-            double ty = offsets[1];
+            vision.getResult();
 
-            telemetry.addData("tx", tx);
-            telemetry.addData("ty", ty);
+            if (vision.lastResultValid()) {
+                Pose3D pose = vision.getPose();
+                double[] offsets = vision.getOffsets();
 
-            double rotationSpeed = tx * vision.errorMultiplier;
-            if (rotationSpeed > vision.minimumCommand) {
-                rotationSpeed = Range.clip(rotationSpeed, vision.minimumCommand, 0.45);
-            } else {
-                rotationSpeed = vision.minimumCommand;
+                double tx = offsets[0];
+                double ty = offsets[1];
+
+//                if (offsets != null) {
+//                    tx = offsets[0];
+//                    ty = offsets[1];
+//                }
+
+                telemetry.addData("tx", tx);
+                telemetry.addData("ty", ty);
+
+                double rotationSpeed = Math.abs(tx) * vision.errorMultiplier;
+                if (rotationSpeed > vision.minimumCommand && rotationSpeed < vision.maximumCommand) {
+                    rotationSpeed = Range.clip(rotationSpeed, vision.minimumCommand, vision.maximumCommand);
+                } else if (rotationSpeed > vision.maximumCommand) {
+                    rotationSpeed = vision.maximumCommand;
+                } else {
+                    rotationSpeed = vision.minimumCommand;
+                }
+
+                if (tx < 0-vision.errorOffset) {
+                    Bot.rotateLeft(rotationSpeed);
+                } else if (tx > 0+ vision.errorOffset) {
+                    Bot.rotateRight(rotationSpeed);
+                } else {
+                    Bot.stopMotors();
+                }
+
+//                telemetry.addData("pose", pose.toString());
             }
-
-            if (tx < 0-vision.errorOffset) {
-                Bot.rotateRight(rotationSpeed);
-            } else if (tx > 0+ vision.errorOffset) {
-                Bot.rotateLeft(rotationSpeed);
-            } else {
-                Bot.stopMotors();
-            }
-
-            telemetry.addData("pose", pose.toString());
 
             telemetry.update();
         }
