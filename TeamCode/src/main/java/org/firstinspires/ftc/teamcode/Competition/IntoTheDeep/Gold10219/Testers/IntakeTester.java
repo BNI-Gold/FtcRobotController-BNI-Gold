@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
-@TeleOp(name = "B - Intake Tester")
+@TeleOp(name = "B - Intake Tester", group = "testers")
 public class IntakeTester extends OpMode {
 
     public CompBot Bot = new CompBot();

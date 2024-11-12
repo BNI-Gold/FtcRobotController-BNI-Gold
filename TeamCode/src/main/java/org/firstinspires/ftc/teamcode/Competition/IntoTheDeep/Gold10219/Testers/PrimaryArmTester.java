@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot;
 
-@TeleOp(name = "B - Primary Arm Tester")
+@TeleOp(name = "B - Primary Arm Tester", group = "testers")
 public class PrimaryArmTester extends OpMode {
 
     public CompBot Bot = new CompBot();
