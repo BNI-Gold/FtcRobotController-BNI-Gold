@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot;
@@ -48,13 +49,20 @@ public class LLTester extends LinearOpMode {
             telemetry.addData("tx", tx);
             telemetry.addData("ty", ty);
 
-//            if (tx < 0-vision.errorOffset) {
-//                Bot.rotateRight(0.25);
-//            } else if (tx > 0+ vision.errorOffset) {
-//                Bot.rotateLeft(0.25);
-//            } else {
-//                Bot.stopMotors();
-//            }
+            double rotationSpeed = tx * vision.errorMultiplier;
+            if (rotationSpeed > vision.minimumCommand) {
+                rotationSpeed = Range.clip(rotationSpeed, vision.minimumCommand, 0.45);
+            } else {
+                rotationSpeed = vision.minimumCommand;
+            }
+
+            if (tx < 0-vision.errorOffset) {
+                Bot.rotateRight(rotationSpeed);
+            } else if (tx > 0+ vision.errorOffset) {
+                Bot.rotateLeft(rotationSpeed);
+            } else {
+                Bot.stopMotors();
+            }
 
             telemetry.addData("pose", pose.toString());
 

@@ -13,7 +13,9 @@ public class Vision {
     public Limelight3A cam = null;
     public LinearOpMode LinearOp = null;
 
+    public double errorMultiplier = 0.075;
     public double errorOffset = 4;
+    public double minimumCommand = 0.1;
 
     public boolean captureSnapshots = false;
     public int snapshotLimit = 0;
