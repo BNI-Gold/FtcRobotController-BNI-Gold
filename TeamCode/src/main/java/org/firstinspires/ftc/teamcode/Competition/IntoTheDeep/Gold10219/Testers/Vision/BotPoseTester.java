@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
 
-@TeleOp(name = "LLTester", group = "testers")
+@TeleOp(name = "BotPoseTester", group = "testers")
 public class BotPoseTester extends LinearOpMode {
 
     Vision vision = new Vision();
