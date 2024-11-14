@@ -17,6 +17,12 @@ public class ProgrammingBot extends MecanumDrive {
 
     public ProgrammingBot() {}
 
+    public double width = .45;
+    public double length = .43;
+    public double LLForward = .13;
+    public double LLRight = .23;
+    public double LLUp = .13;
+
     public void initRobot(HardwareMap hwMap) {
         hwBot = hwMap;
 
@@ -47,8 +53,8 @@ public class ProgrammingBot extends MecanumDrive {
         //****************************************
 
         //********** INIT IMU **********
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.FORWARD;
+        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
         imu = hwBot.get(IMU.class, "imu");

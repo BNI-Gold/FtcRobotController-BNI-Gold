@@ -16,6 +16,12 @@ public class CompBot extends MecanumDrive {
 
     public CompBot() {}
 
+    public double width = 0;
+    public double length = 0;
+    public double LLForward = 0;
+    public double LLRight = 0;
+    public double LLUp = 0;
+
     public void initRobot(HardwareMap hwMap) {
         hwBot = hwMap;
 

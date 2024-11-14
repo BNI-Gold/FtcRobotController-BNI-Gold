@@ -34,7 +34,7 @@ public class Vision {
 
     public void setLinearOp(LinearOpMode LinearOp) {this.LinearOp = LinearOp;}
 
-    public void initVision(HardwareMap hwMap, IMU imu, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
+    public void initVision(HardwareMap hwMap, double[] dimensions, IMU imu, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
         hwBot = hwMap;
         this.imu = imu;
         this.captureSnapshots = captureSnapshots;
@@ -50,6 +50,8 @@ public class Vision {
 
         LinearOp.telemetry.addLine("Vision Started");
         LinearOp.telemetry.update();
+
+
     }
 
     public void setPipeline(int pipeline) {

@@ -20,7 +20,7 @@ public class LLTester extends LinearOpMode {
         Bot.initRobot(hardwareMap);
         Bot.setLinearOp(this);
 
-        vision.initVision(hardwareMap, Bot.imu, true, 4, "tester_");
+        vision.initVision(hardwareMap, new double[]{Bot.width, Bot.length, Bot.LLForward, Bot.LLRight, Bot.LLUp}, Bot.imu, true, 4, "tester_");
         vision.setLinearOp(this);
     }
 
