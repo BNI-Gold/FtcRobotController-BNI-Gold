@@ -2,14 +2,13 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
 
 @TeleOp(name = "LLTester", group = "testers")
-public class LLTester extends LinearOpMode {
+public class BotPoseTester extends LinearOpMode {
 
     Vision vision = new Vision();
 
@@ -35,10 +34,10 @@ public class LLTester extends LinearOpMode {
 
         waitForStart();
 
-        Pipelines[] pipelinesToTest = new Pipelines[]{Pipelines.RED, Pipelines.YELLOW, Pipelines.BLUE};
-        int closestPipeline = vision.getClosestPipeline(pipelinesToTest);
+//        Pipelines[] pipelinesToTest = new Pipelines[]{Pipelines.RED, Pipelines.YELLOW, Pipelines.BLUE};
+//        int closestPipeline = vision.getClosestPipeline(pipelinesToTest);
 
-        vision.setPipeline(closestPipeline);
+        vision.setPipeline(3);
 
         while (opModeIsActive()) {
             telemetry.addLine("OpMode Active");
@@ -47,33 +46,33 @@ public class LLTester extends LinearOpMode {
 
             if (vision.lastResultValid()) {
                 telemetry.addLine("Result Valid");
-                double[] offsets = vision.getOffsets();
+//                double[] offsets = vision.getOffsets();
                 Pose3D pose = vision.getPose();
+//Ï
+//                double tx = offsets[0];
+//                double ty = offsets[1];
+//
+//                telemetry.addData("tx", tx);
+//                telemetry.addData("ty", ty);
+//
+//                double rotationSpeed = Math.abs(tx) * vision.errorMultiplier;
+//                if (rotationSpeed > vision.minimumCommand && rotationSpeed < vision.maximumCommand) {
+//                    rotationSpeed = Range.clip(rotationSpeed, vision.minimumCommand, vision.maximumCommand);
+//                } else if (rotationSpeed > vision.maximumCommand) {
+//                    rotationSpeed = vision.maximumCommand;
+//                } else {
+//                    rotationSpeed = vision.minimumCommand;
+//                }
 
-                double tx = offsets[0];
-                double ty = offsets[1];
+//                if (tx < 0-vision.errorOffset) {
+//                    Bot.rotateLeft(rotationSpeed);
+//                } else if (tx > 0+ vision.errorOffset) {
+//                    Bot.rotateRight(rotationSpeed);
+//                } else {
+//                    Bot.stopMotors();
+//                }
 
-                telemetry.addData("tx", tx);
-                telemetry.addData("ty", ty);
-
-                double rotationSpeed = Math.abs(tx) * vision.errorMultiplier;
-                if (rotationSpeed > vision.minimumCommand && rotationSpeed < vision.maximumCommand) {
-                    rotationSpeed = Range.clip(rotationSpeed, vision.minimumCommand, vision.maximumCommand);
-                } else if (rotationSpeed > vision.maximumCommand) {
-                    rotationSpeed = vision.maximumCommand;
-                } else {
-                    rotationSpeed = vision.minimumCommand;
-                }
-
-                if (tx < 0-vision.errorOffset) {
-                    Bot.rotateLeft(rotationSpeed);
-                } else if (tx > 0+ vision.errorOffset) {
-                    Bot.rotateRight(rotationSpeed);
-                } else {
-                    Bot.stopMotors();
-                }
-
-//                telemetry.addData("pose", pose.toString());
+                telemetry.addData("pose", pose.toString());
             } else {
                 telemetry.addLine("Invalid Result");
             }
