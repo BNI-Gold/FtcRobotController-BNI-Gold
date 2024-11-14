@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot.ProgrammingBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
 
@@ -48,7 +47,6 @@ public class LLTester extends LinearOpMode {
             if (vision.lastResultValid()) {
                 telemetry.addLine("Result Valid");
                 double[] offsets = vision.getOffsets();
-                Pose3D pose = vision.getPose();
 
                 double tx = offsets[0];
                 double ty = offsets[1];
@@ -73,7 +71,6 @@ public class LLTester extends LinearOpMode {
                     Bot.stopMotors();
                 }
 
-//                telemetry.addData("pose", pose.toString());
             } else {
                 telemetry.addLine("Invalid Result");
             }
