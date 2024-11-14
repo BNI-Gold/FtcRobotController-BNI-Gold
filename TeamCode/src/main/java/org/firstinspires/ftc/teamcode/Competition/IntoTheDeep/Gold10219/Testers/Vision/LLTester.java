@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot.ProgrammingBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
 
 @TeleOp(name = "LLTester", group = "testers")
@@ -20,7 +20,7 @@ public class LLTester extends LinearOpMode {
         Bot.initRobot(hardwareMap);
         Bot.setLinearOp(this);
 
-        vision.initVision(hardwareMap, new double[]{Bot.width, Bot.length, Bot.LLForward, Bot.LLRight, Bot.LLUp}, Bot.imu, true, 4, "tester_");
+        vision.initVision(hardwareMap, Bot.imu, true, 4, "tester_");
         vision.setLinearOp(this);
     }
 
