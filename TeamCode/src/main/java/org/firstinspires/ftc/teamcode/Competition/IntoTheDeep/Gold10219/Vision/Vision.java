@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.Pipelines;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.SamplePipelineResult;
@@ -42,16 +43,15 @@ public class Vision {
         this.snapshotPrefix = snapshotPrefix;
 
         cam = hwBot.get(Limelight3A.class, "limelight");
-        cam.pipelineSwitch(0);
+        cam.setPollRateHz(100);
     }
 
     public void start() {
         cam.start();
+        setPipeline(0);
 
         LinearOp.telemetry.addLine("Vision Started");
         LinearOp.telemetry.update();
-
-
     }
 
     public void setPipeline(int pipeline) {
@@ -66,6 +66,11 @@ public class Vision {
         return result != null && result.isValid();
     }
 
+    public void updateYaw() {
+        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        cam.updateRobotOrientation(robotYaw);
+    }
+
     public Pose3D getPose(PoseTypes pose) {
         switch (pose) {
             case MT1:
@@ -74,8 +79,6 @@ public class Vision {
                 }
                 break;
             case MT2:
-                double robotYaw = imu.getRobotYawPitchRollAngles().getYaw();
-                cam.updateRobotOrientation(robotYaw);
                 if (result != null) {
                     return result.getBotpose_MT2();
                 }
