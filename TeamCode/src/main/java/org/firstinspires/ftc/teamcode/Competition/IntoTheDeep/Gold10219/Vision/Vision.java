@@ -66,11 +66,20 @@ public class Vision {
         return result != null && result.isValid();
     }
 
-    public Pose3D getPose() {
-        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw();
-        cam.updateRobotOrientation(robotYaw);
-        if (result != null) {
-            return result.getBotpose_MT2();
+    public Pose3D getPose(PoseTypes pose) {
+        switch (pose) {
+            case MT1:
+                if (result != null) {
+                    return result.getBotpose();
+                }
+                break;
+            case MT2:
+                double robotYaw = imu.getRobotYawPitchRollAngles().getYaw();
+                cam.updateRobotOrientation(robotYaw);
+                if (result != null) {
+                    return result.getBotpose_MT2();
+                }
+                break;
         }
         return null;
     }

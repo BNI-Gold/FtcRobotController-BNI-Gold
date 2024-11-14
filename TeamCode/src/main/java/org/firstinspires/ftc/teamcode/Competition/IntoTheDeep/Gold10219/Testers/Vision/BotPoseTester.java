@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot.ProgrammingBot;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.PoseTypes;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
 
 @TeleOp(name = "BotPoseTester", group = "testers")
@@ -49,7 +50,8 @@ public class BotPoseTester extends LinearOpMode {
             if (vision.lastResultValid()) {
                 telemetry.addLine("Result Valid");
 //                double[] offsets = vision.getOffsets();
-                Pose3D pose = vision.getPose();
+                Pose3D MT1 = vision.getPose(PoseTypes.MT1);
+                Pose3D MT2 = vision.getPose(PoseTypes.MT2);
 //Ï
 //                double tx = offsets[0];
 //                double ty = offsets[1];
@@ -74,10 +76,13 @@ public class BotPoseTester extends LinearOpMode {
 //                    Bot.stopMotors();
 //                }
 
-                telemetry.addData("pose", pose.toString());
-                double x = pose.getPosition().x;
-                double y = pose.getPosition().y;
-                telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
+                double MT1x = MT1.getPosition().x;
+                double MT1y = MT2.getPosition().y;
+                telemetry.addData("MT1 Location:", "(" + MT1x + ", " + MT1y + ")");
+
+                double MT2x = MT2.getPosition().x;
+                double MT2y = MT2.getPosition().y;
+                telemetry.addData("MT2 Location:", "(" + MT2x + ", " + MT2y + ")");
             } else {
                 telemetry.addLine("Invalid Result");
             }
