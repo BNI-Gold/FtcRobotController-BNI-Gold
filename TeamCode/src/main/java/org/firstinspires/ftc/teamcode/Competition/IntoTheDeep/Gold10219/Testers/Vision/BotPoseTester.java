@@ -49,32 +49,8 @@ public class BotPoseTester extends LinearOpMode {
 
             if (vision.lastResultValid()) {
                 telemetry.addLine("Result Valid");
-//                double[] offsets = vision.getOffsets();
                 Pose3D MT1 = vision.getPose(PoseTypes.MT1);
                 Pose3D MT2 = vision.getPose(PoseTypes.MT2);
-//Ï
-//                double tx = offsets[0];
-//                double ty = offsets[1];
-//
-//                telemetry.addData("tx", tx);
-//                telemetry.addData("ty", ty);
-//
-//                double rotationSpeed = Math.abs(tx) * vision.errorMultiplier;
-//                if (rotationSpeed > vision.minimumCommand && rotationSpeed < vision.maximumCommand) {
-//                    rotationSpeed = Range.clip(rotationSpeed, vision.minimumCommand, vision.maximumCommand);
-//                } else if (rotationSpeed > vision.maximumCommand) {
-//                    rotationSpeed = vision.maximumCommand;
-//                } else {
-//                    rotationSpeed = vision.minimumCommand;
-//                }
-
-//                if (tx < 0-vision.errorOffset) {
-//                    Bot.rotateLeft(rotationSpeed);
-//                } else if (tx > 0+ vision.errorOffset) {
-//                    Bot.rotateRight(rotationSpeed);
-//                } else {
-//                    Bot.stopMotors();
-//                }
 
                 double MT1x = MT1.getPosition().x;
                 double MT1y = MT2.getPosition().y;
