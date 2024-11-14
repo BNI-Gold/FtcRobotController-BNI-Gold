@@ -19,8 +19,10 @@ public class BotPoseTester extends LinearOpMode {
         Bot.initRobot(hardwareMap);
         Bot.setLinearOp(this);
 
-        vision.initVision(hardwareMap, true, 4, "tester_");
+        vision.initVision(hardwareMap, Bot.imu, true, 4, "tester_");
         vision.setLinearOp(this);
+
+        Bot.imu.resetYaw();
     }
 
     @Override
@@ -73,6 +75,9 @@ public class BotPoseTester extends LinearOpMode {
 //                }
 
                 telemetry.addData("pose", pose.toString());
+                double x = pose.getPosition().x;
+                double y = pose.getPosition().y;
+                telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
             } else {
                 telemetry.addLine("Invalid Result");
             }

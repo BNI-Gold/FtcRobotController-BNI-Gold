@@ -4,6 +4,7 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.Pipelines;
@@ -15,6 +16,7 @@ public class Vision {
     public HardwareMap hwBot = null;
     public Limelight3A cam = null;
     public LinearOpMode LinearOp = null;
+    public IMU imu = null;
 
     public double errorMultiplier = 0.025;
     public double errorOffset = 4;
@@ -32,8 +34,9 @@ public class Vision {
 
     public void setLinearOp(LinearOpMode LinearOp) {this.LinearOp = LinearOp;}
 
-    public void initVision(HardwareMap hwMap, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
+    public void initVision(HardwareMap hwMap, IMU imu, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
         hwBot = hwMap;
+        this.imu = imu;
         this.captureSnapshots = captureSnapshots;
         this.snapshotLimit = snapshotLimit;
         this.snapshotPrefix = snapshotPrefix;
@@ -62,6 +65,8 @@ public class Vision {
     }
 
     public Pose3D getPose() {
+        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw();
+        cam.updateRobotOrientation(robotYaw);
         if (result != null) {
             return result.getBotpose_MT2();
         }
