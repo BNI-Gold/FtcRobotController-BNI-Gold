@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.P
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.PoseTypes;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
 
-@Disabled
 @TeleOp(name = "BotPoseTester", group = "testers")
 public class BotPoseTester extends LinearOpMode {
 
