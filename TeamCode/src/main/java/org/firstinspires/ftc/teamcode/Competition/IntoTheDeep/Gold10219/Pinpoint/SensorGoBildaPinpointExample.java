@@ -119,6 +119,7 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
         //If we are using limelight to determine field position, then the position specified below won't matter.
         //But this is where we would be setting the initial heading instead.
 //        Pose2D position = new Pose2D(DistanceUnit.INCH, 12.0, 36.0, AngleUnit.DEGREES, 0);
+//        odo.setPosition(position);
 
         telemetry.addData("Status", "Initialized");
         telemetry.addData("X offset", odo.getXOffset());
