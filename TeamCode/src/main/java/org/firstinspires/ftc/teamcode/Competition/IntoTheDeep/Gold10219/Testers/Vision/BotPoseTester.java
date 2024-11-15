@@ -50,7 +50,8 @@ public class BotPoseTester extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addLine("OpMode Active");
 
-//            vision.updateYaw(); Uncommenting this to see if same two lines in method work in vision.getResult();
+//            vision.updateYaw(); Uncommenting this to see if same two lines in vision.updateYaw()
+//            method work in vision.getResult();
             vision.getResult();
 
             if (vision.lastResultValid()) {
