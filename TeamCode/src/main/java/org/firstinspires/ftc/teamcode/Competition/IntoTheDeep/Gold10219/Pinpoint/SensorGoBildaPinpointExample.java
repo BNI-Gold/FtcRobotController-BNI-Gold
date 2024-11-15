@@ -115,6 +115,9 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
         odo.resetPosAndIMU();
 
         //Mitchell added this, maybe should be used at init of each auto? Probably...
+        //See comments in vision.updateYaw() and vision.setStartingRotation().
+        //If we are using limelight to determine field position, then the position specified below won't matter.
+        //But this is where we would be setting the initial heading instead.
 //        Pose2D position = new Pose2D(DistanceUnit.INCH, 12.0, 36.0, AngleUnit.DEGREES, 0);
 
         telemetry.addData("Status", "Initialized");

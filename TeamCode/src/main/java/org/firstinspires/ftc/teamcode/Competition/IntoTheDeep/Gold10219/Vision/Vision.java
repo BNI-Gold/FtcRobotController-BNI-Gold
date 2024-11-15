@@ -28,6 +28,7 @@ public class Vision {
     public int snapshotLimit = 0;
     public String snapshotPrefix = "pov_";
     private int numSnapshots = 0;
+    public int startingRotation = 0;
 
     private LLResult result = null;
 
@@ -58,17 +59,29 @@ public class Vision {
         cam.pipelineSwitch(pipeline);
     }
 
+    public void setStartingRotation(int degrees) {
+        //When using pinpoint instead of onboard imu, there is a method to tell it the starting rotation.
+        //So instead, startingRotation won't be used, and that method will be called instead.
+        startingRotation = degrees;
+    }
+
+    public void updateYaw() {
+        //When using pinpoint instead of onboard imu, there is a method to tell it the starting rotation.
+        // So startingRotation won't be added to yaw in future.
+        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        cam.updateRobotOrientation(robotYaw+startingRotation);
+    }
+
     public void getResult() {
+        //When using pinpoint instead of onboard imu, there is a method to tell it the starting rotation.
+        // So startingRotation won't be added to yaw in future.
+        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        cam.updateRobotOrientation(robotYaw+startingRotation);
         result = cam.getLatestResult();
     }
 
     public boolean lastResultValid() {
         return result != null && result.isValid();
-    }
-
-    public void updateYaw() {
-        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-        cam.updateRobotOrientation(robotYaw);
     }
 
     public Pose3D getPose(PoseTypes pose) {
