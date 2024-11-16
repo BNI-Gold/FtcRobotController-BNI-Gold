@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pinpoint.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.ProgrammingBot.ProgrammingBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.PoseTypes;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
@@ -12,20 +13,23 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.V
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@Disabled
-@TeleOp(name = "BotPoseTester", group = "testers")
-public class BotPoseTester extends LinearOpMode {
+@TeleOp(name = "BotPoseTester2", group = "testers")
+public class BotPoseTester2 extends LinearOpMode {
 
     Vision vision = new Vision();
 
     //    public CompBot Bot = new CompBot();
     public ProgrammingBot Bot = new ProgrammingBot();
+    public Pinpoint pinpoint = new Pinpoint();
 
     public void autoStart() {
         Bot.initRobot(hardwareMap);
         Bot.setLinearOp(this);
 
-//        vision.initVision(hardwareMap, Bot.imu, true, 4, "tester_");
+        pinpoint.initPinpoint(hardwareMap);
+        pinpoint.setLinearOp(this);
+
+        vision.initVision(hardwareMap, pinpoint, true, 4, "tester_");
         vision.setLinearOp(this);
 
         Bot.imu.resetYaw();
@@ -46,10 +50,6 @@ public class BotPoseTester extends LinearOpMode {
 //        int closestPipeline = vision.getClosestPipeline(pipelinesToTest);
 
         vision.setPipeline(3);
-
-        //This should fix bot outside of field error.
-        //For example, if bot is facing away from audience (towards hallway in comp room), this should be 180.
-        vision.setStartingRotation(0);
 
         while (opModeIsActive()) {
             telemetry.addLine("OpMode Active");
@@ -75,7 +75,14 @@ public class BotPoseTester extends LinearOpMode {
                 telemetry.addData("MT2 Y: ", MT2y);
                 telemetry.addLine();
 
-                telemetry.addData("Tag count: ", vision.getTagCount());
+                double tagCount = vision.getTagCount();
+                telemetry.addData("Tag count: ", tagCount);
+
+                if (tagCount == 2) {
+                    //Tag count is two; heading should be determined from MT1 and updated in pinpoint
+                    double yaw = MT1.getOrientation().getYaw(AngleUnit.DEGREES);
+                    pinpoint.updateHeading(yaw);
+                }
             } else {
                 telemetry.addLine("Invalid Result");
             }

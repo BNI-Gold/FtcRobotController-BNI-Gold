@@ -4,10 +4,10 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pinpoint.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.Pipelines;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.SamplePipelineResult;
 
@@ -17,7 +17,7 @@ public class Vision {
     public HardwareMap hwBot = null;
     public Limelight3A cam = null;
     public LinearOpMode LinearOp = null;
-    public IMU imu = null;
+    public Pinpoint pinpoint = null;
 
     public double errorMultiplier = 0.025;
     public double errorOffset = 4;
@@ -28,7 +28,6 @@ public class Vision {
     public int snapshotLimit = 0;
     public String snapshotPrefix = "pov_";
     private int numSnapshots = 0;
-    public int startingRotation = 0;
 
     private LLResult result = null;
 
@@ -36,9 +35,9 @@ public class Vision {
 
     public void setLinearOp(LinearOpMode LinearOp) {this.LinearOp = LinearOp;}
 
-    public void initVision(HardwareMap hwMap, IMU imu, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
+    public void initVision(HardwareMap hwMap, Pinpoint pinpoint, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
         hwBot = hwMap;
-        this.imu = imu;
+        this.pinpoint = pinpoint;
         this.captureSnapshots = captureSnapshots;
         this.snapshotLimit = snapshotLimit;
         this.snapshotPrefix = snapshotPrefix;
@@ -59,24 +58,10 @@ public class Vision {
         cam.pipelineSwitch(pipeline);
     }
 
-    public void setStartingRotation(int degrees) {
-        //When using pinpoint instead of onboard imu, there is a method to tell it the starting rotation.
-        //So instead, startingRotation won't be used, and that method will be called instead.
-        startingRotation = degrees;
-    }
-
-    public void updateYaw() {
-        //When using pinpoint instead of onboard imu, there is a method to tell it the starting rotation.
-        // So startingRotation won't be added to yaw in future.
-        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-        cam.updateRobotOrientation(robotYaw+startingRotation);
-    }
-
     public void getResult() {
-        //When using pinpoint instead of onboard imu, there is a method to tell it the starting rotation.
-        // So startingRotation won't be added to yaw in future.
-        double robotYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-        cam.updateRobotOrientation(robotYaw+startingRotation);
+        double yaw = pinpoint.getPosition().getHeading(AngleUnit.DEGREES);
+
+        cam.updateRobotOrientation(yaw);
         result = cam.getLatestResult();
     }
 
