@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pinpoint;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -47,6 +47,7 @@ public class Pinpoint {
 
     public Pose2D getPosition() {
         return pinpoint.getPosition();
+
     }
 
     public void updatePosition(Pose2D position) {
@@ -58,6 +59,7 @@ public class Pinpoint {
         double yaw = oldPosition.getHeading(AngleUnit.DEGREES);
 
         Pose2D newPosition = new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, yaw);
+        updatePosition(newPosition);
     }
 
     public void updateHeading(double heading) {

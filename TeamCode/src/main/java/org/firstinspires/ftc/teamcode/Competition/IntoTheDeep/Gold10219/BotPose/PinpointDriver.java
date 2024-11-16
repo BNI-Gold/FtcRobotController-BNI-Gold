@@ -20,7 +20,7 @@
  *   SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pinpoint;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose;
 
 import static com.qualcomm.robotcore.util.TypeConversion.byteArrayToInt;
 

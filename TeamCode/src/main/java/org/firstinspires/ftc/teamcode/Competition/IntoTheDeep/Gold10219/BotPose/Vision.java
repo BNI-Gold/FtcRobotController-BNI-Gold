@@ -1,13 +1,13 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pinpoint.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.Pipelines;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.SamplePipelineResult;
 
@@ -18,6 +18,7 @@ public class Vision {
     public Limelight3A cam = null;
     public LinearOpMode LinearOp = null;
     public Pinpoint pinpoint = null;
+    public Telemetry telemetry = null;
 
     public double errorMultiplier = 0.025;
     public double errorOffset = 4;
@@ -31,9 +32,13 @@ public class Vision {
 
     private LLResult result = null;
 
-    public Vision() {}
+    public Vision() {
+    }
 
-    public void setLinearOp(LinearOpMode LinearOp) {this.LinearOp = LinearOp;}
+    public void setLinearOp(LinearOpMode LinearOp) {
+        this.LinearOp = LinearOp;
+        telemetry = LinearOp.telemetry;
+    }
 
     public void initVision(HardwareMap hwMap, Pinpoint pinpoint, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
         hwBot = hwMap;
@@ -50,8 +55,8 @@ public class Vision {
         cam.start();
         setPipeline(0);
 
-        LinearOp.telemetry.addLine("Vision Started");
-        LinearOp.telemetry.update();
+        telemetry.addLine("Vision Started");
+        telemetry.update();
     }
 
     public void setPipeline(int pipeline) {
@@ -93,7 +98,7 @@ public class Vision {
         if (result != null && result.isValid()) {
             if (captureSnapshots && numSnapshots < snapshotLimit) {
                 captureSnapshot();
-                numSnapshots ++;
+                numSnapshots++;
             }
 
             double[] coords = new double[3];
@@ -142,7 +147,7 @@ public class Vision {
             }
         }
 
-//        LinearOp.telemetry.update();
+//        telemetry.update();
 
         //For each result, determine smallest ta value, then output pipeline id
         double closestTa = 0;
