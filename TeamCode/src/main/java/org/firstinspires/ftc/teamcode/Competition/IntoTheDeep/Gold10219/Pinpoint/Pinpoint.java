@@ -53,6 +53,13 @@ public class Pinpoint {
         pinpoint.setPosition(position);
     }
 
+    public void updateXYPosition(double x, double y) {
+        Pose2D oldPosition = getPosition();
+        double yaw = oldPosition.getHeading(AngleUnit.DEGREES);
+
+        Pose2D newPosition = new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, yaw);
+    }
+
     public void updateHeading(double heading) {
         Pose2D oldPosition = getPosition();
         double x = oldPosition.getX(DistanceUnit.INCH);

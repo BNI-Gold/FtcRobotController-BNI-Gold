@@ -49,7 +49,7 @@ public class BotPoseTester extends LinearOpMode {
 
         //This should fix bot outside of field error.
         //For example, if bot is facing away from audience (towards hallway in comp room), this should be 180.
-        vision.setStartingRotation(0);
+//        vision.setStartingRotation(0);
 
         while (opModeIsActive()) {
             telemetry.addLine("OpMode Active");
