@@ -100,6 +100,10 @@ public class Vision {
         return null;
     }
 
+    public int getTagCount() {
+        return result.getBotposeTagCount();
+    }
+
     public double[] getOffsets() {
         if (result != null && result.isValid()) {
             if (captureSnapshots && numSnapshots < snapshotLimit) {

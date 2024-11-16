@@ -9,6 +9,9 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.P
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.PoseTypes;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Vision.Vision;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @TeleOp(name = "BotPoseTester", group = "testers")
 public class BotPoseTester extends LinearOpMode {
 
@@ -59,13 +62,19 @@ public class BotPoseTester extends LinearOpMode {
                 Pose3D MT1 = vision.getPose(PoseTypes.MT1);
                 Pose3D MT2 = vision.getPose(PoseTypes.MT2);
 
-                double MT1x = MT1.getPosition().x;
-                double MT1y = MT2.getPosition().y;
-                telemetry.addData("MT1 Location:", "(" + MT1x + ", " + MT1y + ")");
+                BigDecimal MT1x = new BigDecimal(MT1.getPosition().x).setScale(4, RoundingMode.DOWN);
+                BigDecimal MT1y = new BigDecimal(MT2.getPosition().y).setScale(4, RoundingMode.DOWN);
+                telemetry.addData("MT1 X: ", MT1x);
+                telemetry.addData("MT1 Y: ", MT1y);
+                telemetry.addLine();
 
-                double MT2x = MT2.getPosition().x;
-                double MT2y = MT2.getPosition().y;
-                telemetry.addData("MT2 Location:", "(" + MT2x + ", " + MT2y + ")");
+                BigDecimal MT2x = new BigDecimal(MT2.getPosition().x).setScale(4, RoundingMode.DOWN);
+                BigDecimal MT2y = new BigDecimal(MT2.getPosition().y).setScale(4, RoundingMode.DOWN);
+                telemetry.addData("MT2 X: ", MT2x);
+                telemetry.addData("MT2 Y: ", MT2y);
+                telemetry.addLine();
+
+                telemetry.addData("Tag count: ", vision.getTagCount());
             } else {
                 telemetry.addLine("Invalid Result");
             }
