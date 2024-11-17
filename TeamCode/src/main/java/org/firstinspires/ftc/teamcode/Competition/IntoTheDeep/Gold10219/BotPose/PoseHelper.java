@@ -14,6 +14,7 @@ public class PoseHelper {
     public LinearOpMode LinearOp = null;
     public Telemetry telemetry = null;
     public boolean LLInUse = false;
+    public Pose2D pose = null;
     public PoseHelperResultTypes resultType = null;
 
     public PoseHelper() {
@@ -37,7 +38,7 @@ public class PoseHelper {
         return resultType;
     }
 
-    public Pose2D determinePose() {
+    public void updatePose() {
         if (!LLInUse) {
             vision.setPipeline(3);
             vision.getResult();
@@ -61,6 +62,10 @@ public class PoseHelper {
             resultType = PoseHelperResultTypes.PINPOINT;
         }
         pinpoint.update();
-        return pinpoint.getPosition();
+        pose = pinpoint.getPosition();
+    }
+
+    public Pose2D getPose() {
+        return pose;
     }
 }

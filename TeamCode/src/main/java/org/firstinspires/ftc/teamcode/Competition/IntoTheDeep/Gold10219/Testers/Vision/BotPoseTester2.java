@@ -48,16 +48,16 @@ public class BotPoseTester2 extends LinearOpMode {
 
         waitForStart();
 
-//        Pipelines[] pipelinesToTest = new Pipelines[]{Pipelines.RED, Pipelines.YELLOW, Pipelines.BLUE};
-//        int closestPipeline = vision.getClosestPipeline(pipelinesToTest);
-
-        vision.setPipeline(3);
-
         while (opModeIsActive()) {
             telemetry.addLine("OpMode Active");
 
-            //pose.determinePose() also calls vision.getResult() and pinpoint.update(), so no need to call those here
-            Pose2D currentPose = pose.determinePose();
+            //pose.updatePose() must be called every loop, even if position data isn't needed.
+            //pose.updatePose() updates Pinpoint with data depending on number of april tags available.
+            //pose.updatePose() also calls vision.getResult() and pinpoint.update(), so no need to call those here
+            pose.updatePose();
+
+            //pose.getPose() returns the pose that is stored in the PoseHelper class when pose.updatePose() is called.
+            Pose2D currentPose = pose.getPose();
 
             PoseHelperResultTypes resultType = pose.getResultType();
 
