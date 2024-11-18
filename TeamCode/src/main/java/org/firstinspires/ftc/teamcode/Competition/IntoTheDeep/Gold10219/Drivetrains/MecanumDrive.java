@@ -235,7 +235,7 @@ public class MecanumDrive {
 
     //Linear drive with rotations methods using inches
     public void driveForwardInches(double speed, double inches) {
-        double rotations = inches/6;
+        double rotations = inches/12;
         double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -246,7 +246,7 @@ public class MecanumDrive {
         stopMotors();
     }
     public void driveBackInches(double speed, double inches) {
-        double rotations = inches/6;
+        double rotations = inches/12;
         double ticks = rotations  * MOTOR_TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -366,7 +366,7 @@ public class MecanumDrive {
 
     //Strafing with rotations methods, using inches
     public void strafeLeftInches(double speed, double inches) {
-        double rotations = inches/6;
+        double rotations = inches/12;
         double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -379,7 +379,7 @@ public class MecanumDrive {
         stopMotors();
     }
     public void strafeRightInches(double speed, double inches) {
-        double rotations = inches/6;
+        double rotations = inches/12;
         double ticks = rotations * MOTOR_TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

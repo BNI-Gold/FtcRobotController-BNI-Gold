@@ -18,9 +18,9 @@ public class RedObservationPark extends AutoRedAlliance {
         while(opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
-            Bot.strafeRightInches(0.5, 2.4);
+            Bot.strafeRightInches(0.5, 4.8);
             sleep(500);
-            Bot.driveBackInches(0.5, 33);
+            Bot.driveBackInches(0.5, 66);
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();

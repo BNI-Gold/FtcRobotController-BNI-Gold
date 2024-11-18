@@ -18,17 +18,17 @@ public class RedNetDropSamplePark extends AutoRedAlliance {
         while (opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
-            Bot.strafeRightInches(0.5, 2.4);
+            Bot.strafeRightInches(0.5, 4.8);
             sleep(500);
             safeExtendAndRaise();
             sleep(500);
-            Bot.driveForwardInches(0.5, 27);
+            Bot.driveForwardInches(0.5, 54);
             sleep(500);
             Bot.rotateLeftDegrees(0.5, 36);
             sleep(500);
-            Bot.strafeRightInches(0.5, 2.4);
+            Bot.strafeRightInches(0.5, 4.8);
             sleep(500);
-            Bot.driveForwardInches(.5, 3);
+            Bot.driveForwardInches(.5, 6);
             sleep(1000);
             dropAndRetreatFromBucket();
             sleep(500);

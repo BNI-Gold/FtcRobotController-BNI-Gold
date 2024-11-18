@@ -18,11 +18,11 @@ public class BlueNetPark extends AutoBlueAlliance {
         while (opModeIsActive()) {
 
             // START AUTO PATH SEQUENCE
-            Bot.strafeRightInches(0.5, 2.4);
+            Bot.strafeRightInches(0.5, 4.8);
             sleep(500);
-            Bot.driveForwardInches(0.5, 27);
+            Bot.driveForwardInches(0.5, 54);
             sleep(500);
-            Bot.strafeLeftInches(0.5, 2.4);
+            Bot.strafeLeftInches(0.5, 4.8);
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();
