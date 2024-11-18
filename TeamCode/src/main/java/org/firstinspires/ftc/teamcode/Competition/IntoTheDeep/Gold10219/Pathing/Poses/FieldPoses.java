@@ -4,8 +4,17 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 
 public class FieldPoses {
 
-    //Spike mark locations
-    public Pose pose1 = new FCPose(13, 42); // Automatically converted to corner-centric
+    public static final class SampleLines {
+
+        public static final class SampleLines {
+
+
+            public static final class Audience {
+                public Pose Neutral1 = new FCPose()
+            }
+        }
+    }
+
 }
 
 // FCPose class that extends Pose
