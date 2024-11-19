@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.util.SingleRunAction;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.SingleRunAction;
 
 /**
  * This is the PathCallback class. This class handles callbacks of Runnables in PathChains.
@@ -16,7 +16,7 @@ public class PathCallback extends SingleRunAction {
     private double startCondition;
 
     private int type;
-    private int index;
+    private final int index;
 
     public static final int TIME = 0;
     public static final int PARAMETRIC = 1;

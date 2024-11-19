@@ -1,23 +1,23 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower;
 
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.drivePIDFFeedForward;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.drivePIDFSwitch;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.forwardZeroPowerAcceleration;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.headingPIDFFeedForward;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.headingPIDFSwitch;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.lateralZeroPowerAcceleration;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.secondaryDrivePIDFFeedForward;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.secondaryHeadingPIDFFeedForward;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.secondaryTranslationalPIDFFeedForward;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.translationalPIDFFeedForward;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.translationalPIDFSwitch;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.useSecondaryDrivePID;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.useSecondaryHeadingPID;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.useSecondaryTranslationalPID;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.drivePIDFFeedForward;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.drivePIDFSwitch;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.forwardZeroPowerAcceleration;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.headingPIDFFeedForward;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.headingPIDFSwitch;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.lateralZeroPowerAcceleration;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.secondaryDrivePIDFFeedForward;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.secondaryHeadingPIDFFeedForward;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.secondaryTranslationalPIDFFeedForward;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.translationalPIDFFeedForward;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.translationalPIDFSwitch;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.useSecondaryDrivePID;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.useSecondaryHeadingPID;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.useSecondaryTranslationalPID;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -38,12 +38,12 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Vector;
-import org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.DashboardPoseTracker;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.Drawing;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.FilteredPIDFController;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.KalmanFilter;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.PIDFController;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.DashboardPoseTracker;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.Drawing;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.FilteredPIDFController;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.KalmanFilter;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.PIDFController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +60,7 @@ import java.util.List;
  */
 @Config
 public class Follower {
-    private HardwareMap hardwareMap;
+    private final HardwareMap hardwareMap;
 
     private DcMotorEx leftFront;
     private DcMotorEx leftRear;
@@ -96,8 +96,8 @@ public class Follower {
     private double maxPower = 1;
     private double previousSecondaryTranslationalIntegral;
     private double previousTranslationalIntegral;
-    private double holdPointTranslationalScaling = FollowerConstants.holdPointTranslationalScaling;
-    private double holdPointHeadingScaling = FollowerConstants.holdPointHeadingScaling;
+    private final double holdPointTranslationalScaling = FollowerConstants.holdPointTranslationalScaling;
+    private final double holdPointHeadingScaling = FollowerConstants.holdPointHeadingScaling;
     public double driveError;
     public double headingError;
 
@@ -106,8 +106,8 @@ public class Follower {
     private double[] drivePowers;
     private double[] teleopDriveValues;
 
-    private ArrayList<Vector> velocities = new ArrayList<>();
-    private ArrayList<Vector> accelerations = new ArrayList<>();
+    private final ArrayList<Vector> velocities = new ArrayList<>();
+    private final ArrayList<Vector> accelerations = new ArrayList<>();
 
     private Vector averageVelocity;
     private Vector averagePreviousVelocity;
@@ -122,16 +122,16 @@ public class Follower {
     public Vector centripetalVector;
     public Vector correctiveVector;
 
-    private PIDFController secondaryTranslationalPIDF = new PIDFController(FollowerConstants.secondaryTranslationalPIDFCoefficients);
-    private PIDFController secondaryTranslationalIntegral = new PIDFController(FollowerConstants.secondaryTranslationalIntegral);
-    private PIDFController translationalPIDF = new PIDFController(FollowerConstants.translationalPIDFCoefficients);
-    private PIDFController translationalIntegral = new PIDFController(FollowerConstants.translationalIntegral);
-    private PIDFController secondaryHeadingPIDF = new PIDFController(FollowerConstants.secondaryHeadingPIDFCoefficients);
-    private PIDFController headingPIDF = new PIDFController(FollowerConstants.headingPIDFCoefficients);
-    private FilteredPIDFController secondaryDrivePIDF = new FilteredPIDFController(FollowerConstants.secondaryDrivePIDFCoefficients);
-    private FilteredPIDFController drivePIDF = new FilteredPIDFController(FollowerConstants.drivePIDFCoefficients);
+    private final PIDFController secondaryTranslationalPIDF = new PIDFController(FollowerConstants.secondaryTranslationalPIDFCoefficients);
+    private final PIDFController secondaryTranslationalIntegral = new PIDFController(FollowerConstants.secondaryTranslationalIntegral);
+    private final PIDFController translationalPIDF = new PIDFController(FollowerConstants.translationalPIDFCoefficients);
+    private final PIDFController translationalIntegral = new PIDFController(FollowerConstants.translationalIntegral);
+    private final PIDFController secondaryHeadingPIDF = new PIDFController(FollowerConstants.secondaryHeadingPIDFCoefficients);
+    private final PIDFController headingPIDF = new PIDFController(FollowerConstants.headingPIDFCoefficients);
+    private final FilteredPIDFController secondaryDrivePIDF = new FilteredPIDFController(FollowerConstants.secondaryDrivePIDFCoefficients);
+    private final FilteredPIDFController drivePIDF = new FilteredPIDFController(FollowerConstants.drivePIDFCoefficients);
 
-    private KalmanFilter driveKalmanFilter = new KalmanFilter(FollowerConstants.driveKalmanFilterParameters);
+    private final KalmanFilter driveKalmanFilter = new KalmanFilter(FollowerConstants.driveKalmanFilterParameters);
     private double[] driveErrors;
     private double rawDriveError;
     private double previousRawDriveError;

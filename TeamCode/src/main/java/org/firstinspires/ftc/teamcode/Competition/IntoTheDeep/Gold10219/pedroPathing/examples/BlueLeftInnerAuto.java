@@ -1,5 +1,4 @@
-package org.firstinspires.ftc.teamcode.competition.autonomous;
-
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.examples;
 
 import static org.firstinspires.ftc.teamcode.util.RobotConstants.INTAKE_ARM_AUTO_AVOID_POSITION;
 import static org.firstinspires.ftc.teamcode.util.RobotConstants.INTAKE_ARM_IN_POSITION;
@@ -37,20 +36,21 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierCurve;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.competition.teleop.TwoPersonDrive;
-import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
-import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierCurve;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierLine;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierPoint;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.MathFunctions;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.SingleRunAction;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierCurve;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierLine;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierPoint;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Path;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.PathChain;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.SingleRunAction;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.Timer;
 import org.firstinspires.ftc.teamcode.util.VisionPortalTeamPropPipeline;
 import org.firstinspires.ftc.vision.VisionPortal;
 
@@ -80,42 +80,43 @@ public class BlueLeftInnerAuto extends OpMode {
 // this means that 0 heading is pointing from the blue side to the red side
 
     // all spike mark locations since I'm lazy
-    private Pose redLeftSideLeftSpikeMark = new Pose(36 + 72, -47.5 + 72);
-    private Pose redLeftSideMiddleSpikeMark = new Pose(24.5 + 72, -36 + 72);
-    private Pose redLeftSideRightSpikeMark = new Pose(36 + 72, -24.5 + 72);
-    private Pose redRightSideLeftSpikeMark = new Pose(36 + 72, 0.5 + 72);
-    private Pose redRightSideMiddleSpikeMark = new Pose(24.5 + 72, 12 + 72);
-    private Pose redRightSideRightSpikeMark = new Pose(36 + 72, 23.5 + 72);
-    private Pose blueLeftSideLeftSpikeMark = new Pose(-36 + 72, 23.5 + 72);
-    private Pose blueLeftSideMiddleSpikeMark = new Pose(-24.5 + 72, 12 + 72);
-    private Pose blueLeftSideRightSpikeMark = new Pose(-36 + 72, 0.5 + 72);
-    private Pose blueRightSideLeftSpikeMark = new Pose(-36 + 72, -24.5 + 72);
-    private Pose blueRightSideMiddleSpikeMark = new Pose(-24.5 + 72, -36 + 72);
-    private Pose blueRightSideRightSpikeMark = new Pose(-36 + 72, -47.5 + 72);
+    private final Pose redLeftSideLeftSpikeMark = new Pose(36 + 72, -47.5 + 72);
+    private final Pose redLeftSideMiddleSpikeMark = new Pose(24.5 + 72, -36 + 72);
+    private final Pose redLeftSideRightSpikeMark = new Pose(36 + 72, -24.5 + 72);
+    private final Pose redRightSideLeftSpikeMark = new Pose(36 + 72, 0.5 + 72);
+    private final Pose redRightSideMiddleSpikeMark = new Pose(24.5 + 72, 12 + 72);
+    private final Pose redRightSideRightSpikeMark = new Pose(36 + 72, 23.5 + 72);
+    private final Pose blueLeftSideLeftSpikeMark = new Pose(-36 + 72, 23.5 + 72);
+    private final Pose blueLeftSideMiddleSpikeMark = new Pose(-24.5 + 72, 12 + 72);
+    private final Pose blueLeftSideRightSpikeMark = new Pose(-36 + 72, 0.5 + 72);
+    private final Pose blueRightSideLeftSpikeMark = new Pose(-36 + 72, -24.5 + 72);
+    private final Pose blueRightSideMiddleSpikeMark = new Pose(-24.5 + 72, -36 + 72);
+    private final Pose blueRightSideRightSpikeMark = new Pose(-36 + 72, -47.5 + 72);
 
     // backdrop april tag locations
-    private Pose blueLeftBackdrop = new Pose(-42.875 + 72, 60.75 + 72);
-    private Pose blueMiddleBackdrop = new Pose(-36.75 + 72, 60.75 + 72);
-    private Pose blueRightBackdrop = new Pose(-30.75 + 72, 60.75 + 72);
-    private Pose redLeftBackdrop = new Pose(30.75 + 72, 60.75 + 72);
-    private Pose redMiddleBackdrop = new Pose(36.75 + 72, 60.75 + 72);
-    private Pose redRightBackdrop = new Pose(42.875 + 72, 60.75 + 72);
+    private final Pose blueLeftBackdrop = new Pose(-42.875 + 72, 60.75 + 72);
+    private final Pose blueMiddleBackdrop = new Pose(-36.75 + 72, 60.75 + 72);
+    private final Pose blueRightBackdrop = new Pose(-30.75 + 72, 60.75 + 72);
+    private final Pose redLeftBackdrop = new Pose(30.75 + 72, 60.75 + 72);
+    private final Pose redMiddleBackdrop = new Pose(36.75 + 72, 60.75 + 72);
+    private final Pose redRightBackdrop = new Pose(42.875 + 72, 60.75 + 72);
 
     // white pixel stack locations
-    private Pose redOuterStack = new Pose(36 + 72, -72 + 72);
-    private Pose redMiddleStack = new Pose(24 + 72, -72 + 72);
-    private Pose redInnerStack = new Pose(12 + 72, -72 + 72);
-    private Pose blueInnerStack = new Pose(-12 + 72, -72 + 72);
-    private Pose blueMiddleStack = new Pose(-24 + 72, -72 + 72);
-    private Pose blueOuterStack = new Pose(-36 + 72, -72 + 72);
+    private final Pose redOuterStack = new Pose(36 + 72, -72 + 72);
+    private final Pose redMiddleStack = new Pose(24 + 72, -72 + 72);
+    private final Pose redInnerStack = new Pose(12 + 72, -72 + 72);
+    private final Pose blueInnerStack = new Pose(-12 + 72, -72 + 72);
+    private final Pose blueMiddleStack = new Pose(-24 + 72, -72 + 72);
+    private final Pose blueOuterStack = new Pose(-36 + 72, -72 + 72);
 
     private Pose spikeMarkGoalPose, initialBackdropGoalPose, firstCycleStackPose, firstCycleBackdropGoalPose, secondCycleStackPose, secondCycleBackdropGoalPose;
 
     // TODO: adjust this for each auto
-    private Pose startPose = new Pose(144 - (63 + 72), 12 + 72, 0);
+    private final Pose startPose = new Pose(144 - (63 + 72), 12 + 72, 0);
 
     // TODO: dont forget to adjust this too
-    private Point abortPoint = new Point(144 - 83.5, 120, Point.CARTESIAN), backdropGoalPoint;
+    private final Point abortPoint = new Point(144 - 83.5, 120, Point.CARTESIAN);
+    private Point backdropGoalPoint;
 
     private Follower follower;
 
@@ -736,6 +737,7 @@ setPathState(314);
                 for (Boolean detection : distanceSensorDisconnects) {
                     if (!detection) {
                         distanceSensorDisconnected = false;
+                        break;
                     }
                 }
             }
@@ -754,6 +756,7 @@ setPathState(314);
                 for (Boolean detection : distanceSensorDisconnects) {
                     if (!detection) {
                         rearDistanceSensorDisconnected = false;
+                        break;
                     }
                 }
             }
@@ -910,11 +913,7 @@ follower.poseUpdater.setYOffset(1.5 * MathFunctions.getSign(follower.poseUpdater
             telemetry.addData("Navigation:", navigation);
             telemetry.update();
             scanTimer.resetTimer();
-        } else if (scanTimer.getElapsedTime() > 700) {
-            visionPortal.setProcessorEnabled(teamPropPipeline, true);
-        } else {
-            visionPortal.setProcessorEnabled(teamPropPipeline, false);
-        }
+        } else visionPortal.setProcessorEnabled(teamPropPipeline, scanTimer.getElapsedTime() > 700);
     }
 
     @Override

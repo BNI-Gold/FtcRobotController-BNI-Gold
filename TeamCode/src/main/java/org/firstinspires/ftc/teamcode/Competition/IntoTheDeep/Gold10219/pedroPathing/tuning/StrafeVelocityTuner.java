@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning;
 
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -42,7 +42,7 @@ import java.util.List;
 @Config
 @Autonomous(name = "Strafe Velocity Tuner", group = "Autonomous Pathing Tuning")
 public class StrafeVelocityTuner extends OpMode {
-    private ArrayList<Double> velocities = new ArrayList<>();
+    private final ArrayList<Double> velocities = new ArrayList<>();
 
     private DcMotorEx leftFront;
     private DcMotorEx leftRear;
@@ -145,7 +145,7 @@ public class StrafeVelocityTuner extends OpMode {
             for (Double velocity : velocities) {
                 average += velocity;
             }
-            average /= (double) velocities.size();
+            average /= velocities.size();
 
             telemetryA.addData("strafe velocity:", average);
             telemetryA.update();

@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.tuning;
 
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -17,8 +17,8 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.PoseUpdater;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.DashboardPoseTracker;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.Drawing;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.DashboardPoseTracker;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.Drawing;
 
 import java.util.Arrays;
 import java.util.List;

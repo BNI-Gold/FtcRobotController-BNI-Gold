@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util;
 
-import kotlin.jvm.JvmField;
-
 /**
  * This is the KalmanFilterParameters class. This class handles holding parameters Kalman filters.
  *
@@ -9,8 +7,8 @@ import kotlin.jvm.JvmField;
  * @version 1.0, 7/17/2024
  */
 public class KalmanFilterParameters {
-    @JvmField public double modelCovariance;
-    @JvmField public double dataCovariance;
+    public double modelCovariance;
+    public double dataCovariance;
 
     /**
      * This creates a new KalmanFilterParameters with a specified model and data covariance.

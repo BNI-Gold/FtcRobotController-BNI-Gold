@@ -13,7 +13,7 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPa
 public class SingleRunAction {
     private boolean hasBeenRun;
 
-    private Runnable runnable;
+    private final Runnable runnable;
 
     /**
      * This creates a new SingleRunAction with a Runnable containing the code to be run for this action.

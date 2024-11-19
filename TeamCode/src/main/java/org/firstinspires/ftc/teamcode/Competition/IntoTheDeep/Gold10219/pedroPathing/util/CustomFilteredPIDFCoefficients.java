@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util;
 
-import kotlin.jvm.JvmField;
-
 /**
  * This is the CustomFilteredPIDFCoefficients class. This class handles holding coefficients for filtered PIDF
  * controllers.
@@ -10,11 +8,11 @@ import kotlin.jvm.JvmField;
  * @version 1.0, 7/15/2024
  */
 public class CustomFilteredPIDFCoefficients {
-    @JvmField public double P;
-    @JvmField public double I;
-    @JvmField public double D;
-    @JvmField public double T;
-    @JvmField public double F;
+    public double P;
+    public double I;
+    public double D;
+    public double T;
+    public double F;
 
     public FeedForwardConstant feedForwardConstantEquation;
 

@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning;
 
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -42,7 +42,7 @@ import java.util.List;
 @Config
 @Autonomous(name = "Lateral Zero Power Acceleration Tuner", group = "Autonomous Pathing Tuning")
 public class LateralZeroPowerAccelerationTuner extends OpMode {
-    private ArrayList<Double> accelerations = new ArrayList<>();
+    private final ArrayList<Double> accelerations = new ArrayList<>();
 
     private DcMotorEx leftFront;
     private DcMotorEx leftRear;
@@ -153,7 +153,7 @@ public class LateralZeroPowerAccelerationTuner extends OpMode {
             for (Double acceleration : accelerations) {
                 average += acceleration;
             }
-            average /= (double) accelerations.size();
+            average /= accelerations.size();
 
             telemetryA.addData("lateral zero power acceleration (deceleration):", average);
             telemetryA.update();

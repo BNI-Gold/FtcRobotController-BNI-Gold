@@ -7,7 +7,7 @@ public class CompBotVars {
 
     public Motors Motors = new Motors();
     public IMUDirections IMU = new IMUDirections();
-    public LLDimensions LL = new LLDimensions();
+    public Chassis Chassis = new Chassis();
 
     public CompBotVars() {
     }
@@ -38,11 +38,17 @@ public class CompBotVars {
         public RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoFacingDirection, usbFacingDirection);
     }
 
-    public static final class LLDimensions {
-        public double width = 0;
-        public double length = 0;
-        public double forward = 0;
-        public double right = 0;
-        public double up = 0;
+    public static final class Chassis {
+        public double ROBOT_FRONT_LENGTH = 0;
+        public double ROBOT_BACK_LENGTH = 0;
+        public double ROBOT_WIDTH = 0;
+    }
+
+    public static final class Mechanisms {
+        public Arm Arm = new Arm();
+        public static final class Arm {
+            public double ARM_RETRACTED_POSITION = 0;
+            public double ARM_EXTENDED_POSITION = 0;
+        }
     }
 }

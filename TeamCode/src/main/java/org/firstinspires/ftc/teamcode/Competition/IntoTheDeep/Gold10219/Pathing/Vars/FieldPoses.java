@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Poses;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Vars;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 
@@ -67,18 +67,6 @@ public class FieldPoses {
         private static final double redHeading = 0;
 
         //TODO: Add robot positions
-    }
-
-}
-
-// FCPose class that extends Pose
-class FCPose extends Pose {
-    public FCPose(double xField, double yField) {
-        super(xField + 72, yField + 72);
-    }
-
-    public FCPose(double xField, double yField, double heading) {
-        super(xField + 72, yField + 72, heading);
     }
 }
 

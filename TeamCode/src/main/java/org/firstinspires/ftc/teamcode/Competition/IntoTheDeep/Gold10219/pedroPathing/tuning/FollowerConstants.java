@@ -5,9 +5,9 @@ import com.acmerobotics.dashboard.config.Config;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Vector;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.CustomFilteredPIDFCoefficients;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.CustomPIDFCoefficients;
-import org.firstinspires.ftc.teamcode.pedroPathing.util.KalmanFilterParameters;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.CustomFilteredPIDFCoefficients;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.CustomPIDFCoefficients;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.KalmanFilterParameters;
 
 /**
  * This is the FollowerConstants class. It holds many constants and parameters for various parts of
@@ -30,9 +30,9 @@ public class FollowerConstants {
 
     // This section is for setting the actual drive vector for the front left wheel, if the robot
     // is facing a heading of 0 radians with the wheel centered at (0,0)
-    private static double xMovement = 81.34056;
-    private static double yMovement = 65.43028;
-    private static double[] convertToPolar = Point.cartesianToPolar(xMovement, -yMovement);
+    private static final double xMovement = 81.34056;
+    private static final double yMovement = 65.43028;
+    private static final double[] convertToPolar = Point.cartesianToPolar(xMovement, -yMovement);
     public static Vector frontLeftVector = MathFunctions.normalizeVector(new Vector(convertToPolar[0], convertToPolar[1]));
 
 
