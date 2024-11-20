@@ -41,6 +41,8 @@ public class Playground1 extends OpMode {
 
     @Override
     public void init() {
+        Bot.initRobot(hardwareMap);
+
         pinpoint.setOp(this);
         pinpoint.initPinpoint(hardwareMap);
 
@@ -53,6 +55,7 @@ public class Playground1 extends OpMode {
         vision.start();
 
         pose.updateLLUsage(false);
+
         pose.updateHeading();
         pose.syncPose();
 
@@ -66,7 +69,7 @@ public class Playground1 extends OpMode {
         startPose = new Pose(
                 currentPose.getX(DistanceUnit.INCH),
                 currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.DEGREES)
+                currentPose.getHeading(AngleUnit.RADIANS)
         );
 
         telemetry.addData("Start Pose: ", startPose);
@@ -82,9 +85,9 @@ public class Playground1 extends OpMode {
     }
 
     public void loop() {
+        tel();
         follower.update();
         autonomousPathUpdate();
-        tel();
     }
 
     public void tel() {
@@ -117,13 +120,16 @@ public class Playground1 extends OpMode {
                 break;
             case 11:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), -90);
+                    double heading = pose.getPose().getHeading(AngleUnit.DEGREES);
+                    double correction = -90 + Math.abs(heading);
+
+//                    follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), -90);
                     setPathState(12);
                 }
                 break;
             case 12:
-//                follower.followPath(fromChambersToObservation);
-//                setPathState(13);
+                follower.followPath(fromChambersToObservation);
+                setPathState(13);
                 break;
             case 13:
                 if (!follower.isBusy()) {
