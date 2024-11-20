@@ -34,6 +34,8 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPath;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.SafePoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierCurve;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
@@ -179,6 +181,17 @@ public class BlueLeftInnerAuto extends OpMode {
                         * Math.abs(scoreSpikeMarkMidPoint.getY() - spikeMarkGoalPose.getY())
                         * ROBOT_FRONT_LENGTH / scoreSpikeMarkMidToSpikeDistance,
                 Point.CARTESIAN)));
+
+        //Using Mitchell's SafePoint:
+//        scoreSpikeMark = new Path(new BezierCurve(
+//                new Point(startPose),
+//                scoreSpikeMarkMidPoint,
+//                new SafePoint(scoreSpikeMarkMidPoint, spikeMarkGoalPose)));
+        
+        //Using Mitchell's EasyPath:
+//        scoreSpikeMark = new EasyPath(startPose, scoreSpikeMarkMidPoint, spikeMarkGoalPose);
+
+
         scoreSpikeMark.setConstantHeadingInterpolation(startPose.getHeading());
         scoreSpikeMark.setPathEndTimeoutConstraint(3);
 
