@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -11,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 public class Pinpoint {
     public HardwareMap hwBot = null;
     public PinpointDriver pinpoint = null;
-    public LinearOpMode LinearOp = null;
     public PinpointVars vars = new PinpointVars();
     public Telemetry telemetry = null;
 
@@ -19,8 +19,11 @@ public class Pinpoint {
     }
 
     public void setLinearOp(LinearOpMode LinearOp) {
-        this.LinearOp = LinearOp;
         telemetry = LinearOp.telemetry;
+    }
+
+    public void setOp(OpMode Op) {
+        telemetry = Op.telemetry;
     }
 
     public void initPinpoint(HardwareMap hwMap) {

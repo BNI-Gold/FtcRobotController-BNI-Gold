@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 public class Vision {
     public HardwareMap hwBot = null;
     public Limelight3A cam = null;
-    public LinearOpMode LinearOp = null;
     public Pinpoint pinpoint = null;
     public Telemetry telemetry = null;
 
@@ -36,8 +36,11 @@ public class Vision {
     }
 
     public void setLinearOp(LinearOpMode LinearOp) {
-        this.LinearOp = LinearOp;
         telemetry = LinearOp.telemetry;
+    }
+
+    public void setOp(OpMode Op) {
+        telemetry = Op.telemetry;
     }
 
     public void initVision(HardwareMap hwMap, Pinpoint pinpoint, boolean captureSnapshots, int snapshotLimit, String snapshotPrefix) {
@@ -46,6 +49,17 @@ public class Vision {
         this.captureSnapshots = captureSnapshots;
         this.snapshotLimit = snapshotLimit;
         this.snapshotPrefix = snapshotPrefix;
+
+        cam = hwBot.get(Limelight3A.class, "limelight");
+        cam.setPollRateHz(100);
+    }
+
+    public void initVision(HardwareMap hwMap, Pinpoint pinpoint, boolean captureSnapshots) {
+        hwBot = hwMap;
+        this.pinpoint = pinpoint;
+        this.captureSnapshots = captureSnapshots;
+        this.snapshotLimit = 0;
+        this.snapshotPrefix = "";
 
         cam = hwBot.get(Limelight3A.class, "limelight");
         cam.setPollRateHz(100);

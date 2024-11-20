@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -9,13 +10,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 
 public class PoseHelper {
     public Vision vision = null;
     public Pinpoint pinpoint = null;
-    public LinearOpMode LinearOp = null;
     public Telemetry telemetry = null;
     public boolean LLInUse = false;
     public Pose2D pose = null;
@@ -26,8 +25,11 @@ public class PoseHelper {
     }
 
     public void setLinearOp(LinearOpMode LinearOp) {
-        this.LinearOp = LinearOp;
         telemetry = LinearOp.telemetry;
+    }
+
+    public void setOp(OpMode Op) {
+        telemetry = Op.telemetry;
     }
 
     public void setDevices(Vision vision, Pinpoint pinpoint) {
