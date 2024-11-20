@@ -16,6 +16,7 @@ public class BlueNetDropSamplePark extends AutoBlueAlliance {
         //wait for player to press start
         waitForStart();
         while (opModeIsActive()) {
+            //TEST the PARK
 
             // START AUTO PATH SEQUENCE
             Bot.strafeRightInches(0.5, 4.8);
@@ -32,6 +33,11 @@ public class BlueNetDropSamplePark extends AutoBlueAlliance {
             sleep(1000);
             dropAndRetreatFromBucket();
             sleep(500);
+            Bot.rotateRightDegrees(0.5, 36);
+            sleep(500);
+            Bot.rotateLeftDegrees(0.5, 180);
+            Bot.driveBackInches(0.5,108);
+
 
             // END AUTO PATH SEQUENCE
             requestOpModeStop();
