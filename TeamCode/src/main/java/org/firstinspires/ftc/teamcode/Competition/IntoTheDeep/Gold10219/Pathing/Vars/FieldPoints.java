@@ -15,9 +15,9 @@ public class FieldPoints {
         public Rear Rear = new Rear();
 
         private static final double x = 46.25;
-        private static final double y1 = 120.5; // Updated y values to match new field orientation
-        private static final double y2 = 130.5;
-        private static final double y3 = 140.5;
+        private static final double y1 = 23.5;
+        private static final double y2 = 13.5;
+        private static final double y3 = 3.5;
 
         public static final class Audience {
             public Point Blue1 = new Point(x, y1);
@@ -41,26 +41,26 @@ public class FieldPoints {
     }
 
     public static final class Chambers {
-        private static final int x = 72; // Adjusted x to match updated orientation
-        private static final int y = 48; // Adjusted y to match updated orientation
+        private static final double x = 72; // Adjusted for the rotated field
+        private static final double y = 48;
+
+        public Point Blue = new Point(x, y);
+        public Point Red = new Point(f - x, f - y);
+    }
+
+    public static final class Nets {
+        private static final double x = 12;
+        private static final double y = 12;
 
         public Point Blue = new Point(x, f - y);
         public Point Red = new Point(f - x, y);
     }
 
-    public static final class Nets {
-        private static final int x = 12;
-        private static final int y = 12;
-
-        public Point Blue = new Point(f - y, x);
-        public Point Red = new Point(y, f - x);
-    }
-
     public static final class Observations {
-        private static final int x = 12; // Adjusted x to match updated orientation
-        private static final int y = 14; // Adjusted y to match updated orientation
+        private static final double x = 12;
+        private static final double y = 14;
 
-        public Point Blue = new Point(f - y, x);
-        public Point Red = new Point(y, f - x);
+        public Point Blue = new Point(x, y);
+        public Point Red = new Point(f - x, f - y);
     }
 }
