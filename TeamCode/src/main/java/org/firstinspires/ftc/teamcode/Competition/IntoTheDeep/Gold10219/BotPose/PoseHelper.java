@@ -54,16 +54,17 @@ public class PoseHelper {
                 int tagCount = vision.getTagCount();
                 if (tagCount == 2) {
                     double heading = vision.getPose(PoseTypes.MT1).getOrientation().getYaw(AngleUnit.DEGREES);
+                    if (heading > 180) {
+                        heading -= 360;
+                    }
                     pinpoint.updateHeading(heading);
                     resultType = PoseHelperResultTypes.MT2Tag;
                 }
             }
         }
-        pose = ShortenXY(pinpoint.getPosition());
     }
 
     public void syncPose() {
-        pinpoint.update();
         if (!LLInUse) {
             vision.setPipeline(3);
             vision.getResult();
@@ -83,7 +84,6 @@ public class PoseHelper {
         } else {
             resultType = PoseHelperResultTypes.PINPOINT;
         }
-        pose = ShortenXY(pinpoint.getPosition());
     }
 
     public void updatePose() {
@@ -92,8 +92,8 @@ public class PoseHelper {
     }
 
     private Pose2D ShortenXY(Pose2D oldPose) {
-        double x = BigDecimal.valueOf(oldPose.getX(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue();
-        double y = BigDecimal.valueOf(oldPose.getY(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue();
+        double x = BigDecimal.valueOf(oldPose.getX(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue() + 72;
+        double y = BigDecimal.valueOf(oldPose.getY(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue() + 72;
         double heading = oldPose.getHeading(AngleUnit.DEGREES);
 
         return new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, heading);

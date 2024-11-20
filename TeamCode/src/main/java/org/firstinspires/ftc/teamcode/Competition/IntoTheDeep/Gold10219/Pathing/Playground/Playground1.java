@@ -41,8 +41,6 @@ public class Playground1 extends OpMode {
 
     @Override
     public void init() {
-        Bot.initRobot(hardwareMap);
-
         pinpoint.setOp(this);
         pinpoint.initPinpoint(hardwareMap);
 
@@ -52,9 +50,13 @@ public class Playground1 extends OpMode {
         pose.setOp(this);
         pose.setDevices(vision, pinpoint);
 
+        vision.start();
+
         pose.updateLLUsage(false);
         pose.updateHeading();
         pose.syncPose();
+
+        pose.updatePose();
 
         Pose2D currentPose = pose.getPose();
         telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
@@ -82,15 +84,24 @@ public class Playground1 extends OpMode {
     public void loop() {
         follower.update();
         autonomousPathUpdate();
+        tel();
+    }
+
+    public void tel() {
+        pose.updatePose();
+        Pose2D current = pose.getPose();
+        telemetry.addData("PX: ", current.getX(DistanceUnit.INCH));
+        telemetry.addData("PY: ", current.getY(DistanceUnit.INCH));
+        telemetry.addData("PO: ", current.getHeading(AngleUnit.DEGREES));
     }
 
     public void buildPaths() {
         fromStartToChambers = new EasyPath(startPose, points.Chambers.Blue);
-        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), 90, .8);
+        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), -90, .8);
         fromStartToChambers.setPathEndTimeoutConstraint(3);
 
         fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), points.Observations.Blue);
-        fromChambersToObservation.setLinearHeadingInterpolation(90, -90, .8);
+        fromChambersToObservation.setLinearHeadingInterpolation(-90, 90, .8);
         fromChambersToObservation.setPathEndTimeoutConstraint(3);
 
         telemetry.addData("Blue Chamber: ", points.Chambers.Blue);
@@ -106,13 +117,13 @@ public class Playground1 extends OpMode {
                 break;
             case 11:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), fromStartToChambers.getEndTangent().getTheta());
+                    follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), -90);
                     setPathState(12);
                 }
                 break;
             case 12:
-                follower.followPath(fromChambersToObservation);
-                setPathState(13);
+//                follower.followPath(fromChambersToObservation);
+//                setPathState(13);
                 break;
             case 13:
                 if (!follower.isBusy()) {

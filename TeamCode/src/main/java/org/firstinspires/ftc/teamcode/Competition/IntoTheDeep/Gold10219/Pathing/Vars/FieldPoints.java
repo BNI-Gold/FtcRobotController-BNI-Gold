@@ -43,8 +43,9 @@ public class FieldPoints {
     public static final class Chambers {
         private static final int x = 48;
         private static final int y = 72;
-        
-        public Point Blue = new Point(x, y);
+
+        //Adjusting blue for field check
+        public Point Blue = new Point(72, 106);
         public Point Red = new Point(f-x, y);
     }
     
@@ -60,7 +61,8 @@ public class FieldPoints {
         private static final int x = 14;
         private static final int y = 12;
 
-        public Point Blue = new Point(x, y);
+        //Adjusting blue for field check
+        public Point Blue = new Point(12, 130);
         public Point Red = new Point(f-x, f-y);
     }
 }
