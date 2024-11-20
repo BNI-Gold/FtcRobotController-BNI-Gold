@@ -57,11 +57,18 @@ public class Playground1 extends OpMode {
         pose.syncPose();
 
         Pose2D currentPose = pose.getPose();
+        telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
+        telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
+        telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
+
         startPose = new Pose(
                 currentPose.getX(DistanceUnit.INCH),
                 currentPose.getY(DistanceUnit.INCH),
                 currentPose.getHeading(AngleUnit.DEGREES)
         );
+
+        telemetry.addData("Start Pose: ", startPose);
+        telemetry.update();
 
         follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
@@ -114,6 +121,6 @@ public class Playground1 extends OpMode {
 
     public void setPathState(int state) {
         pathState = state;
-        autonomousPathUpdate();
+//        autonomousPathUpdate();
     }
 }
