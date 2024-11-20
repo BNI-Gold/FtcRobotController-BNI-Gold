@@ -116,6 +116,17 @@ public class MathFunctions {
     }
 
     /**
+     * This returns the distance between a Point and another Point,
+     *
+     * @param one this is the Pose.
+     * @param two this is the Point.
+     * @return returns the distance between the two.
+     */
+    public static double distance(Point one, Point two) {
+        return Math.sqrt(Math.pow(one.getX() - two.getX(), 2) + Math.pow(one.getY() - two.getY(), 2));
+    }
+
+    /**
      * This returns the distance between a Pose and another Pose.
      *
      * @param one this is the first Pose.
