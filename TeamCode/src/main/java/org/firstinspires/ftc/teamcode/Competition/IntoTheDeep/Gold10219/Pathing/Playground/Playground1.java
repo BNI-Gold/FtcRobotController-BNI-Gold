@@ -92,6 +92,10 @@ public class Playground1 extends OpMode {
         fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), points.Observations.Blue);
         fromChambersToObservation.setLinearHeadingInterpolation(90, -90, .8);
         fromChambersToObservation.setPathEndTimeoutConstraint(3);
+
+        telemetry.addData("Blue Chamber: ", points.Chambers.Blue);
+        telemetry.addData("Blue Observation: ", points.Observations.Blue);
+        telemetry.update();
     }
 
     public void autonomousPathUpdate() {
