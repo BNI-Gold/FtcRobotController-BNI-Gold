@@ -104,13 +104,17 @@ public class Playground1 extends OpMode {
     }
 
     public void buildPaths() {
-        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, new double[]{vars.Chassis.WIDTH/2}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION});
+        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, new double[]{}, new double[]{});
         //Commenting this to try setting linear heading interpolation after 10% of path is completed (see pathState case 11)
 //        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), -90, .8);
         fromStartToChambers.setConstantHeadingInterpolation(startPose.getHeading());
         fromStartToChambers.setPathEndTimeoutConstraint(3);
 
-        telemetry.addData("StartToChambers End Tangent: ", MathFunctions.radToDeg(fromStartToChambers.getEndTangent().getTheta()));
+        telemetry.addData("Blue Chamber Previous X:", poses.Chambers.Blue.getX());
+        telemetry.addData("Blue Chamber Previous Y:", poses.Chambers.Blue.getY());
+
+        telemetry.addData("Blue Chamber New X:", fromStartToChambers.getLastControlPoint().getX());
+        telemetry.addData("Blue Chamber New Y:", fromStartToChambers.getLastControlPoint().getY());
 
         fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{});
         //Same as above
@@ -118,8 +122,11 @@ public class Playground1 extends OpMode {
         fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
         fromChambersToObservation.setPathEndTimeoutConstraint(3);
 
-        telemetry.addData("Blue Chamber: ", poses.Chambers.Blue);
-        telemetry.addData("Blue Observation: ", poses.Observations.Blue);
+        telemetry.addData("Observation Previous X:", poses.Observations.Blue.getX());
+        telemetry.addData("Observation Previous Y:", poses.Observations.Blue.getY());
+
+        telemetry.addData("Observation New X:", fromChambersToObservation.getLastControlPoint().getX());
+        telemetry.addData("Observation New Y:", fromChambersToObservation.getLastControlPoint().getY());
         telemetry.update();
     }
 

@@ -42,7 +42,7 @@ public class FieldPoses {
 
     public static final class Chambers {
         private static final double x = 72; // Adjusted for the rotated field
-        private static final double y = 36;
+        private static final double y = 48;
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
         public Pose Red = new Pose(x, y);
