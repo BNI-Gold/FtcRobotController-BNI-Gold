@@ -95,6 +95,8 @@ public class Playground1 extends OpMode {
     }
 
     Pose2D nP = null;
+    Pose nP2 = null;
+    Pose a = null;
 
     public void tel() {
         Pose2D current = pose.getPose();
@@ -103,11 +105,23 @@ public class Playground1 extends OpMode {
         telemetry.addData("PO: ", current.getHeading(AngleUnit.DEGREES));
         telemetry.addLine();
         telemetry.addData("pathState: ", pathState);
-        if (nP != null) {
+//        if (nP != null) {
+//            telemetry.addLine();
+//            telemetry.addData("New Pose X: ", nP.getX(DistanceUnit.INCH));
+//            telemetry.addData("New Pose Y: ", nP.getY(DistanceUnit.INCH));
+//            telemetry.addData("New Pose H: ", nP.getHeading(AngleUnit.DEGREES));
+//        }
+        if (a != null) {
             telemetry.addLine();
-            telemetry.addData("New Pose X: ", nP.getX(DistanceUnit.INCH));
-            telemetry.addData("New Pose Y: ", nP.getY(DistanceUnit.INCH));
-            telemetry.addData("New Pose H: ", nP.getHeading(AngleUnit.DEGREES));
+            telemetry.addData("A X: ", a.getX());
+            telemetry.addData("A Y: ", a.getY());
+            telemetry.addData("A H: ", a.getHeading());
+        }
+        if (nP2 != null) {
+            telemetry.addLine();
+            telemetry.addData("NP2 X: ", nP2.getX());
+            telemetry.addData("NP2 Y: ", nP2.getY());
+            telemetry.addData("NP2 H: ", nP2.getHeading());
         }
         telemetry.update();
     }
@@ -166,9 +180,16 @@ public class Playground1 extends OpMode {
                 pose.updatePose();
 
                 Pose2D pPose = pose.getPose();
-                Pose newPose = new Pose(pPose.getX(DistanceUnit.INCH), pPose.getY(DistanceUnit.INCH), pPose.getHeading(AngleUnit.RADIANS));
+                nP = pPose;
+                //-44, 120, -178
+//                Pose newPose = new Pose(Math.abs(pPose.getX(DistanceUnit.INCH)), pPose.getY(DistanceUnit.INCH), pPose.getHeading(AngleUnit.RADIANS));
+                Pose newPose = new Pose(48, 120, Math.toRadians(-180));
+                nP2 = newPose;
 
                 follower.setCurrentPoseWithOffset(newPose);
+
+                a = follower.getPose();
+
                 setPathState(17);
                 break;
             case 17:
