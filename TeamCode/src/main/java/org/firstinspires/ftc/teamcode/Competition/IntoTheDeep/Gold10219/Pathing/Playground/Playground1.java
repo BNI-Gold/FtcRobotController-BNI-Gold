@@ -37,7 +37,7 @@ public class Playground1 extends OpMode {
 
     private Timer pathTimer;
 
-    private Path fromStartToChambers, fromChambersToRecal, fromRecalToObservation;
+    private Path fromStartToChambers, fromChambersToObservation;
     private int pathState;
 
     @Override
@@ -94,9 +94,7 @@ public class Playground1 extends OpMode {
         tel();
     }
 
-    Pose2D nP = null;
-    Pose nP2 = null;
-    Pose a = null;
+    Pose l = null;
 
     public void tel() {
         Pose2D current = pose.getPose();
@@ -105,23 +103,11 @@ public class Playground1 extends OpMode {
         telemetry.addData("PO: ", current.getHeading(AngleUnit.DEGREES));
         telemetry.addLine();
         telemetry.addData("pathState: ", pathState);
-//        if (nP != null) {
-//            telemetry.addLine();
-//            telemetry.addData("New Pose X: ", nP.getX(DistanceUnit.INCH));
-//            telemetry.addData("New Pose Y: ", nP.getY(DistanceUnit.INCH));
-//            telemetry.addData("New Pose H: ", nP.getHeading(AngleUnit.DEGREES));
-//        }
-        if (a != null) {
+        if (l != null) {
             telemetry.addLine();
-            telemetry.addData("A X: ", a.getX());
-            telemetry.addData("A Y: ", a.getY());
-            telemetry.addData("A H: ", a.getHeading());
-        }
-        if (nP2 != null) {
-            telemetry.addLine();
-            telemetry.addData("NP2 X: ", nP2.getX());
-            telemetry.addData("NP2 Y: ", nP2.getY());
-            telemetry.addData("NP2 H: ", nP2.getHeading());
+            telemetry.addData("FinalX: ", l.getX());
+            telemetry.addData("FinalY: ", l.getY());
+            telemetry.addData("FinalH: ", l.getHeading());
         }
         telemetry.update();
     }
@@ -131,13 +117,9 @@ public class Playground1 extends OpMode {
         fromStartToChambers.setConstantHeadingInterpolation(startPose.getHeading());
         fromStartToChambers.setPathEndTimeoutConstraint(3);
 
-        fromChambersToRecal = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Recalibration.Single.A11);
-        fromChambersToRecal.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Recalibration.Single.A11).getValue(), poses.Recalibration.Single.A11.getHeading(), .8);
-        fromChambersToRecal.setPathEndTimeoutConstraint(3);
-
-        fromRecalToObservation = new EasyPath(fromChambersToRecal.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
-        fromRecalToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromChambersToRecal.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
-        fromRecalToObservation.setPathEndTimeoutConstraint(3);
+        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
+        fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
+        fromChambersToObservation.setPathEndTimeoutConstraint(3);
     }
 
     public void autonomousPathUpdate() {
@@ -163,48 +145,15 @@ public class Playground1 extends OpMode {
                     setPathState(14);
                 }
             case 14:
-                follower.followPath(fromChambersToRecal);
+                follower.followPath(fromChambersToObservation);
                 setPathState(15);
                 break;
             case 15:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(fromChambersToRecal.getLastControlPoint()), Math.toRadians(-180));
-
-                    if (Math.abs(pose.getPose().getHeading(AngleUnit.DEGREES) - -180) < 2) {
-                        setPathState(16);
-                    }
+                    follower.holdPoint(new BezierPoint(fromChambersToObservation.getLastControlPoint()), Math.toRadians(90));
                 }
+                l = follower.getPose();
                 break;
-            case 16:
-                pose.syncPose();
-                pose.updatePose();
-
-                Pose2D pPose = pose.getPose();
-                nP = pPose;
-                //-44, 120, -178
-//                Pose newPose = new Pose(Math.abs(pPose.getX(DistanceUnit.INCH)), pPose.getY(DistanceUnit.INCH), pPose.getHeading(AngleUnit.RADIANS));
-                Pose newPose = new Pose(48, 120, Math.toRadians(-180));
-                nP2 = newPose;
-
-                follower.setCurrentPoseWithOffset(newPose);
-
-                a = follower.getPose();
-
-                setPathState(17);
-                break;
-            case 17:
-                // Align the robot to the start tangent of the path
-                follower.holdPoint(new BezierPoint(fromRecalToObservation.getFirstControlPoint()), fromRecalToObservation.getFirstControlPoint().getTheta());
-
-                if (Math.abs(pose.getPose().getHeading(AngleUnit.DEGREES) - Math.toDegrees(fromRecalToObservation.getFirstControlPoint().getTheta())) < 2) {
-                    follower.followPath(fromRecalToObservation);
-                    setPathState(18);
-                }
-                break;
-            case 18:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(fromRecalToObservation.getLastControlPoint()), Math.toRadians(90));
-                }
         }
     }
 
