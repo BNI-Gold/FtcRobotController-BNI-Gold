@@ -193,8 +193,13 @@ public class Playground1 extends OpMode {
                 setPathState(17);
                 break;
             case 17:
-                follower.followPath(fromRecalToObservation);
-                setPathState(18);
+                // Align the robot to the start tangent of the path
+                follower.holdPoint(new BezierPoint(fromRecalToObservation.getFirstControlPoint()), fromRecalToObservation.getFirstControlPoint().getTheta());
+
+                if (Math.abs(pose.getPose().getHeading(AngleUnit.DEGREES) - Math.toDegrees(fromRecalToObservation.getFirstControlPoint().getTheta())) < 2) {
+                    follower.followPath(fromRecalToObservation);
+                    setPathState(18);
+                }
                 break;
             case 18:
                 if (!follower.isBusy()) {
