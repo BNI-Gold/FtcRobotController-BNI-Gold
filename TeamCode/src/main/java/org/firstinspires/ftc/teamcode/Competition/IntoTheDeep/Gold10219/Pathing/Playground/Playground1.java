@@ -104,7 +104,7 @@ public class Playground1 extends OpMode {
     }
 
     public void buildPaths() {
-        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, false);
+        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue);
         //Commenting this to try setting linear heading interpolation after 10% of path is completed (see pathState case 11)
 //        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), -90, .8);
         fromStartToChambers.setConstantHeadingInterpolation(startPose.getHeading());
@@ -112,7 +112,7 @@ public class Playground1 extends OpMode {
 
         telemetry.addData("StartToChambers End Tangent: ", MathFunctions.radToDeg(fromStartToChambers.getEndTangent().getTheta()));
 
-        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, false);
+        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue);
         //Same as above
 //        fromChambersToObservation.setLinearHeadingInterpolation(MathFunctions.degToRad(-90), MathFunctions.degToRad(90), .8);
         fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);

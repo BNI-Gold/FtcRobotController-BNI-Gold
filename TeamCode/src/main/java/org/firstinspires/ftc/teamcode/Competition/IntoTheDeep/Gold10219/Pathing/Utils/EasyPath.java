@@ -7,27 +7,43 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 
 public class EasyPath extends Path {
     public EasyPath(Object startPoint, Object endPoint) {
-        super(new BezierCurve(toPoint(startPoint), generateMidPoint(startPoint, endPoint), new SafePoint(generateMidPoint(startPoint, endPoint), toPoint(endPoint))));
-    }
-
-    public EasyPath(Object startPoint, Object midPoint, Object finalPoint) {
-        super(new BezierCurve(toPoint(startPoint), toPoint(startPoint), new SafePoint(toPoint(midPoint), toPoint(finalPoint))));
-    }
-
-    public EasyPath(Object startPoint, Object control1, Object control2, Object finalPoint) {
-        super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), new SafePoint(toPoint(control2), toPoint(finalPoint))));
-    }
-
-    public EasyPath(Object startPoint, Object endPoint, boolean f) {
         super(new BezierCurve(toPoint(startPoint), generateMidPoint(startPoint, endPoint), toPoint(endPoint)));
     }
 
-    public EasyPath(Object startPoint, Object midPoint, Object endPoint, boolean f) {
+    public EasyPath(Object startPoint, Object midPoint, Object endPoint) {
         super(new BezierCurve(toPoint(startPoint), toPoint(midPoint), toPoint(endPoint)));
     }
 
-    public EasyPath(Object startPoint, Object control1, Object control2, Object finalPoint, boolean f) {
+    public EasyPath(Object startPoint, Object control1, Object control2, Object finalPoint) {
         super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), toPoint(finalPoint)));
+    }
+
+    public EasyPath(Object startPoint, Object endPoint, double[] xOffsets, double[] yOffsets) {
+        super(new BezierCurve(toPoint(startPoint), generateMidPoint(startPoint, endPoint), generateOffsetPoint(endPoint, xOffsets, yOffsets)));
+    }
+
+    public EasyPath(Object startPoint, Object midPoint, Object endPoint, double[] xOffsets, double[] yOffsets) {
+        super(new BezierCurve(toPoint(startPoint), toPoint(midPoint), generateOffsetPoint(endPoint, xOffsets, yOffsets)));
+    }
+
+    public EasyPath(Object startPoint, Object control1, Object control2, Object endPoint, double[] xOffsets, double[] yOffsets) {
+        super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), generateOffsetPoint(endPoint, xOffsets, yOffsets)));
+    }
+
+    private static Point generateOffsetPoint(Object finalPoint, double[] xOffsets, double[] yOffsets) {
+        double xOffsetSum = 0;
+        double yOffsetSum = 0;
+
+        for (int i = 0; i < xOffsets.length-1; i++) {
+            xOffsetSum += xOffsets[i];
+        }
+
+        for (int i = 0; i < yOffsets.length-1; i++) {
+            yOffsetSum += yOffsets[i];
+        }
+
+        Point finalPointPoint = toPoint(finalPoint);
+        return new Point(finalPointPoint.getX() + xOffsetSum, finalPointPoint.getY() + yOffsetSum);
     }
 
     private static Point generateMidPoint(Object startPoint, Object endPoint) {
