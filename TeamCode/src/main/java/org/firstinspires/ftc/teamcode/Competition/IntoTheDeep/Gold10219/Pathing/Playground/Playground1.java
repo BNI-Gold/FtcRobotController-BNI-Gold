@@ -10,14 +10,16 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPath;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Vars.FieldPoints;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.SafeInterpolationStartHeading;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Vars.FieldPoses;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierPoint;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Path;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.Timer;
 
 @Autonomous(name = "Playground 1", group = "Playground")
 public class Playground1 extends OpMode {
@@ -28,13 +30,14 @@ public class Playground1 extends OpMode {
     private Pinpoint pinpoint = new Pinpoint();
     private PoseHelper pose = new PoseHelper();
 
-    private FieldPoints points = new FieldPoints();
     private FieldPoses poses = new FieldPoses();
 
     //TODO: Don't forget to set this pose on auto start when robot determines current position
     private Pose startPose;
 
     private Follower follower;
+
+    private Timer pathTimer;
 
     private Path fromStartToChambers, fromChambersToObservation;
     private int pathState;
@@ -51,6 +54,8 @@ public class Playground1 extends OpMode {
 
         pose.setOp(this);
         pose.setDevices(vision, pinpoint);
+
+        pathTimer = new Timer();
 
         vision.start();
 
@@ -85,13 +90,13 @@ public class Playground1 extends OpMode {
     }
 
     public void loop() {
-        tel();
+        pose.updatePose();
         follower.update();
         autonomousPathUpdate();
+        tel();
     }
 
     public void tel() {
-        pose.updatePose();
         Pose2D current = pose.getPose();
         telemetry.addData("PX: ", current.getX(DistanceUnit.INCH));
         telemetry.addData("PY: ", current.getY(DistanceUnit.INCH));
@@ -99,16 +104,22 @@ public class Playground1 extends OpMode {
     }
 
     public void buildPaths() {
-        fromStartToChambers = new EasyPath(startPose, points.Chambers.Blue);
-        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), -90, .8);
+        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, false);
+        //Commenting this to try setting linear heading interpolation after 10% of path is completed (see pathState case 11)
+//        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), -90, .8);
+        fromStartToChambers.setConstantHeadingInterpolation(startPose.getHeading());
         fromStartToChambers.setPathEndTimeoutConstraint(3);
 
-        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), points.Observations.Blue);
-        fromChambersToObservation.setLinearHeadingInterpolation(-90, 90, .8);
+        telemetry.addData("StartToChambers End Tangent: ", MathFunctions.radToDeg(fromStartToChambers.getEndTangent().getTheta()));
+
+        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, false);
+        //Same as above
+//        fromChambersToObservation.setLinearHeadingInterpolation(MathFunctions.degToRad(-90), MathFunctions.degToRad(90), .8);
+        fromChambersToObservation.setConstantHeadingInterpolation(fromStartToChambers.getLastControlPoint().getTheta());
         fromChambersToObservation.setPathEndTimeoutConstraint(3);
 
-        telemetry.addData("Blue Chamber: ", points.Chambers.Blue);
-        telemetry.addData("Blue Observation: ", points.Observations.Blue);
+        telemetry.addData("Blue Chamber: ", poses.Chambers.Blue);
+        telemetry.addData("Blue Observation: ", poses.Observations.Blue);
         telemetry.update();
     }
 
@@ -119,19 +130,31 @@ public class Playground1 extends OpMode {
                 setPathState(11);
                 break;
             case 11:
-                if (!follower.isBusy()) {
-                    double heading = pose.getPose().getHeading(AngleUnit.DEGREES);
-                    double correction = -90 + Math.abs(heading);
-
-//                    follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), -90);
+                if (follower.getCurrentTValue() > 0.1) {
+                    fromStartToChambers.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.Chambers.Blue).getValue(), poses.Chambers.Blue.getHeading());
                     setPathState(12);
                 }
-                break;
             case 12:
-                follower.followPath(fromChambersToObservation);
-                setPathState(13);
+                if (!follower.isBusy()) {
+                    follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), fromStartToChambers.getEndTangent().getTheta());
+                    setPathState(13);
+
+                    setPathState(13);
+                }
                 break;
             case 13:
+                if (pathTimer.getElapsedTime() > 500) {
+//                    setPathState(14);
+                }
+            case 14:
+                follower.followPath(fromChambersToObservation);
+                setPathState(15);
+                break;
+            case 15:
+                if (follower.getCurrentTValue() > 0.1) {
+//                    fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.Chambers.Blue).getValue(), poses);
+                }
+            case 16:
                 if (!follower.isBusy()) {
                     follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), fromChambersToObservation.getEndTangent().getTheta());
                     telemetry.addLine("Complete!");
@@ -142,6 +165,7 @@ public class Playground1 extends OpMode {
 
     public void setPathState(int state) {
         pathState = state;
-//        autonomousPathUpdate();
+        pathTimer.resetTimer();
+        autonomousPathUpdate();
     }
 }

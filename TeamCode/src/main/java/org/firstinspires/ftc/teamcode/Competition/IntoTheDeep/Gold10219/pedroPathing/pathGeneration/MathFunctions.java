@@ -14,6 +14,24 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 public class MathFunctions {
 
     /**
+     * Returns the radian value of the given degree.
+     * @param degree this is the original degree
+     * @return returns the degree in radians
+     */
+    public static double degToRad(double degree) {
+        return degree/0.0174533;
+    }
+
+    /**
+     * Returns the degree value of the given radian.
+     * @param radian this is the original radian
+     * @return returns the radian in degrees
+     */
+    public static double radToDeg(double radian) {
+        return radian*0.0174533;
+    }
+
+    /**
      * This is a simple implementation of the choose function in math. It's equivalent to the number
      * of ways you can choose r items from n total items, if only which items got picked and not the
      * order of picking the items mattered.

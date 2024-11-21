@@ -18,6 +18,18 @@ public class EasyPath extends Path {
         super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), new SafePoint(toPoint(control2), toPoint(finalPoint))));
     }
 
+    public EasyPath(Object startPoint, Object endPoint, boolean f) {
+        super(new BezierCurve(toPoint(startPoint), generateMidPoint(startPoint, endPoint), toPoint(endPoint)));
+    }
+
+    public EasyPath(Object startPoint, Object midPoint, Object endPoint, boolean f) {
+        super(new BezierCurve(toPoint(startPoint), toPoint(midPoint), toPoint(endPoint)));
+    }
+
+    public EasyPath(Object startPoint, Object control1, Object control2, Object finalPoint, boolean f) {
+        super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), toPoint(finalPoint)));
+    }
+
     private static Point generateMidPoint(Object startPoint, Object endPoint) {
         Point start = toPoint(startPoint);
         Point end = toPoint(endPoint);
