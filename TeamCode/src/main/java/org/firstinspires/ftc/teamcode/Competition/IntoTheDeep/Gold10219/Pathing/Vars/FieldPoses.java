@@ -42,7 +42,7 @@ public class FieldPoses {
     }
 
     public static final class Chambers {
-        private static final double x = 72; // Adjusted for the rotated field
+        private static final double x = 72;
         private static final double y = 48;
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
@@ -66,11 +66,20 @@ public class FieldPoses {
     }
 
     public static final class Recalibration {
-        public Pose A11 = new Pose(48, 120, Math.toRadians(-180)); // Use radians for heading
-        public Pose A12 = new Pose(72, 120, Math.toRadians(90));
-        public Pose A13 = new Pose(96, 120, Math.toRadians(0));
-        public Pose A14 = new Pose(96, 24, Math.toRadians(0));
-        public Pose A15 = new Pose(72, 24, Math.toRadians(-90));
-        public Pose A16 = new Pose(48, 24, Math.toRadians(180));
+        public Single Single = new Single();
+        public Double Double = new Double();
+
+        public static final class Single {
+            public Pose A11 = new Pose(48, 120, Math.toRadians(-180));
+            public Pose A12 = new Pose(72, 120, Math.toRadians(90));
+            public Pose A13 = new Pose(96, 120, Math.toRadians(0));
+            public Pose A14 = new Pose(96, 24, Math.toRadians(0));
+            public Pose A15 = new Pose(72, 24, Math.toRadians(-90));
+            public Pose A16 = new Pose(48, 24, Math.toRadians(180));
+        }
+
+        public static final class Double {
+
+        }
     }
 }

@@ -31,7 +31,6 @@ public class Playground1 extends OpMode {
 
     private FieldPoses poses = new FieldPoses();
 
-    //TODO: Don't forget to set this pose on auto start when robot determines current position
     private Pose startPose;
 
     private Follower follower;
@@ -95,11 +94,22 @@ public class Playground1 extends OpMode {
         tel();
     }
 
+    Pose2D nP = null;
+
     public void tel() {
         Pose2D current = pose.getPose();
         telemetry.addData("PX: ", current.getX(DistanceUnit.INCH));
         telemetry.addData("PY: ", current.getY(DistanceUnit.INCH));
         telemetry.addData("PO: ", current.getHeading(AngleUnit.DEGREES));
+        telemetry.addLine();
+        telemetry.addData("pathState: ", pathState);
+        if (nP != null) {
+            telemetry.addLine();
+            telemetry.addData("New Pose X: ", nP.getX(DistanceUnit.INCH));
+            telemetry.addData("New Pose Y: ", nP.getY(DistanceUnit.INCH));
+            telemetry.addData("New Pose H: ", nP.getHeading(AngleUnit.DEGREES));
+        }
+        telemetry.update();
     }
 
     public void buildPaths() {
@@ -107,8 +117,8 @@ public class Playground1 extends OpMode {
         fromStartToChambers.setConstantHeadingInterpolation(startPose.getHeading());
         fromStartToChambers.setPathEndTimeoutConstraint(3);
 
-        fromChambersToRecal = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Recalibration.A11);
-        fromChambersToRecal.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Recalibration.A11).getValue(), poses.Recalibration.A11.getHeading(), .8);
+        fromChambersToRecal = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Recalibration.Single.A11);
+        fromChambersToRecal.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Recalibration.Single.A11).getValue(), poses.Recalibration.Single.A11.getHeading(), .8);
         fromChambersToRecal.setPathEndTimeoutConstraint(3);
 
         fromRecalToObservation = new EasyPath(fromChambersToRecal.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
@@ -144,10 +154,8 @@ public class Playground1 extends OpMode {
                 break;
             case 15:
                 if (!follower.isBusy()) {
-                    // Hold position and heading
                     follower.holdPoint(new BezierPoint(fromChambersToRecal.getLastControlPoint()), Math.toRadians(-180));
 
-                    // Ensure heading is aligned before moving on
                     if (Math.abs(pose.getPose().getHeading(AngleUnit.DEGREES) - -180) < 2) {
                         setPathState(16);
                     }
