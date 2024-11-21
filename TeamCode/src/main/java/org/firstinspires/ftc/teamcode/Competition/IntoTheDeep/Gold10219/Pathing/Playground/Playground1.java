@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.C
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierPoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.Timer;
 
@@ -145,8 +144,13 @@ public class Playground1 extends OpMode {
                 break;
             case 15:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(fromChambersToRecal.getLastControlPoint()), fromChambersToRecal.getEndTangent().getTheta());
-                    setPathState(16);
+                    // Hold position and heading
+                    follower.holdPoint(new BezierPoint(fromChambersToRecal.getLastControlPoint()), Math.toRadians(-180));
+
+                    // Ensure heading is aligned before moving on
+                    if (Math.abs(pose.getPose().getHeading(AngleUnit.DEGREES) - -180) < 2) {
+                        setPathState(16);
+                    }
                 }
                 break;
             case 16:

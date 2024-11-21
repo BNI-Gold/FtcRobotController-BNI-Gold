@@ -21,9 +21,9 @@ public class FieldPoses {
         private static final double y = 46.25;
 
         public static final class Audience {
-            public Pose Blue1 = new Pose(x1, f-y);
-            public Pose Blue2 = new Pose(x2, f-y);
-            public Pose Blue3 = new Pose(x3, f-y);
+            public Pose Blue1 = new Pose(x1, f - y);
+            public Pose Blue2 = new Pose(x2, f - y);
+            public Pose Blue3 = new Pose(x3, f - y);
 
             public Pose Neutral1 = new Pose(x1, y);
             public Pose Neutral2 = new Pose(x2, y);
@@ -31,13 +31,13 @@ public class FieldPoses {
         }
 
         public static final class Rear {
-            public Pose Neutral1 = new Pose(f-x1, f-y);
-            public Pose Neutral2 = new Pose(f-x2, f - y);
-            public Pose Neutral3 = new Pose(f-x3, f - y);
+            public Pose Neutral1 = new Pose(f - x1, f - y);
+            public Pose Neutral2 = new Pose(f - x2, f - y);
+            public Pose Neutral3 = new Pose(f - x3, f - y);
 
-            public Pose Red1 = new Pose(f-x1, y);
-            public Pose Red2 = new Pose(f-x2, y);
-            public Pose Red3 = new Pose(f-x2, y);
+            public Pose Red1 = new Pose(f - x1, y);
+            public Pose Red2 = new Pose(f - x2, y);
+            public Pose Red3 = new Pose(f - x2, y);
         }
     }
 
@@ -51,7 +51,7 @@ public class FieldPoses {
 
     public static final class Nets {
         private static final double x = 12;
-        private static final double y =  12;
+        private static final double y = 12;
 
         public Pose Blue = new Pose(f - x, f - y);
         public Pose Red = new Pose(x, y);
@@ -66,12 +66,11 @@ public class FieldPoses {
     }
 
     public static final class Recalibration {
-        public Pose A11 = new Pose(48, 120, -180);
-        public Pose A12 = new Pose (72, 120, 90);
-        public Pose A13 = new Pose (96, 120, 0);
-
-        public Pose A14 = new Pose(96, 24, 0);
-        public Pose A15 = new Pose(72, 24, -90);
-        public Pose A16 = new Pose(48, 24, 180);
+        public Pose A11 = new Pose(48, 120, Math.toRadians(-180)); // Use radians for heading
+        public Pose A12 = new Pose(72, 120, Math.toRadians(90));
+        public Pose A13 = new Pose(96, 120, Math.toRadians(0));
+        public Pose A14 = new Pose(96, 24, Math.toRadians(0));
+        public Pose A15 = new Pose(72, 24, Math.toRadians(-90));
+        public Pose A16 = new Pose(48, 24, Math.toRadians(180));
     }
 }
