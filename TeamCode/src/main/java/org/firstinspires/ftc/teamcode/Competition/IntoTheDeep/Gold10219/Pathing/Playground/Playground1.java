@@ -157,7 +157,10 @@ public class Playground1 extends OpMode {
                 pose.syncPose();
                 pose.updatePose();
 
-                follower.update();
+                Pose2D pPose = pose.getPose();
+                Pose newPose = new Pose(pPose.getX(DistanceUnit.INCH), pPose.getY(DistanceUnit.INCH), pPose.getHeading(AngleUnit.RADIANS));
+
+                follower.setCurrentPoseWithOffset(newPose);
                 setPathState(17);
                 break;
             case 17:
