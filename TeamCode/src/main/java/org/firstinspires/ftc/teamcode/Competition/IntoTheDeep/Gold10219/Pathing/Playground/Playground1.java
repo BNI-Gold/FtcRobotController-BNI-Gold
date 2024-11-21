@@ -115,7 +115,7 @@ public class Playground1 extends OpMode {
         fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, false);
         //Same as above
 //        fromChambersToObservation.setLinearHeadingInterpolation(MathFunctions.degToRad(-90), MathFunctions.degToRad(90), .8);
-        fromChambersToObservation.setConstantHeadingInterpolation(fromStartToChambers.getLastControlPoint().getTheta());
+        fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
         fromChambersToObservation.setPathEndTimeoutConstraint(3);
 
         telemetry.addData("Blue Chamber: ", poses.Chambers.Blue);
@@ -137,27 +137,22 @@ public class Playground1 extends OpMode {
             case 12:
                 if (!follower.isBusy()) {
                     follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), fromStartToChambers.getEndTangent().getTheta());
-                    setPathState(13);
-
+//                    follower.setPose(new Pose(follower.getPose().getX(), follower.getPose().getY(), Math.toRadians(-90)));
                     setPathState(13);
                 }
                 break;
             case 13:
-                if (pathTimer.getElapsedTime() > 500) {
-//                    setPathState(14);
+                if (pathTimer.getElapsedTime() > 2000) {
+                    setPathState(14);
                 }
             case 14:
                 follower.followPath(fromChambersToObservation);
                 setPathState(15);
                 break;
             case 15:
-                if (follower.getCurrentTValue() > 0.1) {
-//                    fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.Chambers.Blue).getValue(), poses);
-                }
-            case 16:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(fromStartToChambers.getLastControlPoint()), fromChambersToObservation.getEndTangent().getTheta());
-                    telemetry.addLine("Complete!");
+//                    follower.holdPoint(new BezierPoint(fromChambersToObservation.getLastControlPoint()), fromChambersToObservation.getEndTangent().getTheta());
+//                    telemetry.addLine("Complete!");
                 }
                 break;
         }
