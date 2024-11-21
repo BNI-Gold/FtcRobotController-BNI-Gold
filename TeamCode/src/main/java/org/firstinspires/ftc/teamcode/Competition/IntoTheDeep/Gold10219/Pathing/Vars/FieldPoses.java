@@ -7,6 +7,7 @@ public class FieldPoses {
     public Chambers Chambers = new Chambers();
     public Nets Nets = new Nets();
     public Observations Observations = new Observations();
+    public Recalibration Recalibration = new Recalibration();
 
     private static final int f = 144;
 
@@ -62,5 +63,15 @@ public class FieldPoses {
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
         public Pose Red = new Pose(f - x, y);
+    }
+
+    public static final class Recalibration {
+        public Pose A11 = new Pose(48, 120, -180);
+        public Pose A12 = new Pose (72, 120, 90);
+        public Pose A13 = new Pose (96, 120, 0);
+
+        public Pose A14 = new Pose(96, 24, 0);
+        public Pose A15 = new Pose(72, 24, -90);
+        public Pose A16 = new Pose(48, 24, 180);
     }
 }

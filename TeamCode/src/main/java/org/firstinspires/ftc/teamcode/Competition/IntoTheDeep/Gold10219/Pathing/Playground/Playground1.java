@@ -39,7 +39,7 @@ public class Playground1 extends OpMode {
 
     private Timer pathTimer;
 
-    private Path fromStartToChambers, fromChambersToObservation;
+    private Path fromStartToChambers, fromChambersToRecal, fromRecalToObservation;
     private int pathState;
 
     @Override
@@ -104,30 +104,17 @@ public class Playground1 extends OpMode {
     }
 
     public void buildPaths() {
-        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, new double[]{vars.Chassis.WIDTH/2}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION});
-        //Commenting this to try setting linear heading interpolation after 10% of path is completed (see pathState case 11)
-//        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), -90, .8);
+        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, new double[]{}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION});
         fromStartToChambers.setConstantHeadingInterpolation(startPose.getHeading());
         fromStartToChambers.setPathEndTimeoutConstraint(3);
 
-        telemetry.addData("Blue Chamber Previous X:", poses.Chambers.Blue.getX());
-        telemetry.addData("Blue Chamber Previous Y:", poses.Chambers.Blue.getY());
+        fromChambersToRecal = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Recalibration.A11);
+        fromChambersToRecal.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Recalibration.A11).getValue(), poses.Recalibration.A11.getHeading(), .8);
+        fromChambersToRecal.setPathEndTimeoutConstraint(3);
 
-        telemetry.addData("Blue Chamber New X:", fromStartToChambers.getLastControlPoint().getX());
-        telemetry.addData("Blue Chamber New Y:", fromStartToChambers.getLastControlPoint().getY());
-
-        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
-        //Same as above
-//        fromChambersToObservation.setLinearHeadingInterpolation(MathFunctions.degToRad(-90), MathFunctions.degToRad(90), .8);
-        fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
-        fromChambersToObservation.setPathEndTimeoutConstraint(3);
-
-        telemetry.addData("Observation Previous X:", poses.Observations.Blue.getX());
-        telemetry.addData("Observation Previous Y:", poses.Observations.Blue.getY());
-
-        telemetry.addData("Observation New X:", fromChambersToObservation.getLastControlPoint().getX());
-        telemetry.addData("Observation New Y:", fromChambersToObservation.getLastControlPoint().getY());
-        telemetry.update();
+        fromRecalToObservation = new EasyPath(fromChambersToRecal.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
+        fromRecalToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromChambersToRecal.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
+        fromRecalToObservation.setPathEndTimeoutConstraint(3);
     }
 
     public void autonomousPathUpdate() {
@@ -149,19 +136,34 @@ public class Playground1 extends OpMode {
                 }
                 break;
             case 13:
-                if (pathTimer.getElapsedTime() > 2000) {
+                if (pathTimer.getElapsedTime() > 10000) {
                     setPathState(14);
                 }
             case 14:
-                follower.followPath(fromChambersToObservation);
+                follower.followPath(fromChambersToRecal);
                 setPathState(15);
                 break;
             case 15:
                 if (!follower.isBusy()) {
-//                    follower.holdPoint(new BezierPoint(fromChambersToObservation.getLastControlPoint()), fromChambersToObservation.getEndTangent().getTheta());
-//                    telemetry.addLine("Complete!");
+                    follower.holdPoint(new BezierPoint(fromChambersToRecal.getLastControlPoint()), fromChambersToRecal.getEndTangent().getTheta());
+                    setPathState(16);
                 }
                 break;
+            case 16:
+                pose.syncPose();
+                pose.updatePose();
+
+                follower.update();
+                setPathState(17);
+                break;
+            case 17:
+                follower.followPath(fromRecalToObservation);
+                setPathState(18);
+                break;
+            case 18:
+                if (!follower.isBusy()) {
+                    follower.holdPoint(new BezierPoint(fromRecalToObservation.getLastControlPoint()), Math.toRadians(90));
+                }
         }
     }
 
