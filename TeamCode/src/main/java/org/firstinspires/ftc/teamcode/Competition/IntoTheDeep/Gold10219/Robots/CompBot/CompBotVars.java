@@ -8,6 +8,7 @@ public class CompBotVars {
     public Motors Motors = new Motors();
     public IMUDirections IMU = new IMUDirections();
     public Chassis Chassis = new Chassis();
+    public Mechanisms Mechanisms = new Mechanisms();
 
     public CompBotVars() {
     }
@@ -39,17 +40,17 @@ public class CompBotVars {
     }
 
     public static final class Chassis {
-        public double FRONT_LENGTH = 9;
+        public double FRONT_LENGTH = 8;
         public double BACK_LENGTH = 9;
-        public double WIDTH = 11;
+        public double WIDTH = 16;
     }
 
     public static final class Mechanisms {
         public Grabber Grabber = new Grabber();
         public static final class Grabber {
-            public double GRABBER_RETRACTED_POSITION = 0;
-            public double GRABBER_EXTENDED_POSITION = 0;
-            public double GRABBER_HOOK_POSITION = 0;
+            public double GRABBER_RETRACTED_POSITION = 2;
+            public double GRABBER_EXTENDED_POSITION = 5;
+            public double GRABBER_HOOK_POSITION = 3;
         }
     }
 }
