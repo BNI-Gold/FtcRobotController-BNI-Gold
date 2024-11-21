@@ -112,7 +112,7 @@ public class Playground1 extends OpMode {
 
         telemetry.addData("StartToChambers End Tangent: ", MathFunctions.radToDeg(fromStartToChambers.getEndTangent().getTheta()));
 
-        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue);
+        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, new double[]{0}, new double[]{-vars.Chassis.FRONT_LENGTH});
         //Same as above
 //        fromChambersToObservation.setLinearHeadingInterpolation(MathFunctions.degToRad(-90), MathFunctions.degToRad(90), .8);
         fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);

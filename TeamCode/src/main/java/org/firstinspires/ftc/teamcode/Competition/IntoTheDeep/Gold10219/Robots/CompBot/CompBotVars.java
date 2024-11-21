@@ -45,10 +45,11 @@ public class CompBotVars {
     }
 
     public static final class Mechanisms {
-        public Arm Arm = new Arm();
-        public static final class Arm {
-            public double ARM_RETRACTED_POSITION = 0;
-            public double ARM_EXTENDED_POSITION = 0;
+        public Grabber Grabber = new Grabber();
+        public static final class Grabber {
+            public double GRABBER_RETRACTED_POSITION = 0;
+            public double GRABBER_EXTENDED_POSITION = 0;
+            public double GRABBER_HOOK_POSITION = 0;
         }
     }
 }

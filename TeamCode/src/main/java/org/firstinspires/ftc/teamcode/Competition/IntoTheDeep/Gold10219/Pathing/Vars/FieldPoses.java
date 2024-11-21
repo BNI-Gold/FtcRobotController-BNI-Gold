@@ -58,7 +58,7 @@ public class FieldPoses {
 
     public static final class Observations {
         private static final double x = 12;
-        private static final double y = 22;
+        private static final double y = 14;
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
         public Pose Red = new Pose(f - x, y);
