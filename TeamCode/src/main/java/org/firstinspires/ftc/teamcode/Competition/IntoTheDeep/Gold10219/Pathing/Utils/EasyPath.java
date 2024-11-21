@@ -34,11 +34,11 @@ public class EasyPath extends Path {
         double xOffsetSum = 0;
         double yOffsetSum = 0;
 
-        for (int i = 0; i < xOffsets.length-1; i++) {
+        for (int i = 0; i < xOffsets.length; i++) {
             xOffsetSum += xOffsets[i];
         }
 
-        for (int i = 0; i < yOffsets.length-1; i++) {
+        for (int i = 0; i < yOffsets.length; i++) {
             yOffsetSum += yOffsets[i];
         }
 
