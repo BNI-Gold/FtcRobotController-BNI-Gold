@@ -104,7 +104,7 @@ public class Playground1 extends OpMode {
     }
 
     public void buildPaths() {
-        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, new double[]{}, new double[]{});
+        fromStartToChambers = new EasyPath(startPose, poses.Chambers.Blue, new double[]{vars.Chassis.WIDTH/2}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION});
         //Commenting this to try setting linear heading interpolation after 10% of path is completed (see pathState case 11)
 //        fromStartToChambers.setLinearHeadingInterpolation(startPose.getHeading(), -90, .8);
         fromStartToChambers.setConstantHeadingInterpolation(startPose.getHeading());
@@ -116,7 +116,7 @@ public class Playground1 extends OpMode {
         telemetry.addData("Blue Chamber New X:", fromStartToChambers.getLastControlPoint().getX());
         telemetry.addData("Blue Chamber New Y:", fromStartToChambers.getLastControlPoint().getY());
 
-        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{});
+        fromChambersToObservation = new EasyPath(fromStartToChambers.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
         //Same as above
 //        fromChambersToObservation.setLinearHeadingInterpolation(MathFunctions.degToRad(-90), MathFunctions.degToRad(90), .8);
         fromChambersToObservation.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(fromStartToChambers.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
