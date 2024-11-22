@@ -47,6 +47,16 @@ public class FieldPoses {
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
         public Pose Red = new Pose(x, y);
+
+        public Midpoints Midpoints = new Midpoints();
+
+        public static final class Midpoints {
+            private static final double x = 66;
+            private static final double y = 30;
+
+            public Pose Blue = new Pose(x, f-y);
+            public Pose Red = new Pose(x, y);
+        }
     }
 
     public static final class Nets {

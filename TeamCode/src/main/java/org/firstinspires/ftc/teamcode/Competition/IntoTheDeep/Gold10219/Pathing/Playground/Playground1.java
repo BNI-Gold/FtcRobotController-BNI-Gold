@@ -128,27 +128,27 @@ public class Playground1 extends OpMode {
         localizeAfterObservation1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toSample1.getEndTangent().getTheta(), poses.Recalibration.Single.A11).getValue(), poses.Recalibration.Single.A11.getHeading());
         localizeAfterObservation1.setPathEndTimeoutConstraint(3);
 
-        toSample2 = new EasyPath(toObservation1.getLastControlPoint(), poses.SampleLines.Audience.Blue2);
-        toSample2.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toObservation1.getEndTangent().getTheta(), poses.SampleLines.Audience.Blue2).getValue(), poses.SampleLines.Audience.Blue2.getHeading(), .8);
+        toSample2 = new EasyPath(toObservation1.getLastControlPoint(), poses.SampleLines.Audience.Blue1);
+        toSample2.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toObservation1.getEndTangent().getTheta(), poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading(), .8);
         toSample2.setPathEndTimeoutConstraint(3);
 
         toObservation2 = new EasyPath(toSample2.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
         toObservation2.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toSample2.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
         toObservation2.setPathEndTimeoutConstraint(3);
 
-        toChambers1 = new EasyPath(toObservation2.getLastControlPoint(), poses.Chambers.Blue, new double[]{}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION});
+        toChambers1 = new EasyPath(toObservation2.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue, new double[]{}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION});
         toChambers1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toObservation2.getEndTangent().getTheta(), poses.Chambers.Blue).getValue(), poses.Chambers.Blue.getHeading(), .8);
         toChambers1.setPathEndTimeoutConstraint(3);
 
-        toSample3 = new EasyPath(toChambers1.getLastControlPoint(), poses.SampleLines.Audience.Blue3);
-        toSample3.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toChambers1.getEndTangent().getTheta(), poses.SampleLines.Audience.Blue3).getValue(), poses.SampleLines.Audience.Blue3.getHeading(), .8);
+        toSample3 = new EasyPath(toChambers1.getLastControlPoint(), new Point(48, 144-48), poses.SampleLines.Audience.Blue1);
+        toSample3.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toChambers1.getEndTangent().getTheta(), poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading(), .8);
         toSample3.setPathEndTimeoutConstraint(3);
 
         toObservation3 = new EasyPath(toSample3.getLastControlPoint(), poses.Observations.Blue);
         toObservation3.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toSample3.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), 0.8);
         toObservation3.setPathEndTimeoutConstraint(3);
 
-        toChambers2 = new EasyPath(toObservation2.getLastControlPoint(), poses.Chambers.Blue);
+        toChambers2 = new EasyPath(toObservation2.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue);
         toChambers2.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toObservation3.getEndTangent().getTheta(), poses.Chambers.Blue).getValue(), poses.Chambers.Blue.getHeading(), 0.8);
         toChambers2.setPathEndTimeoutConstraint(3);
 
@@ -168,13 +168,8 @@ public class Playground1 extends OpMode {
                 break;
             case 12:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new BezierPoint(toSample1.getLastControlPoint()),
-                            toSample1.getEndTangent().getTheta()
-                    );
-                    if (Math.abs(pose.getPose().getHeading(AngleUnit.DEGREES) - Math.toDegrees(toSample1.getEndTangent().getTheta())) < 2) {
-                        setPathState(13);
-                    }
+                    follower.holdPoint(new BezierPoint(toSample1.getLastControlPoint()), toSample1.getEndTangent().getTheta());
+                    setPathState(13);
                 }
                 break;
             case 13:
@@ -204,7 +199,7 @@ public class Playground1 extends OpMode {
                 break;
             case 18:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.SampleLines.Audience.Blue2, new double[]{}, new double[]{})), poses.SampleLines.Audience.Blue2.getHeading());
+                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.SampleLines.Audience.Blue1, new double[]{}, new double[]{})), poses.SampleLines.Audience.Blue1.getHeading());
 //                    follower.holdPoint(new BezierPoint(new Point(poses.Recalibration.Single.A11)), poses.Recalibration.Single.A11.getHeading());
                     l = follower.getPose();
                     setPathState(19);
