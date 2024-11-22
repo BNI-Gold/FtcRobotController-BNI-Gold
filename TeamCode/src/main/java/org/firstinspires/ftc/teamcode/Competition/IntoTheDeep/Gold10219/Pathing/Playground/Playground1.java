@@ -162,14 +162,19 @@ public class Playground1 extends OpMode {
                 break;
             case 11:
                 if (follower.getCurrentTValue() > 0.1) {
-                    toSample3.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading());
+                    toSample1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading());
                     setPathState(12);
                 }
                 break;
             case 12:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.SampleLines.Audience.Blue1, new double[]{}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION})), poses.SampleLines.Audience.Blue1.getHeading());
-                    setPathState(13);
+                    follower.holdPoint(
+                            new BezierPoint(toSample1.getLastControlPoint()),
+                            toSample1.getEndTangent().getTheta()
+                    );
+                    if (Math.abs(pose.getPose().getHeading(AngleUnit.DEGREES) - Math.toDegrees(toSample1.getEndTangent().getTheta())) < 2) {
+                        setPathState(13);
+                    }
                 }
                 break;
             case 13:
