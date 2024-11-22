@@ -9,14 +9,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPath;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.SafeInterpolationStartHeading;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPoint;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Pathing.EasySafePath;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Pathing.HeadingPath;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Pathing.HeadingTypes;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Vars.FieldPoses;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierPoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.Timer;
@@ -39,8 +41,6 @@ public class Playground1 extends OpMode {
     private Timer pathTimer;
 
     private Path toSample1, toObservation1, toSample2, toObservation2, toChambers1, toSample3, toObservation3, toChambers2;
-    private Path localizeAfterObservation1;
-
     private int pathState;
 
     @Override
@@ -116,41 +116,32 @@ public class Playground1 extends OpMode {
     }
 
     public void buildPaths() {
-        toSample1 = new EasyPath(startPose, poses.SampleLines.Audience.Blue1);
-        toSample1.setConstantHeadingInterpolation(startPose.getHeading());
-        toSample1.setPathEndTimeoutConstraint(3);
+        toSample1 = new EasySafePath(startPose, poses.SampleLines.Audience.Blue1)
+                .setHeading(HeadingTypes.CONSTANT, startPose);
 
-        toObservation1 = new EasyPath(toSample1.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
-        toObservation1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toSample1.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
-        toObservation1.setPathEndTimeoutConstraint(3);
+        toObservation1 = new EasySafePath(toSample1.getLastControlPoint(), poses.Observations.Blue,
+                new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION))
+                .setHeading(HeadingTypes.LINEAR, toSample1, poses.Observations.Blue);
 
-        localizeAfterObservation1 = new EasyPath(toSample1.getLastControlPoint(), poses.Recalibration.Single.A11);
-        localizeAfterObservation1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toSample1.getEndTangent().getTheta(), poses.Recalibration.Single.A11).getValue(), poses.Recalibration.Single.A11.getHeading());
-        localizeAfterObservation1.setPathEndTimeoutConstraint(3);
+        toSample2 = new EasySafePath(toObservation1.getLastControlPoint(), poses.SampleLines.Audience.Blue1)
+                .setHeading(HeadingTypes.LINEAR, toObservation1, poses.SampleLines.Audience.Blue1);
 
-        toSample2 = new EasyPath(toObservation1.getLastControlPoint(), poses.SampleLines.Audience.Blue1);
-        toSample2.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toObservation1.getEndTangent().getTheta(), poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading(), .8);
-        toSample2.setPathEndTimeoutConstraint(3);
+        toObservation2 = new EasySafePath(toSample2.getLastControlPoint(), poses.Observations.Blue,
+                new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION))
+                .setHeading(HeadingTypes.LINEAR, toSample2, poses.Observations.Blue);
 
-        toObservation2 = new EasyPath(toSample2.getLastControlPoint(), poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION});
-        toObservation2.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toSample2.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), .8);
-        toObservation2.setPathEndTimeoutConstraint(3);
+        toChambers1 = new EasySafePath(toObservation2.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue,
+                new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION))
+                .setHeading(HeadingTypes.LINEAR, toObservation2, poses.Chambers.Blue);
 
-        toChambers1 = new EasyPath(toObservation2.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue, new double[]{}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION});
-        toChambers1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toObservation2.getEndTangent().getTheta(), poses.Chambers.Blue).getValue(), poses.Chambers.Blue.getHeading(), .8);
-        toChambers1.setPathEndTimeoutConstraint(3);
+        toSample3 = new EasySafePath(toChambers1.getLastControlPoint(), new Point(48, 144 - 48), poses.SampleLines.Audience.Blue1)
+                .setHeading(HeadingTypes.LINEAR, toChambers1, poses.SampleLines.Audience.Blue1);
 
-        toSample3 = new EasyPath(toChambers1.getLastControlPoint(), new Point(48, 144-48), poses.SampleLines.Audience.Blue1);
-        toSample3.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toChambers1.getEndTangent().getTheta(), poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading(), .8);
-        toSample3.setPathEndTimeoutConstraint(3);
+        toObservation3 = new EasySafePath(toSample3.getLastControlPoint(), poses.Observations.Blue)
+                .setHeading(HeadingTypes.LINEAR, toSample3, poses.Observations.Blue);
 
-        toObservation3 = new EasyPath(toSample3.getLastControlPoint(), poses.Observations.Blue);
-        toObservation3.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toSample3.getEndTangent().getTheta(), poses.Observations.Blue).getValue(), poses.Observations.Blue.getHeading(), 0.8);
-        toObservation3.setPathEndTimeoutConstraint(3);
-
-        toChambers2 = new EasyPath(toObservation2.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue);
-        toChambers2.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(toObservation3.getEndTangent().getTheta(), poses.Chambers.Blue).getValue(), poses.Chambers.Blue.getHeading(), 0.8);
-        toChambers2.setPathEndTimeoutConstraint(3);
+        toChambers2 = new EasySafePath(toObservation2.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue)
+                .setHeading(HeadingTypes.LINEAR, toObservation3, poses.Chambers.Blue);
 
     }
 
@@ -162,13 +153,15 @@ public class Playground1 extends OpMode {
                 break;
             case 11:
                 if (follower.getCurrentTValue() > 0.1) {
-                    toSample1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading());
+                    //TODO: if initial heading doesn't work as expected, this is why.
+//                    toSample1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading());
+                    ((HeadingPath) toSample1).setHeading(HeadingTypes.LINEAR, startPose, poses.SampleLines.Audience.Blue1);
                     setPathState(12);
                 }
                 break;
             case 12:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(toSample1.getLastControlPoint()), toSample1.getEndTangent().getTheta());
+                    follower.holdPoint(new EasyPoint(poses.SampleLines.Audience.Blue1), poses.SampleLines.Audience.Blue1.getHeading());
                     setPathState(13);
                 }
                 break;
@@ -183,7 +176,10 @@ public class Playground1 extends OpMode {
                 break;
             case 15:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION})), poses.Observations.Blue.getHeading());
+                    follower.holdPoint(
+                            new EasyPoint(poses.Observations.Blue,
+                                    new Offsets().remY(-vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
+                            poses.Observations.Blue.getHeading());
                     setPathState(16);
                 }
                 break;
@@ -193,14 +189,12 @@ public class Playground1 extends OpMode {
                 }
                 break;
             case 17:
-//                follower.followPath(localizeAfterObservation1);
                 follower.followPath(toSample2);
                 setPathState(18);
                 break;
             case 18:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.SampleLines.Audience.Blue1, new double[]{}, new double[]{})), poses.SampleLines.Audience.Blue1.getHeading());
-//                    follower.holdPoint(new BezierPoint(new Point(poses.Recalibration.Single.A11)), poses.Recalibration.Single.A11.getHeading());
+                    follower.holdPoint(new EasyPoint(poses.SampleLines.Audience.Blue1), poses.SampleLines.Audience.Blue1.getHeading());
                     l = follower.getPose();
                     setPathState(19);
 
@@ -217,7 +211,10 @@ public class Playground1 extends OpMode {
                 break;
             case 21:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION})), poses.Observations.Blue.getHeading());
+                    follower.holdPoint(
+                            new EasyPoint(poses.Observations.Blue,
+                                    new Offsets().remY(-vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
+                            poses.Observations.Blue.getHeading());
                     l = follower.getPose();
                     setPathState(22);
                 }
@@ -233,7 +230,10 @@ public class Playground1 extends OpMode {
                 break;
             case 24:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.Chambers.Blue, new double[]{}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION})), poses.Chambers.Blue.getHeading());
+                    follower.holdPoint(
+                            new EasyPoint(poses.Chambers.Blue,
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                            poses.Chambers.Blue.getHeading());
                     setPathState(25);
                 }
                 break;
@@ -248,7 +248,10 @@ public class Playground1 extends OpMode {
                 break;
             case 27:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.Observations.Blue, new double[]{}, new double[]{-vars.Chassis.FRONT_LENGTH - vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION})), poses.Observations.Blue.getHeading());
+                    follower.holdPoint(
+                            new EasyPoint(poses.Observations.Blue,
+                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
+                            poses.Observations.Blue.getHeading());
                     setPathState(28);
                 }
                 break;
@@ -263,7 +266,10 @@ public class Playground1 extends OpMode {
                 break;
             case 30:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new BezierPoint(generateOffsetPoint(poses.Chambers.Blue, new double[]{}, new double[]{vars.Chassis.FRONT_LENGTH + vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION})), poses.Chambers.Blue.getHeading());
+                    follower.holdPoint(
+                            new EasyPoint(poses.Chambers.Blue,
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                            poses.Chambers.Blue.getHeading());
                 }
         }
     }
@@ -272,35 +278,5 @@ public class Playground1 extends OpMode {
         pathState = state;
         pathTimer.resetTimer();
         autonomousPathUpdate();
-    }
-
-    public static Point generateOffsetPoint(Point finalPoint, double[] xOffsets, double[] yOffsets) {
-        double xOffsetSum = 0;
-        double yOffsetSum = 0;
-
-        for (int i = 0; i < xOffsets.length; i++) {
-            xOffsetSum += xOffsets[i];
-        }
-
-        for (int i = 0; i < yOffsets.length; i++) {
-            yOffsetSum += yOffsets[i];
-        }
-
-        return new Point(finalPoint.getX() + xOffsetSum, finalPoint.getY() + yOffsetSum);
-    }
-
-    public static Point generateOffsetPoint(Pose finalPose, double[] xOffsets, double[] yOffsets) {
-        double xOffsetSum = 0;
-        double yOffsetSum = 0;
-
-        for (int i = 0; i < xOffsets.length; i++) {
-            xOffsetSum += xOffsets[i];
-        }
-
-        for (int i = 0; i < yOffsets.length; i++) {
-            yOffsetSum += yOffsets[i];
-        }
-
-        return new Point(finalPose.getX() + xOffsetSum, finalPose.getY() + yOffsetSum);
     }
 }
