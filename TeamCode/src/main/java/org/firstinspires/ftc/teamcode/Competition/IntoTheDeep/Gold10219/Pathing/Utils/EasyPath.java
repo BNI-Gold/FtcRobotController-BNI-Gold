@@ -19,7 +19,7 @@ public class EasyPath extends Path {
     }
 
     public EasyPath(Object startPoint, Object endPoint, double[] xOffsets, double[] yOffsets) {
-        super(new BezierCurve(toPoint(startPoint), generateMidPoint(startPoint, endPoint), generateOffsetPoint(endPoint, xOffsets, yOffsets)));
+        super(new BezierCurve(toPoint(startPoint), generateMidPoint(startPoint, endPoint), generateOffsetPoint(new SafePoint(generateMidPoint(startPoint, endPoint), toPoint(endPoint)), xOffsets, yOffsets)));
     }
 
     public EasyPath(Object startPoint, Object midPoint, Object endPoint, double[] xOffsets, double[] yOffsets) {
