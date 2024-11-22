@@ -11,4 +11,6 @@ public interface HeadingPath {
     HeadingPath setHeading(HeadingTypes type, Pose pose1, Pose pose2);
 
     HeadingPath setHeading(HeadingTypes type, double radian, Pose pose);
+
+    HeadingPath setHeading(HeadingTypes type, Pose pose, double radian);
 }

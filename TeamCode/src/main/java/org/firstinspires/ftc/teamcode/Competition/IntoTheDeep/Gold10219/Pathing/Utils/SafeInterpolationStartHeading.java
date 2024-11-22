@@ -23,6 +23,21 @@ public class SafeInterpolationStartHeading {
                 * MathFunctions.getSmallestAngleDifference(startHeading, endHeading);
     }
 
+    public SafeInterpolationStartHeading(Pose startPose, double endHeading) {
+        double startHeading = startPose.getHeading();
+        this.value = startHeading
+                - 0.1
+                * MathFunctions.getTurnDirection(startHeading, endHeading)
+                * MathFunctions.getSmallestAngleDifference(startHeading, endHeading);
+    }
+
+    public SafeInterpolationStartHeading(double startHeading, double endHeading) {
+        this.value = startHeading
+                - 0.1
+                * MathFunctions.getTurnDirection(startHeading, endHeading)
+                * MathFunctions.getSmallestAngleDifference(startHeading, endHeading);
+    }
+
     public double getValue() {
         return value;
     }

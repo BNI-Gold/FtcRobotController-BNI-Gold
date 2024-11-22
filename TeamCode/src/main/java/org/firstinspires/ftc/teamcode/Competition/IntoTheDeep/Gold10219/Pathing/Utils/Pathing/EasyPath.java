@@ -25,6 +25,11 @@ public class EasyPath extends Path {
         this.setPathEndTimeoutConstraint(3);
     }
 
+    public EasyPath(Object startPoint, Object control1, Object control2, Object control3, Object finalPoint) {
+        super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), toPoint(control3), toPoint(finalPoint)));
+        this.setPathEndTimeoutConstraint(3);
+    }
+
     public EasyPath(Object startPoint, Object endPoint, Offsets offsets) {
         super(new BezierCurve(toPoint(startPoint), generateMidPoint(startPoint, endPoint), generateOffsetPoint(endPoint, offsets)));
         this.setPathEndTimeoutConstraint(3);
@@ -37,6 +42,11 @@ public class EasyPath extends Path {
 
     public EasyPath(Object startPoint, Object control1, Object control2, Object endPoint, Offsets offsets) {
         super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), generateOffsetPoint(endPoint, offsets)));
+        this.setPathEndTimeoutConstraint(3);
+    }
+
+    public EasyPath(Object startPoint, Object control1, Object control2, Object control3, Object endPoint, Offsets offsets) {
+        super(new BezierCurve(toPoint(startPoint), toPoint(control1), toPoint(control2), toPoint(control3), generateOffsetPoint(endPoint, offsets)));
         this.setPathEndTimeoutConstraint(3);
     }
 
@@ -70,6 +80,24 @@ public class EasyPath extends Path {
     public EasyPath setHeading(HeadingTypes type, double radian, Pose pose) {
         if (type == HeadingTypes.LINEAR) {
             this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(radian, pose).getValue(), pose.getHeading());
+        } else {
+            throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
+        }
+        return this;
+    }
+
+    public EasyPath setHeading(HeadingTypes type, Pose pose, double radian) {
+        if (type == HeadingTypes.LINEAR) {
+            this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(pose, radian).getValue(), radian, .8);
+        } else {
+            throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
+        }
+        return this;
+    }
+
+    public EasyPath setHeading(HeadingTypes type, Path path, double radian) {
+        if (type == HeadingTypes.LINEAR) {
+            this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(path.getEndTangent().getTheta(), radian).getValue(), radian, .8);
         } else {
             throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
         }

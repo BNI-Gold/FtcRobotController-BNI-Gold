@@ -15,12 +15,16 @@ public class FieldPoses {
         public Audience Audience = new Audience();
         public Rear Rear = new Rear();
 
+        public double pushApproachAngle = Math.toRadians(90);
+
         private static final double x1 = 23.5;
         private static final double x2 = 13.5;
         private static final double x3 = 3.5;
         private static final double y = 46.25;
 
         public static final class Audience {
+            public Midpoints Midpoints = new Midpoints();
+
             public Pose Blue1 = new Pose(x1, f - y);
             public Pose Blue2 = new Pose(x2, f - y);
             public Pose Blue3 = new Pose(x3, f - y);
@@ -28,9 +32,16 @@ public class FieldPoses {
             public Pose Neutral1 = new Pose(x1, y);
             public Pose Neutral2 = new Pose(x2, y);
             public Pose Neutral3 = new Pose(x3, y);
+
+            public static final class Midpoints {
+                public Pose Pre = new Pose(36, f - 36);
+                public Pose Post = new Pose(36, f - 60);
+            }
         }
 
         public static final class Rear {
+            public FieldPoses.SampleLines.Audience.Midpoints Midpoints = new Audience.Midpoints();
+
             public Pose Neutral1 = new Pose(f - x1, f - y);
             public Pose Neutral2 = new Pose(f - x2, f - y);
             public Pose Neutral3 = new Pose(f - x3, f - y);
@@ -38,6 +49,11 @@ public class FieldPoses {
             public Pose Red1 = new Pose(f - x1, y);
             public Pose Red2 = new Pose(f - x2, y);
             public Pose Red3 = new Pose(f - x2, y);
+
+            public static final class Midpoints {
+                public Pose Pre = new Pose(f - 36, f - 36);
+                public Pose Post = new Pose(f - 36, f - 60);
+            }
         }
     }
 
@@ -51,10 +67,10 @@ public class FieldPoses {
         public Midpoints Midpoints = new Midpoints();
 
         public static final class Midpoints {
-            private static final double x = 66;
+            private static final double x = 48;
             private static final double y = 30;
 
-            public Pose Blue = new Pose(x, f-y);
+            public Pose Blue = new Pose(x, f - y);
             public Pose Red = new Pose(x, y);
         }
     }
