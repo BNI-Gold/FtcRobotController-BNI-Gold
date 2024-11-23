@@ -105,6 +105,51 @@ public class EasySafePath extends Path {
         return this;
     }
 
+    public EasySafePath setHeading(HeadingTypes type, Path path, Pose pose, double end) {
+        if (type == HeadingTypes.LINEAR) {
+            this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(path.getEndTangent().getTheta(), pose).getValue(), pose.getHeading(), end);
+        } else {
+            throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
+        }
+        return this;
+    }
+
+    public EasySafePath setHeading(HeadingTypes type, Pose pose1, Pose pose2, double end) {
+        if (type == HeadingTypes.LINEAR) {
+            this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(pose1.getHeading(), pose2).getValue(), pose2.getHeading(), end);
+        } else {
+            throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
+        }
+        return this;
+    }
+
+    public EasySafePath setHeading(HeadingTypes type, double radian, Pose pose, double end) {
+        if (type == HeadingTypes.LINEAR) {
+            this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(radian, pose).getValue(), pose.getHeading(), end);
+        } else {
+            throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
+        }
+        return this;
+    }
+
+    public EasySafePath setHeading(HeadingTypes type, Pose pose, double radian, double end) {
+        if (type == HeadingTypes.LINEAR) {
+            this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(pose, radian).getValue(), radian, end);
+        } else {
+            throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
+        }
+        return this;
+    }
+
+    public EasySafePath setHeading(HeadingTypes type, Path path, double radian, double end) {
+        if (type == HeadingTypes.LINEAR) {
+            this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(path.getEndTangent().getTheta(), radian).getValue(), radian, end);
+        } else {
+            throw new InvalidParameterException("For Constant heading interpolation, only pass in a pose.");
+        }
+        return this;
+    }
+
     private static Point generateOffsetPoint(Object finalPoint, Offsets offsets) {
         double xOffsetSum = offsets.getXTotalOffsets();
         double yOffsetSum = offsets.getYTotalOffsets();

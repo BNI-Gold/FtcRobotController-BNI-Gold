@@ -34,8 +34,9 @@ public class FieldPoses {
             public Pose Neutral3 = new Pose(x3, y);
 
             public static final class Midpoints {
-                public Pose Pre = new Pose(36, f - 24);
-                public Pose Post = new Pose(36, f - 72);
+                public Pose Slip = new Pose(30, f-24);
+                public Pose Pre = new Pose(33, f - 24);
+                public Pose Post = new Pose(42, 144-66);
             }
         }
 
@@ -67,7 +68,7 @@ public class FieldPoses {
         public Midpoints Midpoints = new Midpoints();
 
         public static final class Midpoints {
-            private static final double x = 48;
+            private static final double x = 36;
             private static final double y = 30;
 
             public Pose Blue = new Pose(x, f - y);
@@ -87,8 +88,16 @@ public class FieldPoses {
         private static final double x = 12;
         private static final double y = 14;
 
+        public Retreats Retreats = new Retreats();
+
         public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
         public Pose Red = new Pose(f - x, y);
+
+        public static final class Retreats {
+            private static final double y = 20;
+            public Pose Blue = new Pose(x, f-y);
+            public Pose Red = new Pose(f-x, y);
+        }
     }
 
     public static final class Recalibration {
