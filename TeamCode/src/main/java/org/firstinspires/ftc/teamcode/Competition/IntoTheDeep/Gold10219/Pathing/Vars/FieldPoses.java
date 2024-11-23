@@ -23,20 +23,38 @@ public class FieldPoses {
         private static final double y = 46.25;
 
         public static final class Audience {
-            public Midpoints Midpoints = new Midpoints();
-
-            public Pose Blue1 = new Pose(x1, f - y);
-            public Pose Blue2 = new Pose(x2, f - y);
-            public Pose Blue3 = new Pose(x3, f - y);
+            public Blue Blue = new Blue();
 
             public Pose Neutral1 = new Pose(x1, y);
             public Pose Neutral2 = new Pose(x2, y);
             public Pose Neutral3 = new Pose(x3, y);
 
-            public static final class Midpoints {
-                public Pose Slip = new Pose(30, f - 24);
-                public Pose Pre = new Pose(33, f - 24);
-                public Pose Post = new Pose(42, 144 - 66);
+            public static final class Blue {
+                public B1 B1 = new B1();
+                public B2 B2 = new B2();
+                public B3 B3 = new B3();
+
+                public static final class B1 {
+                    public Pose Sample = new Pose(x1, f-y);
+
+                    public Pose Slip = new Pose(30, f - 24);
+                    public Pose Pre = new Pose(33, f - 24);
+                    public Pose Post = new Pose(42, f - 66);
+                }
+
+                public static final class B2 {
+                    public Pose Sample = new Pose(x2, f-y);
+
+                    public Pose Pre = new Pose(28, f-24);
+                    public Pose Post = new Pose(35, f-66);
+                }
+
+                public static final class B3 {
+                    public Pose Sample = new Pose(x3, f-y);
+
+                    public Pose Pre = new Pose(13, f-24);
+                    public Pose Post = new Pose(22, f-66);
+                }
             }
         }
 

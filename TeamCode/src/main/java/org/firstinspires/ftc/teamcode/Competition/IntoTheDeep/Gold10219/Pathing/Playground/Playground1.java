@@ -120,14 +120,14 @@ public class Playground1 extends OpMode {
                 new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION))
                 .setHeading(HeadingTypes.CONSTANT, startPose);
 
-        toSample1 = new EasySafePath(startPose, poses.SampleLines.Audience.Midpoints.Slip, poses.SampleLines.Audience.Midpoints.Post, poses.SampleLines.Audience.Blue1,
+        toSample1 = new EasySafePath(startPose, poses.SampleLines.Audience.Blue.B1.Slip, poses.SampleLines.Audience.Blue.B1.Post, poses.SampleLines.Audience.Blue.B1.Sample,
                 new Offsets().remY(vars.Chassis.FRONT_LENGTH))
                 .setHeading(HeadingTypes.LINEAR, toChambers1, poses.SampleLines.pushApproachAngle, .35);
 
-        toObservation1 = new EasySafePath(toSample1.getLastControlPoint(), poses.SampleLines.Audience.Midpoints.Pre, poses.Observations.Blue)
+        toObservation1 = new EasySafePath(toSample1.getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Pre, poses.Observations.Blue)
                 .setHeading(HeadingTypes.CONSTANT, poses.Observations.Blue);
 
-        toSample2 = new EasySafePath(toObservation1.getLastControlPoint(), poses.Observations.Retreats.Blue, poses.SampleLines.Audience.Midpoints.Pre, poses.SampleLines.Audience.Midpoints.Post, poses.SampleLines.Audience.Blue2,
+        toSample2 = new EasySafePath(toObservation1.getLastControlPoint(), poses.Observations.Retreats.Blue, poses.SampleLines.Audience.Blue.B2.Pre, poses.SampleLines.Audience.Blue.B2.Post, poses.SampleLines.Audience.Blue.B2.Sample,
                 new Offsets().remY(vars.Chassis.FRONT_LENGTH))
                 .setHeading(HeadingTypes.CONSTANT, poses.SampleLines.pushApproachAngle);
 
@@ -138,16 +138,12 @@ public class Playground1 extends OpMode {
                 new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION))
                 .setHeading(HeadingTypes.LINEAR, toObservation2, poses.Chambers.Blue);
 
-        toSample3 = new EasySafePath(toChambers1.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.SampleLines.Audience.Midpoints.Pre, poses.SampleLines.Audience.Midpoints.Post, poses.SampleLines.Audience.Blue1)
+        toSample3 = new EasySafePath(toChambers1.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.SampleLines.Audience.Blue.B3.Pre, poses.SampleLines.Audience.Blue.B3.Post, poses.SampleLines.Audience.Blue.B3.Sample)
                 .setHeading(HeadingTypes.LINEAR, toChambers1, poses.SampleLines.pushApproachAngle);
 
         toObservation3 = new EasySafePath(toSample3.getLastControlPoint(), poses.Observations.Blue,
                 new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION))
                 .setHeading(HeadingTypes.LINEAR, toSample3, poses.Observations.Blue);
-
-        toChambers2 = new EasySafePath(toObservation3.getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue,
-                new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION))
-                .setHeading(HeadingTypes.LINEAR, toObservation3, poses.Chambers.Blue);
 
         toObservation4 = new EasySafePath(toChambers2.getLastControlPoint(), poses.Observations.Blue,
                 new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION))
@@ -209,16 +205,17 @@ public class Playground1 extends OpMode {
             case 15:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.SampleLines.Audience.Blue1),
+                            new EasyPoint(poses.SampleLines.Audience.Blue.B1.Sample),
                             poses.SampleLines.pushApproachAngle
                     );
                     setPathState(16);
                 }
                 break;
             case 16:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(17);
-                }
+//                if (pathTimer.getElapsedTime() > 500) {
+//
+//                }
+                setPathState(17);
                 break;
             case 17:
                 follower.followPath(toObservation1);
@@ -245,7 +242,7 @@ public class Playground1 extends OpMode {
             case 21:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.SampleLines.Audience.Blue2),
+                            new EasyPoint(poses.SampleLines.Audience.Blue.B2.Sample),
                             poses.SampleLines.pushApproachAngle
                     );
                     l = follower.getPose();
@@ -253,13 +250,14 @@ public class Playground1 extends OpMode {
                 }
                 break;
             case 22:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(23);
-                }
+//                if (pathTimer.getElapsedTime() > 500) {
+//
+//                }
+                setPathState(23);
                 break;
             case 23:
                 follower.followPath(toObservation2);
-                setPathState(21);
+                setPathState(24);
                 break;
             case 24:
                 if (!follower.isBusy()) {
