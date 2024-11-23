@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetra
 
 public class PrimaryArm {
     public HardwareMap hwBot = null;
-    public LinearOpMode LinearOp = null;
+    public OpMode OpMode = null;
     public DcMotor rotator = null;
     public DcMotor arm = null;
     public double rotationUpPower = .75;
@@ -19,9 +20,9 @@ public class PrimaryArm {
     
     public PrimaryArm() {}
 
-    public void initPrimaryArm(HardwareMap hwMap, LinearOpMode LinearOp) {
+    public void initPrimaryArm(HardwareMap hwMap, OpMode OpMode) {
         hwBot = hwMap;
-        this.LinearOp = LinearOp;
+        this.OpMode = OpMode;
 
         rotator = hwBot.dcMotor.get("primary_arm_rotator");
         arm = hwBot.dcMotor.get("viper_slide");
@@ -31,6 +32,13 @@ public class PrimaryArm {
 
         rotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    private boolean isOpModeActive() {
+        if (OpMode instanceof LinearOpMode) {
+            return ((LinearOpMode) OpMode).opModeIsActive();
+        }
+        return true;  // Default for regular OpMode
     }
 
     public void up(boolean s) {
@@ -54,7 +62,7 @@ public class PrimaryArm {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
+        while (Math.abs(rotator.getCurrentPosition()) < ticks && isOpModeActive()) {
             up(s);
         }
         stopRotation();
@@ -63,7 +71,7 @@ public class PrimaryArm {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while (Math.abs(rotator.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
+        while (Math.abs(rotator.getCurrentPosition()) < ticks && isOpModeActive()) {
             down(s);
         }
         stopRotation();
@@ -81,10 +89,10 @@ public class PrimaryArm {
         double ticks = rotations * MecanumDrive.MOTOR_TICKS_PER_ROTATION;
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while(Math.abs(arm.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
+        while(Math.abs(arm.getCurrentPosition()) < ticks && isOpModeActive()) {
             extend(power);
-            LinearOp.telemetry.addData("ArmRotations: ", arm.getCurrentPosition());
-            LinearOp.telemetry.update();
+            OpMode.telemetry.addData("ArmRotations: ", arm.getCurrentPosition());
+            OpMode.telemetry.update();
         }
         stop();
     }
@@ -92,7 +100,7 @@ public class PrimaryArm {
         double ticks = rotations * (1) * MecanumDrive.MOTOR_TICKS_PER_ROTATION;
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while(Math.abs(arm.getCurrentPosition()) < ticks && LinearOp.opModeIsActive()) {
+        while(Math.abs(arm.getCurrentPosition()) < ticks && isOpModeActive()) {
             retract(power);
         }
         stop();
