@@ -60,6 +60,15 @@ public class EasySafePath extends Path {
         return this;
     }
 
+    public EasySafePath setHeading(HeadingTypes type, double radian) {
+        if (type == HeadingTypes.CONSTANT) {
+            this.setConstantHeadingInterpolation(radian);
+        } else {
+            throw new InvalidParameterException("For Linear heading interpolation, pass in a path or radian, as well as a pose.");
+        }
+        return this;
+    }
+
     public EasySafePath setHeading(HeadingTypes type, Path path, Pose pose) {
         if (type == HeadingTypes.LINEAR) {
             this.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(path.getEndTangent().getTheta(), pose).getValue(), pose.getHeading(), .8);

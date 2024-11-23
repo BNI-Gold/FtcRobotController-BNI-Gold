@@ -34,14 +34,14 @@ public class FieldPoses {
             public Pose Neutral3 = new Pose(x3, y);
 
             public static final class Midpoints {
-                public Pose Slip = new Pose(30, f-24);
+                public Pose Slip = new Pose(30, f - 24);
                 public Pose Pre = new Pose(33, f - 24);
-                public Pose Post = new Pose(42, 144-66);
+                public Pose Post = new Pose(42, 144 - 66);
             }
         }
 
         public static final class Rear {
-            public FieldPoses.SampleLines.Audience.Midpoints Midpoints = new Audience.Midpoints();
+            public Midpoints Midpoints = new Midpoints();
 
             public Pose Neutral1 = new Pose(f - x1, f - y);
             public Pose Neutral2 = new Pose(f - x2, f - y);
