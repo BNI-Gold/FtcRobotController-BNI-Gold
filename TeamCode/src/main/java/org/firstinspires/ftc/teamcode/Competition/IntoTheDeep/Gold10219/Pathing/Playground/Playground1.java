@@ -182,7 +182,7 @@ public class Playground1 extends OpMode {
                 if (follower.getCurrentTValue() > 0.1) {
                     //TODO: if initial heading doesn't work as expected, this is why. If so, make sure to adjust the original 'setLinearHeadingInterpolation' to use the new final heading.
 //                    toSample1.setLinearHeadingInterpolation(new SafeInterpolationStartHeading(startPose, poses.SampleLines.Audience.Blue1).getValue(), poses.SampleLines.Audience.Blue1.getHeading());
-                    ((HeadingPath) toSample1).setHeading(HeadingTypes.LINEAR, startPose, poses.SampleLines.pushApproachAngle);
+                    ((EasySafePath) toSample1).setHeading(HeadingTypes.LINEAR, startPose, poses.SampleLines.pushApproachAngle);
                     setPathState(12);
                 }
                 break;
@@ -208,7 +208,7 @@ public class Playground1 extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Observations.Blue,
-                                    new Offsets().remY(-vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
+                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
                             poses.Observations.Blue.getHeading()
                     );
                     setPathState(16);
@@ -247,7 +247,7 @@ public class Playground1 extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Observations.Blue,
-                                    new Offsets().remY(-vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
+                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
                             poses.Observations.Blue.getHeading()
                     );
                     setPathState(22);

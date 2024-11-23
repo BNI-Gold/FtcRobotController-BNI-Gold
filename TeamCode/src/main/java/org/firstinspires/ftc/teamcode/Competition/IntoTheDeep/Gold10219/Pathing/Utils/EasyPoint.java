@@ -14,16 +14,8 @@ public class EasyPoint extends BezierPoint {
     }
 
     public static Point generateOffsetPoint(Point finalPoint, Offsets offsets) {
-        double xOffsetSum = 0;
-        double yOffsetSum = 0;
-
-        for (int i = 0; i < offsets.getXAsArray().length; i++) {
-            xOffsetSum += offsets.getXAsArray()[i];
-        }
-
-        for (int i = 0; i < offsets.getYAsArray().length; i++) {
-            yOffsetSum += offsets.getYAsArray()[i];
-        }
+        double xOffsetSum = offsets.getXTotalOffsets();
+        double yOffsetSum = offsets.getYTotalOffsets();
 
         return new Point(finalPoint.getX() + xOffsetSum, finalPoint.getY() + yOffsetSum);
     }

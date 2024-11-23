@@ -106,16 +106,8 @@ public class EasySafePath extends Path {
     }
 
     private static Point generateOffsetPoint(Object finalPoint, Offsets offsets) {
-        double xOffsetSum = 0;
-        double yOffsetSum = 0;
-
-        for (int i = 0; i < offsets.getXAsArray().length; i++) {
-            xOffsetSum += offsets.getXAsArray()[i];
-        }
-
-        for (int i = 0; i < offsets.getYAsArray().length; i++) {
-            yOffsetSum += offsets.getYAsArray()[i];
-        }
+        double xOffsetSum = offsets.getXTotalOffsets();
+        double yOffsetSum = offsets.getYTotalOffsets();
 
         Point finalPointPoint = toPoint(finalPoint);
         return new Point(finalPointPoint.getX() + xOffsetSum, finalPointPoint.getY() + yOffsetSum);

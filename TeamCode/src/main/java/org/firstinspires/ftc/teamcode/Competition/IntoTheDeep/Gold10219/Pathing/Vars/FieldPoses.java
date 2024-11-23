@@ -34,8 +34,8 @@ public class FieldPoses {
             public Pose Neutral3 = new Pose(x3, y);
 
             public static final class Midpoints {
-                public Pose Pre = new Pose(36, f - 36);
-                public Pose Post = new Pose(36, f - 60);
+                public Pose Pre = new Pose(36, f - 24);
+                public Pose Post = new Pose(36, f - 72);
             }
         }
 

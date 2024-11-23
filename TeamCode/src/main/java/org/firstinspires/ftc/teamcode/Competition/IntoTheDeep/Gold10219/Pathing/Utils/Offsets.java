@@ -41,19 +41,11 @@ public class Offsets {
         return this;
     }
 
-    public double[] getXAsArray() {
-        double[] result = new double[this.x.size()];
-        for (int i = 0; i < this.x.size(); i++) {
-            result[i] = this.x.get(i);
-        }
-        return result;
+    public double getXTotalOffsets() {
+        return this.x.stream().mapToDouble(Double::doubleValue).sum();
     }
 
-    public double[] getYAsArray() {
-        double[] result = new double[this.y.size()];
-        for (int i = 0; i < this.y.size(); i++) {
-            result[i] = this.y.get(i);
-        }
-        return result;
+    public double getYTotalOffsets() {
+        return this.y.stream().mapToDouble(Double::doubleValue).sum();
     }
 }
