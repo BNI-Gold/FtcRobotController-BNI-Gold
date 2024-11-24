@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Playground;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Playground;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -9,12 +9,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Pathing.EasySafePath;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Pathing.HeadingPath;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Pathing.HeadingTypes;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Vars.FieldPoses;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Utils.EasyPoint;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Utils.Offsets;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Utils.Pathing.EasySafePath;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Utils.Pathing.HeadingTypes;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars.FieldPoses;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
@@ -285,160 +284,6 @@ public class Playground1 extends OpMode {
                             poses.Chambers.Blue.getHeading()
                     );
 //                    setPathState(28);
-                }
-                break;
-            case 28:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(29);
-                }
-                break;
-            case 29:
-                follower.followPath(toObservation3);
-                setPathState(30);
-                break;
-            case 30:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Observations.Blue,
-                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
-                            poses.Observations.Blue.getHeading()
-                    );
-                    setPathState(31);
-                }
-                break;
-            case 31:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(32);
-                }
-                break;
-            case 32:
-                follower.followPath(toChambers2);
-                setPathState(33);
-                break;
-            case 33:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
-                            poses.Chambers.Blue.getHeading()
-                    );
-
-                    //TODO: Uncomment below to test entire 5-specimen auto
-                    setPathState(34);
-                }
-                break;
-            case 34:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(35);
-                }
-                break;
-            case 35:
-                follower.followPath(toObservation4);
-                setPathState(36);
-                break;
-            case 36:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Observations.Blue,
-                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
-                            poses.Observations.Blue.getHeading()
-                    );
-                    setPathState(37);
-                }
-                break;
-            case 37:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(38);
-                }
-                break;
-            case 38:
-                follower.followPath(toChambers3);
-                setPathState(39);
-                break;
-            case 39:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
-                            poses.Chambers.Blue.getHeading()
-                    );
-                    setPathState(40);
-                }
-                break;
-            case 40:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(41);
-                }
-                break;
-            case 41:
-                follower.followPath(toObservation5);
-                setPathState(42);
-                break;
-            case 42:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Observations.Blue,
-                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
-                            poses.Observations.Blue.getHeading()
-                    );
-                    setPathState(43);
-                }
-                break;
-            case 43:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(44);
-                }
-                break;
-            case 44:
-                follower.followPath(toChambers4);
-                setPathState(45);
-                break;
-            case 45:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
-                            poses.Chambers.Blue.getHeading()
-                    );
-                    setPathState(46);
-                }
-                break;
-            case 46:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(47);
-                }
-                break;
-            case 47:
-                follower.followPath(toObservation6);
-                setPathState(48);
-                break;
-            case 48:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Observations.Blue,
-                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION)),
-                            poses.Observations.Blue.getHeading()
-                    );
-                    setPathState(49);
-                }
-                break;
-            case 49:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(50);
-                }
-                break;
-            case 50:
-                follower.followPath(toChambers5);
-                setPathState(51);
-                break;
-            case 51:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
-                            poses.Chambers.Blue.getHeading()
-                    );
-                    setPathState(52);
                 }
                 break;
         }
