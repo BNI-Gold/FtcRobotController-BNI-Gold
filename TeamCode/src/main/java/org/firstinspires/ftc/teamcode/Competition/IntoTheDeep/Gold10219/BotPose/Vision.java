@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.Vision.SamplePipelineResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Vision {
     public HardwareMap hwBot = null;
@@ -106,6 +108,10 @@ public class Vision {
 
     public int getTagCount() {
         return result.getBotposeTagCount();
+    }
+
+    public List<LLResultTypes.FiducialResult> getCurrentTags() {
+        return result.getFiducialResults();
     }
 
     public double[] getOffsets() {

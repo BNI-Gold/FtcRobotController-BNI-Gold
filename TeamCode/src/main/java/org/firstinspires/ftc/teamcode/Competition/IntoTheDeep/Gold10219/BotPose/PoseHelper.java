@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose;
 
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 public class PoseHelper {
     public Vision vision = null;
@@ -61,6 +63,46 @@ public class PoseHelper {
                 }
             }
         }
+    }
+
+    public int getTagCount() {
+        if (!LLInUse) {
+            vision.setPipeline(3);
+            vision.getResult();
+
+            if (vision.lastResultValid()) {
+                return vision.getTagCount();
+            }
+        }
+        return 0;
+    }
+
+    public int getCurrentTag() {
+        if (!LLInUse) {
+            vision.setPipeline(3);
+            vision.getResult();
+
+            if (vision.lastResultValid()) {
+                if (vision.getTagCount() == 1) {
+                    return vision.getCurrentTags().get(0).getFiducialId();
+                }
+            }
+        }
+        return 0;
+    }
+
+    public List<LLResultTypes.FiducialResult> getCurrentTags() {
+        if (!LLInUse) {
+            vision.setPipeline(3);
+            vision.getResult();
+
+            if (vision.lastResultValid()) {
+                if (vision.getTagCount() == 2) {
+                    return vision.getCurrentTags();
+                }
+            }
+        }
+        return null;
     }
 
     public void syncPose() {

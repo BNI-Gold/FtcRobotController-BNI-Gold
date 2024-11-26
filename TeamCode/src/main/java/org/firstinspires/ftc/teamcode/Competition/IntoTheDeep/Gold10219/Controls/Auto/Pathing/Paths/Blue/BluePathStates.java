@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue;
 
-public enum PathStates {
+public enum BluePathStates {
     toChambers1,
     chambers1Heading,
     holdChambers1,
