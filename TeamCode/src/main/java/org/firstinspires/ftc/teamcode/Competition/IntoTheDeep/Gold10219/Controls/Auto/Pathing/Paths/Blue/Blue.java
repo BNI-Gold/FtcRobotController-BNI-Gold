@@ -95,22 +95,10 @@ public class Blue extends OpMode {
 
         pose.updateLLUsage(false);
 
-        int tagCount = pose.getTagCount();
+        pinpoint.updateHeading(-90);
+        pose.syncPose();
 
-        if (tagCount == 2) {
-            pose.updateHeading();
-            pose.syncPose();
-
-            pose.updatePose();
-        } else if (tagCount == 1) {
-            int currentTag = pose.getCurrentTag();
-            if (currentTag == 15) {
-                pinpoint.updateHeading(-90);
-                pose.syncPose();
-
-                pose.updatePose();
-            }
-        }
+        pose.updatePose();
 
         Pose2D currentPose = pose.getPose();
         telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
