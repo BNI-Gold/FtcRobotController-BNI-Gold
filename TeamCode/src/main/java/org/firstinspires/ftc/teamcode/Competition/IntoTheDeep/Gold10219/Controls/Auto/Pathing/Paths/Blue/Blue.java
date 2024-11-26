@@ -2,14 +2,23 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Control
 
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.chambers1Heading;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.chambers1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.chambers2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.chambers3Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.chambers4Timeout;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdChambers1;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdChambers2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdChambers3;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdChambers4;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdObservation1;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdObservation2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdObservation3;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdObservation4;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdSample1;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.holdSample2;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.observation1Timeout;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.observation2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.observation3Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.observation4Timeout;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.toChambers1;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.toChambers2;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.PathStates.toChambers3;
@@ -66,7 +75,7 @@ public class Blue extends OpMode {
     //This is setup for a theoretical 5-specimen auto
     private final Map<PathStates, Path> paths = new HashMap<>();
     private PathStates pathState;
-    
+
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
@@ -294,7 +303,86 @@ public class Blue extends OpMode {
                                     new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
                             poses.Chambers.Blue.getHeading()
                     );
-//                    setPathState(28);
+                    setPathState(chambers2Timeout);
+                }
+                break;
+            case chambers2Timeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(toObservation3);
+                }
+                break;
+            case toObservation3:
+                follower.followPath(getPath(toObservation3));
+                setPathState(holdObservation3);
+                break;
+            case holdObservation3:
+                if (!follower.isBusy()) {
+                    follower.holdPoint(
+                            new EasyPoint(poses.Observations.Blue),
+                            poses.Observations.Blue.getHeading()
+                    );
+                    setPathState(observation3Timeout);
+                }
+                break;
+            case observation3Timeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(toChambers3);
+                }
+                break;
+            case toChambers3:
+                follower.followPath(getPath(toChambers3));
+                setPathState(holdChambers3);
+                break;
+            case holdChambers3:
+                if (!follower.isBusy()) {
+                    follower.holdPoint(
+                            new EasyPoint(poses.Chambers.Blue,
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                            poses.Chambers.Blue.getHeading()
+                    );
+                    setPathState(chambers3Timeout);
+                }
+                break;
+            case chambers3Timeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(toObservation4);
+                }
+                break;
+            case toObservation4:
+                follower.followPath(getPath(toObservation4));
+                setPathState(holdObservation4);
+                break;
+            case holdObservation4:
+                if (!follower.isBusy()) {
+                    follower.holdPoint(
+                            new EasyPoint(poses.Observations.Blue),
+                            poses.Observations.Blue.getHeading()
+                    );
+                    setPathState(observation4Timeout);
+                }
+                break;
+            case observation4Timeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(toChambers4);
+                }
+                break;
+            case toChambers4:
+                follower.followPath(getPath(toChambers4));
+                setPathState(holdChambers4);
+                break;
+            case holdChambers4:
+                if (!follower.isBusy()) {
+                    follower.holdPoint(
+                            new EasyPoint(poses.Chambers.Blue,
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                            poses.Chambers.Blue.getHeading()
+                    );
+                    setPathState(chambers4Timeout);
+                }
+                break;
+            case chambers4Timeout:
+                if (pathTimer.getElapsedTime() > 500) {
+//                    setPathState(toObservation4);
                 }
                 break;
         }
