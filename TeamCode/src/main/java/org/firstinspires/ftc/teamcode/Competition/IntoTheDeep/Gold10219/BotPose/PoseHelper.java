@@ -21,8 +21,7 @@ public class PoseHelper {
     public PoseHelperResultTypes resultType = null;
     public double headingTolerance = 3;
 
-    public PoseHelper() {
-    }
+    public PoseHelper() {}
 
     public void setLinearOp(LinearOpMode LinearOp) {
         telemetry = LinearOp.telemetry;
