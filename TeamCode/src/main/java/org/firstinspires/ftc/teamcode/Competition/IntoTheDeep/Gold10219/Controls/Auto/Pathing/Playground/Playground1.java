@@ -50,7 +50,7 @@ public class Playground1 extends OpMode {
         pinpoint.initPinpoint(hardwareMap);
 
         vision.setOp(this);
-        vision.initVision(hardwareMap, pinpoint, false);
+        vision.initVision(hardwareMap, pinpoint);
 
         pose.setOp(this);
         pose.setDevices(vision, pinpoint);

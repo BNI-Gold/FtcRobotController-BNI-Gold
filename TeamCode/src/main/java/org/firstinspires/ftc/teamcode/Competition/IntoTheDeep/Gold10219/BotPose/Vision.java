@@ -33,6 +33,7 @@ public class Vision {
     private int numSnapshots = 0;
 
     private LLResult result = null;
+    public Position Position = new Position();
 
     public Vision() {
     }
@@ -67,6 +68,17 @@ public class Vision {
         cam.setPollRateHz(100);
     }
 
+    public void initVision(HardwareMap hwMap, Pinpoint pinpoint) {
+        hwBot = hwMap;
+        this.pinpoint = pinpoint;
+        this.captureSnapshots = false;
+        this.snapshotLimit = 0;
+        this.snapshotPrefix = "";
+
+        cam = hwBot.get(Limelight3A.class, "limelight");
+        cam.setPollRateHz(100);
+    }
+
     public void start() {
         cam.start();
         setPipeline(0);
@@ -80,9 +92,6 @@ public class Vision {
     }
 
     public void getResult() {
-        double yaw = pinpoint.getPosition().getHeading(AngleUnit.DEGREES);
-
-        cam.updateRobotOrientation(yaw);
         result = cam.getLatestResult();
     }
 
@@ -90,28 +99,34 @@ public class Vision {
         return result != null && result.isValid();
     }
 
-    public Pose3D getPose(PoseTypes pose) {
-        switch (pose) {
-            case MT1:
-                if (result != null) {
-                    return result.getBotpose();
-                }
-                break;
-            case MT2:
-                if (result != null) {
-                    return result.getBotpose_MT2();
-                }
-                break;
+    public class Position {
+        public void updateYaw() {
+            cam.updateRobotOrientation(pinpoint.getPosition().getHeading(AngleUnit.DEGREES));
         }
-        return null;
-    }
 
-    public int getTagCount() {
-        return result.getBotposeTagCount();
-    }
+        public Pose3D getPose(PoseTypes pose) {
+            switch (pose) {
+                case MT1:
+                    if (result != null) {
+                        return result.getBotpose();
+                    }
+                    break;
+                case MT2:
+                    if (result != null) {
+                        return result.getBotpose_MT2();
+                    }
+                    break;
+            }
+            return null;
+        }
 
-    public List<LLResultTypes.FiducialResult> getCurrentTags() {
-        return result.getFiducialResults();
+        public int getTagCount() {
+            return result.getBotposeTagCount();
+        }
+
+        public List<LLResultTypes.FiducialResult> getCurrentTags() {
+            return result.getFiducialResults();
+        }
     }
 
     public double[] getOffsets() {

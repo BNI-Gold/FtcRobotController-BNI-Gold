@@ -84,7 +84,7 @@ public class Blue extends OpMode {
         pinpoint.initPinpoint(hardwareMap);
 
         vision.setOp(this);
-        vision.initVision(hardwareMap, pinpoint, false);
+        vision.initVision(hardwareMap, pinpoint);
 
         pose.setOp(this);
         pose.setDevices(vision, pinpoint);
@@ -95,12 +95,7 @@ public class Blue extends OpMode {
 
         pose.updateLLUsage(false);
 
-        pinpoint.updateHeading(-90);
-        pose.syncPose();
-
-        pose.updatePose();
-
-        Pose2D currentPose = pose.getPose();
+        Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
         telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
         telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
         telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
