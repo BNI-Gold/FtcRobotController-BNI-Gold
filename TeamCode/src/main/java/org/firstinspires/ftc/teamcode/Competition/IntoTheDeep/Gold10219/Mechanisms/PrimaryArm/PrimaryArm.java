@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetrains.MecanumDrive;
 
@@ -11,10 +12,17 @@ public class PrimaryArm {
     public HardwareMap hwBot = null;
     public OpMode OpMode = null;
     public DcMotor rotator = null;
+    public Servo extender = null;
+
     public double rotationUpPower = .75;
     public double rotationUpSuperPower = 1.25;
     public double rotationDownPower = .5;
     public double rotationDownSuperPower = .75;
+
+    public double retractedPosition = 0;
+    public double extendedPosition = 1;
+
+    public double extenderAdjust = .001;
     
     public PrimaryArm() {}
 
@@ -23,8 +31,10 @@ public class PrimaryArm {
         this.OpMode = OpMode;
 
         rotator = hwBot.dcMotor.get("primary_arm_rotator");
+        extender = hwBot.servo.get("primary_arm_extender");
 
         rotator.setDirection(DcMotor.Direction.REVERSE);
+        extender.setDirection(Servo.Direction.FORWARD);
 
         rotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
@@ -70,5 +80,23 @@ public class PrimaryArm {
             down(s);
         }
         stopRotation();
+    }
+
+    public void setExtend() {
+        extender.setPosition(extendedPosition);
+    }
+
+    public void setRetract() {
+        extender.setPosition(retractedPosition);
+    }
+
+    public void extend() {
+        double pos = extender.getPosition();
+        extender.setPosition(pos + extenderAdjust);
+    }
+
+    public void retract() {
+        double pos = extender.getPosition();
+        extender.setPosition(pos - extenderAdjust);
     }
 }
