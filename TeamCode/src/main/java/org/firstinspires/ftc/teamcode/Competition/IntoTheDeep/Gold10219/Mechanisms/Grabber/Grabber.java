@@ -6,10 +6,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Grabber {
     public HardwareMap hwBot = null;
     public Servo grabber = null;
+    public Servo tilt = null;
+    public Servo rotate = null;
 
     //TODO: Update these values
     double grabberOpen = 0;
     double grabberClosed = 0;
+
+
 
     public Grabber() {}
 
