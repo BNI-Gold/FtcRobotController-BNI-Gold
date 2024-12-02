@@ -19,8 +19,8 @@ public class PrimaryArm {
     public double rotationDownPower = .5;
     public double rotationDownSuperPower = .75;
 
-    public double retractedPosition = 0;
-    public double extendedPosition = 1;
+    public double retractedPosition = .2989;
+    public double extendedPosition = .865;
 
     public double extenderAdjust = .001;
     

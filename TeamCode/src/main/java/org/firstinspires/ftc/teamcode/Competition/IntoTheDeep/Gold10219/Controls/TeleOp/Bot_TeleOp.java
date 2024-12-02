@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.IntakeDirections;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
@@ -28,25 +29,24 @@ public class Bot_TeleOp extends OpMode {
 
     public CompBot Bot = new CompBot();
 
-//    PrimaryArm arm = new PrimaryArm();
+    Grabber grabber = new Grabber();
 
-//    Intake intake = new Intake();
+    PrimaryArm arm = new PrimaryArm();
 
     ElapsedTime timer = new ElapsedTime();
 
     public void init() {
         Bot.initRobot(hardwareMap);
-//        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
-//        intake.initIntake(hardwareMap);
-//        intake.center();
+        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
+        grabber.initGrabber(hardwareMap);
     }
 
     public void loop() {
         speedControl();
         drive();
         primaryArmControl();
-        intakeControl();
-//        intake.stateCheck();
+        grabberControl();
+        grabber.tiltStateCheck();
         telemetryOutput();
     }
 
@@ -115,41 +115,27 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
-    public void intakeControl() {
-//        if (gamepad2.a && gamepad2.b) {
-//            intake.start(IntakeDirections.IN);
-//        }
-//        else if (gamepad2.a) {
-//            intake.intakeUntilSample();
-//        }
-//        else if (gamepad2.x && gamepad2.b) {
-//            intake.start(IntakeDirections.OUT);
-//        }
-//        else if (gamepad2.x) {
-//            intake.dropSample();
-//        }
-//        else if (gamepad2.b) intake.stop();
-//
-//
-//        if (gamepad2.right_bumper && !(gamepad2.dpad_up || gamepad2.dpad_down)) intake.rotateRight();
-//        else if (gamepad2.left_bumper) intake.rotateLeft();
-//        else if (gamepad2.y) intake.center();
+    public void grabberControl() {
+        if (gamepad2.a) grabber.close();
+        else if (gamepad2.b) grabber.open();
+
+        if (gamepad2.x) grabber.tiltToAngle(0);
+        else if (gamepad2.y) grabber.tiltToAngle(-90);
+
+        if (gamepad2.dpad_left) grabber.headLeft();
+        else if (gamepad2.dpad_right) grabber.headRight();
+        else if (gamepad2.dpad_up) grabber.headStraight();
     }
 
     public void primaryArmControl() {
-//        //Multiply triggers by speed multiplier
-//        double rightSpeed = gamepad2.right_trigger * armSpeedMultiplier;
-//        double leftSpeed = gamepad2.left_trigger * armSpeedMultiplier;
-//
-//        if (gamepad2.right_trigger > 0.35) arm.extend(rightSpeed);
-//        else if (gamepad2.left_trigger > 0.35) arm.retract(leftSpeed);
-//        else arm.stop();
-//
-//        if (gamepad2.dpad_up && gamepad2.right_bumper) arm.up(true);
-//        else if (gamepad2.dpad_up) arm.up(false);
-//        else if (gamepad2.dpad_down && gamepad2.right_bumper) arm.down(true);
-//        else if (gamepad2.dpad_down) arm.down(false);
-//        else arm.stopRotation();
+        if (gamepad2.right_bumper) arm.setExtend();
+        else if (gamepad2.left_bumper) arm.setRetract();
+
+        if (gamepad2.dpad_up && gamepad2.right_bumper) arm.up(true);
+        else if (gamepad2.dpad_up) arm.up(false);
+        else if (gamepad2.dpad_down && gamepad2.right_bumper) arm.down(true);
+        else if (gamepad2.dpad_down) arm.down(false);
+        else arm.stopRotation();
     }
 
 

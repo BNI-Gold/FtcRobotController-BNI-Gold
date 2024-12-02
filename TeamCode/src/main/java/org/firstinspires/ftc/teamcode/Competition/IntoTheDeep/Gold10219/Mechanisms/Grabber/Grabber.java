@@ -18,19 +18,19 @@ public class Grabber {
     public BNO055IMU imu = null;
 
     //TODO: Update these values
-    double grabberOpen = 0;
-    double grabberClosed = 0;
+    double grabberOpen = .625;
+    double grabberClosed = .925;
 
     private Orientation angles;
     public float heading = 0;
 
-    public double tuckPosition = 0;
+    public double tuckPosition = .6428;
 
-    public double straight = .5;
-    public double right = 0;
-    public double qRight = .25;
-    public double left = 1;
-    public double qLeft = .75;
+    public double straight = .5261;
+    public double right = .8511;
+    public double qRight = .6866;
+    public double left = .1906;
+    public double qLeft = .3584;
 
     public double grabberAdjust = .001;
     public double rotationAdjust = .001;
@@ -47,7 +47,7 @@ public class Grabber {
 
         grabber.setDirection(Servo.Direction.FORWARD);
         tilt.setDirection(Servo.Direction.FORWARD);
-        rotate.setDirection(Servo.Direction.FORWARD);
+        rotate.setDirection(Servo.Direction.REVERSE);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -127,7 +127,7 @@ public class Grabber {
         RUNNING, STOP
     }
 
-    private void tiltToAngle(double angle) {
+    private void toAngle(double angle) {
         double heading = getHeading();
 
         if (heading - angle > 2) {
@@ -142,10 +142,15 @@ public class Grabber {
 
     public void tiltStateCheck() {
         if (tiltState == tiltStates.RUNNING) {
-            tiltToAngle(tiltTo);
+            toAngle(tiltTo);
         } else {
             tiltState = tiltStates.STOP;
         }
+    }
+
+    public void tiltToAngle(double angle) {
+        tiltTo = angle;
+        tiltState = tiltStates.RUNNING;
     }
 
     public void doTuck() {
