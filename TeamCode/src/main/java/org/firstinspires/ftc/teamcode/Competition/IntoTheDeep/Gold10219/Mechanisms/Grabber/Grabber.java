@@ -180,32 +180,28 @@ public class Grabber {
     }
 
     public void tiltStateCheck() {
-        if (doForThis) return;
+        if (doForThis) return; // Skip if already adjusting
         double desiredAngle = 0;
+
+        // Determine the desired angle based on the current state
         switch (currentState) {
             case OUT:
                 desiredAngle = 85;
-                doForThis = true;
                 break;
             case DOWN:
                 desiredAngle = 0;
-                doForThis = true;
                 break;
             case CONTROL:
-                desiredAngle = -1000;
-                break;
+                return; // No adjustment needed
         }
 
-        if (desiredAngle == -1000) return;
         // Get the current tilt angle of the grabber from the IMU
         double currentAngle = getTilt(); // Measured in degrees
-
-        ang = currentAngle;
+        ang = currentAngle; // For telemetry
 
         // Calculate the difference between the current and desired angles
         double angleDifference = desiredAngle - currentAngle;
-
-        diff = angleDifference;
+        diff = angleDifference; // For telemetry
 
         // Normalize the difference to avoid wrapping issues
         if (angleDifference > 150) {
@@ -213,36 +209,37 @@ public class Grabber {
         } else if (angleDifference < -150) {
             angleDifference += 300;
         }
-
-        diff1 = angleDifference;
+        diff1 = angleDifference; // For telemetry
 
         // Deadband to prevent unnecessary adjustments
         if (Math.abs(angleDifference) < 2) {
-            return; // No adjustment needed
+            doForThis = true; // Mark adjustment as complete
+            return; // No further adjustment needed
         }
 
         // Map the angle difference to a servo position adjustment
         double positionChange = angleDifference / 300.0; // Scale to the servo range
-
-        pch = positionChange;
+        pch = positionChange; // For telemetry
 
         // Get the current servo position
         double currentServoPosition = tilt.getPosition();
-
-        csp = currentServoPosition;
+        csp = currentServoPosition; // For telemetry
 
         // Calculate the new servo position
         double newServoPosition = currentServoPosition + positionChange;
-
-        nsp = newServoPosition;
+        nsp = newServoPosition; // For telemetry
 
         // Clamp the servo position to the valid range [0.4, 1.0]
-        newServoPosition = Range.clip(newServoPosition, .4, 1);
-
-        nsp2 = newServoPosition;
+        newServoPosition = Range.clip(newServoPosition, 0.4, 1.0);
+        nsp2 = newServoPosition; // For telemetry
 
         // Set the servo to the new position
         tilt.setPosition(newServoPosition);
+
+        // If close enough to the desired position, mark as complete
+        if (Math.abs(angleDifference) < 5) { // Fine-tuned threshold
+            doForThis = true;
+        }
     }
 
     public void doTuck() {
