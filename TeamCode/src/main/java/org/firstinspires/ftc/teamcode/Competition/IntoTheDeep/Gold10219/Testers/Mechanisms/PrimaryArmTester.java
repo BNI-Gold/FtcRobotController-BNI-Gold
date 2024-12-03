@@ -36,10 +36,6 @@ public class PrimaryArmTester extends OpMode {
     }
 
     public void primaryArmControl() {
-        //Multiply triggers by speed multiplier
-        double rightSpeed = gamepad1.right_trigger * speedMultiplier;
-        double leftSpeed = gamepad1.left_trigger * speedMultiplier;
-
         if (gamepad1.right_bumper) arm.extend();
         else if (gamepad1.left_bumper) arm.retract();
 

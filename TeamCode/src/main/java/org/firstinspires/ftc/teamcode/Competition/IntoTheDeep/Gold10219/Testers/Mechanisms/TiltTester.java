@@ -34,10 +34,14 @@ public class TiltTester extends OpMode {
         } else if (gamepad1.dpad_down) {
             grabber.tiltDown();
         }
+
+        gamepad2.right_s
     }
 
     public void telemetry() {
         telemetry.addData("Tilt Angle: ", grabber.tilt.getPosition());
+        telemetry.addLine();
+        telemetry.addData("IMU Angle: ", grabber.getHeading());
         telemetry.update();
     }
 

@@ -113,14 +113,45 @@ public class Grabber {
         rotate.setPosition(position - rotationAdjust);
     }
 
+    public void rotate(double x, double y) {
+        // Calculate the angle in radians, then convert to degrees
+        double angle = Math.atan2(-y, x); // Negative y to match joystick orientation
+        angle = Math.toDegrees(angle);
+
+        // Normalize the angle to a range of [0, 360]
+        if (angle < 0) {
+            angle += 360;
+        }
+
+        // Map the angle to the servo range
+        double servoPosition;
+        if (angle >= 90 && angle <= 270) {
+            // Map from 90° to 270° to servo range (left to right)
+            servoPosition = map(angle, 90, 270, left, right);
+        } else {
+            // Wrap around for angles outside 90° to 270°
+            if (angle < 90) {
+                angle += 360; // e.g., -45 becomes 315
+            }
+            servoPosition = map(angle, 270, 450, right, left); // Right to left
+        }
+
+        // Set the servo position
+        rotate.setPosition(servoPosition);
+    }
+
+    private double map(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
+        return toLow + (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow);
+    }
+
     public void tiltUp() {
         double position = tilt.getPosition();
-        tilt.setPosition(position + tiltAdjust);
+        tilt.setPosition(Math.min(position + tiltAdjust, 1.0)); // Ensure position does not exceed 1.0
     }
 
     public void tiltDown() {
         double position = tilt.getPosition();
-        tilt.setPosition(position - tiltAdjust);
+        tilt.setPosition(Math.max(position - tiltAdjust, 0.0)); // Ensure position does not go below 0.0
     }
 
     public enum tiltStates {
@@ -130,10 +161,17 @@ public class Grabber {
     private void toAngle(double angle) {
         double heading = getHeading();
 
-        if (heading - angle > 2) {
-            tiltDown();
-        } else if (heading - angle < -2) {
-            tiltUp();
+        double deadband = 2.0;
+        double difference = heading - angle;
+
+        if (Math.abs(difference) > deadband) {
+            if (difference > 0) {
+                tiltDown();
+            } else {
+                tiltUp();
+            }
+        } else {
+            tiltState = tiltStates.STOP; // Stop adjustments once within deadband
         }
     }
 

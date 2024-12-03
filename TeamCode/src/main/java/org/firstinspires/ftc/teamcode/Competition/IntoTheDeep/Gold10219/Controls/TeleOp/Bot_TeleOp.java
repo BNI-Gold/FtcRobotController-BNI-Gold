@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.IntakeDirections;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 
@@ -124,7 +122,8 @@ public class Bot_TeleOp extends OpMode {
 
         if (gamepad2.dpad_left) grabber.headLeft();
         else if (gamepad2.dpad_right) grabber.headRight();
-        else if (gamepad2.dpad_up) grabber.headStraight();
+        else if (gamepad2.back) grabber.headStraight();
+        else grabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
     }
 
     public void primaryArmControl() {
