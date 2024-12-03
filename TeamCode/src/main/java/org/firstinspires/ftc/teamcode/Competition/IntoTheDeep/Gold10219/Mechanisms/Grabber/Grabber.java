@@ -154,6 +154,8 @@ public class Grabber {
         tilt.setPosition(Math.max(position - tiltAdjust, 0.0)); // Ensure position does not go below 0.0
     }
 
+    private double lastTiltAngle = 0;
+
     public void tiltToAngle(double desiredAngle) {
         double currentAngle = getTilt(); // Get current tilt angle
         double difference = desiredAngle - currentAngle;
@@ -162,6 +164,9 @@ public class Grabber {
         if (Math.abs(difference) < 5) {
             return; // Do nothing if within the deadband
         }
+
+        if (lastTiltAngle == desiredAngle && Math.abs(difference) < 5) return;
+        lastTiltAngle = desiredAngle;
 
         // Normalize the difference to fit within [-150, 150] range
         if (difference > 150) {
