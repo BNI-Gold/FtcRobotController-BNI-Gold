@@ -154,7 +154,11 @@ public class Grabber {
         tilt.setPosition(Math.max(position - tiltAdjust, 0.0)); // Ensure position does not go below 0.0
     }
 
-    private double lastTiltAngle = 0;
+    public double diff = 0;
+    public double pch = 0;
+    public double csp = 0;
+    public double nsp = 0;
+    public double nsp2 = 0;
 
     public void tiltToAngle(double desiredAngle) {
         // Get the current tilt angle of the grabber from the IMU
@@ -170,6 +174,8 @@ public class Grabber {
             angleDifference += 300;
         }
 
+        diff = angleDifference;
+
         // Deadband to prevent unnecessary adjustments
         if (Math.abs(angleDifference) < 2) {
             return; // No adjustment needed
@@ -178,14 +184,22 @@ public class Grabber {
         // Map the angle difference to a servo position adjustment
         double positionChange = angleDifference / 300.0; // Scale to the servo range
 
+        pch = positionChange;
+
         // Get the current servo position
         double currentServoPosition = tilt.getPosition();
 
+        csp = currentServoPosition;
+
         // Calculate the new servo position
-        double newServoPosition = currentServoPosition - positionChange; // Use subtraction to adjust direction
+        double newServoPosition = currentServoPosition + positionChange;
+
+        nsp = newServoPosition;
 
         // Clamp the servo position to the valid range [0.4, 1.0]
         newServoPosition = Math.max(0.4, Math.min(1.0, newServoPosition));
+
+        nsp2 = newServoPosition;
 
         // Set the servo to the new position
         tilt.setPosition(newServoPosition);

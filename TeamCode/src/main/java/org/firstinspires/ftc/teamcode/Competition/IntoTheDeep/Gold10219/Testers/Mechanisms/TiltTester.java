@@ -20,6 +20,7 @@ public class TiltTester extends OpMode {
     public void init() {
         Bot.initRobot(hardwareMap);
         grabber.initGrabber(hardwareMap);
+        grabber.doTuck();
     }
 
     @Override
@@ -45,6 +46,12 @@ public class TiltTester extends OpMode {
     public void telemetry() {
         telemetry.addData("Current IMU Angle: ", grabber.getTilt());
         telemetry.addData("Servo Position: ", grabber.tilt.getPosition());
+        telemetry.addLine();
+        telemetry.addData("Diff: ", grabber.diff);
+        telemetry.addData("Pos Ch: ", grabber.pch);
+        telemetry.addData("Current Servo Position: ", grabber.csp);
+        telemetry.addData("New Servo Position: ", grabber.nsp);
+        telemetry.addData("Clamped Servo Position: ", grabber.nsp2);
         telemetry.update();
     }
 
