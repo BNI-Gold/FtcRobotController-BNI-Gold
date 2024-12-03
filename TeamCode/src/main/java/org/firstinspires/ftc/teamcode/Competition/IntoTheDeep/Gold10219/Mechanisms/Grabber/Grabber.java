@@ -154,42 +154,30 @@ public class Grabber {
         tilt.setPosition(Math.max(position - tiltAdjust, 0.0)); // Ensure position does not go below 0.0
     }
 
-    public enum tiltStates {
-        RUNNING, STOP
-    }
+    public void tiltToAngle(double desiredAngle) {
+        double currentAngle = getTilt(); // Get current tilt angle
+        double difference = desiredAngle - currentAngle;
 
-    private void toAngle(double angle) {
-        double heading = getTilt();
-
-        double deadband = 25.0;
-        double difference = heading - angle;
-
-        if (Math.abs(difference) > deadband) {
-            if (difference > 0) {
-                tiltDown();
-            } else {
-                tiltUp();
-            }
-        } else {
-            tiltState = tiltStates.STOP; // Stop adjustments once within deadband
+        // Normalize the difference to ensure it fits in the [-150, 150] range (half of 300)
+        if (difference > 150) {
+            difference -= 300;
+        } else if (difference < -150) {
+            difference += 300;
         }
+
+        // Calculate the new servo position
+        double currentServoPosition = tilt.getPosition();
+        double positionChange = difference / 300.0; // Map the angle difference to position range
+        double newServoPosition = currentServoPosition + positionChange;
+
+        // Ensure the new position is within [0, 1]
+        newServoPosition = Math.max(0.0, Math.min(1.0, newServoPosition));
+
+        // Set the servo to the new position
+        tilt.setPosition(newServoPosition);
     }
 
-    public tiltStates tiltState = tiltStates.STOP;
     public double tiltTo = 0;
-
-    public void tiltStateCheck() {
-        if (tiltState == tiltStates.RUNNING) {
-            toAngle(tiltTo);
-        } else {
-            tiltState = tiltStates.STOP;
-        }
-    }
-
-    public void tiltToAngle(double angle) {
-        tiltTo = angle;
-        tiltState = tiltStates.RUNNING;
-    }
 
     public void doTuck() {
         close();

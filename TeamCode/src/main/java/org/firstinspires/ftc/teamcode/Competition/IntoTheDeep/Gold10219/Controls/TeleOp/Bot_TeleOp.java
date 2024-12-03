@@ -44,7 +44,6 @@ public class Bot_TeleOp extends OpMode {
         drive();
         primaryArmControl();
         grabberControl();
-        grabber.tiltStateCheck();
         telemetryOutput();
     }
 
