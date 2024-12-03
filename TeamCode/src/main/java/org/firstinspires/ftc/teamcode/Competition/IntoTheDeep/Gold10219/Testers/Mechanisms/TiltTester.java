@@ -27,6 +27,7 @@ public class TiltTester extends OpMode {
     public void loop() {
         tiltControl();
         telemetry();
+        grabber.tiltStateCheck();
     }
 
     private double lastTiltAngle = 0;
@@ -37,11 +38,11 @@ public class TiltTester extends OpMode {
         } else if (gamepad1.dpad_down) {
             grabber.tiltDown();
         } else if (gamepad1.a) {
-            grabber.tiltToAngle(Grabber.grabberStates.OUT);
+            grabber.setCurrentState(Grabber.grabberStates.OUT);
         } else if (gamepad1.b) {
-            grabber.tiltToAngle(Grabber.grabberStates.DOWN);
+            grabber.setCurrentState(Grabber.grabberStates.DOWN);
         } else if (gamepad1.y) {
-            grabber.tiltToAngle(Grabber.grabberStates.CONTROL);
+            grabber.setCurrentState(Grabber.grabberStates.CONTROL);
         }
     }
 

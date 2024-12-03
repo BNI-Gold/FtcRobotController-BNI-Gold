@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -164,27 +165,21 @@ public class Grabber {
         OUT, DOWN, CONTROL
     }
 
-    private grabberStates currentState = grabberStates.CONTROL;
+    public grabberStates currentState = grabberStates.CONTROL;
 
-    public void tiltToAngle(grabberStates state) {
+    public void setCurrentState(grabberStates state) {
+        currentState = state;
+    }
+
+    public void tiltStateCheck() {
         double desiredAngle = 0;
-        switch (state) {
+        switch (currentState) {
             case OUT:
-                if (currentState == grabberStates.OUT) {
-                    desiredAngle = -1000;
-                    break;
-                } else {
-                    desiredAngle = 85;
-                    break;
-                }
+                desiredAngle = 85;
+                break;
             case DOWN:
-                if (currentState == grabberStates.DOWN) {
-                    desiredAngle = -1000;
-                    break;
-                } else {
-                    desiredAngle = 0;
-                    break;
-                }
+                desiredAngle = 0;
+                break;
             case CONTROL:
                 desiredAngle = -1000;
                 break;
@@ -227,7 +222,7 @@ public class Grabber {
         nsp = newServoPosition;
 
         // Clamp the servo position to the valid range [0.4, 1.0]
-        newServoPosition = Math.max(0.4, Math.min(1.0, newServoPosition));
+        newServoPosition = Range.clip(newServoPosition, .4, 1);
 
         nsp2 = newServoPosition;
 
