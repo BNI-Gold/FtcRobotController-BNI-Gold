@@ -27,11 +27,9 @@ public class Grabber {
 
     public double tuckPosition = .6428;
 
-    public double straight = .5261;
+    public double straight = .52;
     public double right = .8511;
-    public double qRight = .6866;
     public double left = .1906;
-    public double qLeft = .3584;
 
     public double grabberAdjust = .001;
     public double rotationAdjust = .001;
@@ -40,7 +38,7 @@ public class Grabber {
     public double outAngle = 45;
     public double downAngle = -45;
 
-    public double angleDeadband = 5;
+    public double angleDeadband = 2;
     public double servoDeadband = .005;
 
     public Grabber() {}
@@ -94,16 +92,8 @@ public class Grabber {
         rotate.setPosition(straight);
     }
 
-    public void headQRight() {
-        rotate.setPosition(qRight);
-    }
-
     public void headRight() {
         rotate.setPosition(right);
-    }
-
-    public void headQLeft() {
-        rotate.setPosition(qLeft);
     }
 
     public void headLeft() {
@@ -122,7 +112,7 @@ public class Grabber {
 
     public void rotate(double x, double y) {
         // Calculate the angle in radians, then convert to degrees
-        double angle = Math.atan2(-y, x); // Negative y to match joystick orientation
+        double angle = Math.atan2(-x, -y); // Negative y to match joystick orientation
         angle = Math.toDegrees(angle);
 
         // Normalize the angle to a range of [0, 360]
@@ -197,6 +187,7 @@ public class Grabber {
 
             case CALL_TILT:
                 double desiredAngle = 0;
+                double dampingFactor = .15;
 
                 switch (grabberState) {
                     case OUT:
@@ -228,7 +219,6 @@ public class Grabber {
                 }
 
                 // Apply a damping factor to reduce overshooting
-                double dampingFactor = 0.5; // Adjust this value (e.g., 0.1 to 0.5) to fine-tune correction speed
                 double positionChange = (angleDifference / 300.0) * dampingFactor;
                 pch = positionChange;
 

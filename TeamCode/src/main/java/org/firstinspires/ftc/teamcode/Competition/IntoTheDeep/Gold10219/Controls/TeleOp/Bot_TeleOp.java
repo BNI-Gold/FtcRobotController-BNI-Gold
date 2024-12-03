@@ -37,6 +37,7 @@ public class Bot_TeleOp extends OpMode {
         Bot.initRobot(hardwareMap);
         arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
+        grabber.doTuck();
     }
 
     public void loop() {
@@ -44,6 +45,7 @@ public class Bot_TeleOp extends OpMode {
         drive();
         primaryArmControl();
         grabberControl();
+        grabber.tiltStateCheck();
         telemetryOutput();
     }
 
@@ -116,13 +118,14 @@ public class Bot_TeleOp extends OpMode {
         if (gamepad2.a) grabber.close();
         else if (gamepad2.b) grabber.open();
 
-//        if (gamepad2.x) grabber.setCurrentState(Grabber.grabberStates.DOWN);
-//        else if (gamepad2.y) grabber.setCurrentState(Grabber.grabberStates.OUT);
+        if (gamepad2.x) grabber.setGrabberState(Grabber.grabberStates.DOWN);
+        else if (gamepad2.y) grabber.setGrabberState(Grabber.grabberStates.OUT);
 
-        if (gamepad2.dpad_left) grabber.headLeft();
-        else if (gamepad2.dpad_right) grabber.headRight();
+
+        if (gamepad2.dpad_left && !(gamepad2.dpad_down || gamepad2.dpad_up)) grabber.headLeft();
+        else if (gamepad2.dpad_right && !(gamepad2.dpad_down || gamepad2.dpad_up)) grabber.headRight();
         else if (gamepad2.back) grabber.headStraight();
-        else grabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
+        else if (Math.abs(gamepad2.right_stick_x) > .35 || Math.abs(gamepad2.right_stick_y) > .35) grabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
     }
 
     public void primaryArmControl() {
@@ -131,8 +134,7 @@ public class Bot_TeleOp extends OpMode {
 
         if (gamepad2.dpad_up && gamepad2.right_bumper) {
             arm.up(true);
-        }
-        else if (gamepad2.dpad_up) arm.up(false);
+        } else if (gamepad2.dpad_up) arm.up(false);
         else if (gamepad2.dpad_down && gamepad2.right_bumper) arm.down(true);
         else if (gamepad2.dpad_down) arm.down(false);
         else arm.stopRotation();
