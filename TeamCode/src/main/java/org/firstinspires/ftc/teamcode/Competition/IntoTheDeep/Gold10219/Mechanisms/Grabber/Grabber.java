@@ -157,30 +157,33 @@ public class Grabber {
     private double lastTiltAngle = 0;
 
     public void tiltToAngle(double desiredAngle) {
-        double currentAngle = getTilt(); // Get current tilt angle
-        double difference = desiredAngle - currentAngle;
+        // Get the current tilt angle of the grabber from the IMU
+        double currentAngle = getTilt(); // Measured in degrees
 
-        // Deadband to prevent unnecessary oscillation
-        if (Math.abs(difference) < 5) {
-            return; // Do nothing if within the deadband
+        // Calculate the difference between the current and desired angles
+        double angleDifference = desiredAngle - currentAngle;
+
+        if (Math.abs(angleDifference) < 2) {
+            return; // No adjustment needed
         }
 
-        if (lastTiltAngle == desiredAngle && Math.abs(difference) < 5) return;
-        lastTiltAngle = desiredAngle;
-
-        // Normalize the difference to fit within [-150, 150] range
-        if (difference > 150) {
-            difference -= 300;
-        } else if (difference < -150) {
-            difference += 300;
+        // Normalize the difference to ensure the servo moves in the shortest direction
+        if (angleDifference > 150) {
+            angleDifference -= 300; // Wraparound to stay in range
+        } else if (angleDifference < -150) {
+            angleDifference += 300; // Wraparound to stay in range
         }
+
+        // Map the angle difference to a servo position adjustment
+        double positionChange = angleDifference / 300.0; // 300 degrees mapped to [0.0, 1.0]
+
+        // Get the current servo position
+        double currentServoPosition = tilt.getPosition();
 
         // Calculate the new servo position
-        double currentServoPosition = tilt.getPosition();
-        double positionChange = difference / 300.0; // Map the angle difference to servo range
         double newServoPosition = currentServoPosition + positionChange;
 
-        // Clamp the new position to [0.0, 1.0]
+        // Clamp the servo position to the valid range [0.0, 1.0]
         newServoPosition = Math.max(0.0, Math.min(1.0, newServoPosition));
 
         // Set the servo to the new position
