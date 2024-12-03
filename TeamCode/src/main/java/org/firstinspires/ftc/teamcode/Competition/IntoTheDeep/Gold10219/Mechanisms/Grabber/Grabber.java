@@ -173,14 +173,23 @@ public class Grabber {
         currentState = state;
     }
 
+    public boolean doForThis = false;
+
+    public void setDoForThis(boolean t) {
+        doForThis = t;
+    }
+
     public void tiltStateCheck() {
+        if (doForThis) return;
         double desiredAngle = 0;
         switch (currentState) {
             case OUT:
                 desiredAngle = 85;
+                doForThis = true;
                 break;
             case DOWN:
                 desiredAngle = 0;
+                doForThis = true;
                 break;
             case CONTROL:
                 desiredAngle = -1000;

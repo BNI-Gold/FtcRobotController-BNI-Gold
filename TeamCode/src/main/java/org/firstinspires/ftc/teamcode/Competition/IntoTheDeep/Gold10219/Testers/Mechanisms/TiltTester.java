@@ -43,6 +43,8 @@ public class TiltTester extends OpMode {
             grabber.setCurrentState(Grabber.grabberStates.DOWN);
         } else if (gamepad1.y) {
             grabber.setCurrentState(Grabber.grabberStates.CONTROL);
+        } else if (gamepad1.x) {
+            grabber.setDoForThis(false);
         }
     }
 
