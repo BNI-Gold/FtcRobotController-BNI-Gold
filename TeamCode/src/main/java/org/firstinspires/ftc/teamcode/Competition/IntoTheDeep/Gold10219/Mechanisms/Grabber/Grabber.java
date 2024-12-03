@@ -155,7 +155,9 @@ public class Grabber {
         tilt.setPosition(Math.max(position - tiltAdjust, 0.0)); // Ensure position does not go below 0.0
     }
 
+    public double ang = 0;
     public double diff = 0;
+    public double diff1 = 0;
     public double pch = 0;
     public double csp = 0;
     public double nsp = 0;
@@ -189,8 +191,12 @@ public class Grabber {
         // Get the current tilt angle of the grabber from the IMU
         double currentAngle = getTilt(); // Measured in degrees
 
+        ang = currentAngle;
+
         // Calculate the difference between the current and desired angles
         double angleDifference = desiredAngle - currentAngle;
+
+        diff = angleDifference;
 
         // Normalize the difference to avoid wrapping issues
         if (angleDifference > 150) {
@@ -199,7 +205,7 @@ public class Grabber {
             angleDifference += 300;
         }
 
-        diff = angleDifference;
+        diff1 = angleDifference;
 
         // Deadband to prevent unnecessary adjustments
         if (Math.abs(angleDifference) < 2) {
