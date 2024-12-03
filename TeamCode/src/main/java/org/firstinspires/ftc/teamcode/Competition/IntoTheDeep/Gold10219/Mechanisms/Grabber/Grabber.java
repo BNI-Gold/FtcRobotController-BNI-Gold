@@ -40,8 +40,8 @@ public class Grabber {
     public double outAngle = 45;
     public double downAngle = -45;
 
-    public double angleDeadband = 2;
-    public double servoDeadband = .05;
+    public double angleDeadband = 5;
+    public double servoDeadband = .005;
 
     public Grabber() {}
 
@@ -237,9 +237,9 @@ public class Grabber {
                 desiredPos = newServoPosition;
                 nsp2 = newServoPosition;
 
-                tilt.setPosition(newServoPosition);
-
                 tiltState = tiltStates.TILTING;
+
+                tilt.setPosition(newServoPosition);
                 break;
             case TILTING:
                 double servoPosition = tilt.getPosition();
@@ -248,6 +248,7 @@ public class Grabber {
                     //Setting tiltState to CALL_TILT will continue refining position until deadband in CALL_TILT case is met
 //                    tiltState = tiltStates.CALL_TILT;
                     //Setting tiltState to SETTLED will stop the loop
+//                    grabberState = grabberStates.MANUAL;
                     tiltState = tiltStates.SETTLED;
                 }
                 //If the difference is greater than the servo deadband, then the servo likely isn't finished tilting!
