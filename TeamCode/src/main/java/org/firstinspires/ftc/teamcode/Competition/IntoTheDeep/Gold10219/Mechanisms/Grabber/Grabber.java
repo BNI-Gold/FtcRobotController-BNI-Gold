@@ -190,19 +190,20 @@ public class Grabber {
     public void tiltStateCheck() {
         switch (tiltState) {
             case SETTLED:
-                if (grabberState != grabberStates.MANUAL) tiltState = tiltStates.CALL_TILT;
+                if (grabberState != grabberStates.MANUAL) {
+                    tiltState = tiltStates.CALL_TILT;
+                }
                 break;
+
             case CALL_TILT:
                 double desiredAngle = 0;
 
                 switch (grabberState) {
                     case OUT:
                         desiredAngle = outAngle;
-                        tiltState = tiltStates.TILTING;
                         break;
                     case DOWN:
                         desiredAngle = downAngle;
-                        tiltState = tiltStates.TILTING;
                         break;
                 }
 
@@ -212,6 +213,7 @@ public class Grabber {
                 double angleDifference = desiredAngle - currentAngle;
                 diff = angleDifference;
 
+                // Normalize the difference to avoid wrapping issues
                 if (angleDifference > 150) {
                     angleDifference -= 300;
                 } else if (angleDifference < -150) {
@@ -219,12 +221,15 @@ public class Grabber {
                 }
                 diff1 = angleDifference;
 
+                // Deadband to prevent unnecessary adjustments
                 if (Math.abs(angleDifference) < angleDeadband) {
                     tiltState = tiltStates.SETTLED;
                     return;
                 }
 
-                double positionChange = angleDifference / 300.0;
+                // Apply a damping factor to reduce overshooting
+                double dampingFactor = 0.5; // Adjust this value (e.g., 0.1 to 0.5) to fine-tune correction speed
+                double positionChange = (angleDifference / 300.0) * dampingFactor;
                 pch = positionChange;
 
                 double currentServoPosition = tilt.getPosition();
@@ -233,7 +238,8 @@ public class Grabber {
                 double newServoPosition = currentServoPosition + positionChange;
                 nsp = newServoPosition;
 
-                newServoPosition = Range.clip(newServoPosition, .4, 1);
+                // Clamp the servo position to the valid range [0.4, 1]
+                newServoPosition = Range.clip(newServoPosition, 0.4, 1);
                 desiredPos = newServoPosition;
                 nsp2 = newServoPosition;
 
@@ -241,18 +247,15 @@ public class Grabber {
 
                 tilt.setPosition(newServoPosition);
                 break;
+
             case TILTING:
                 double servoPosition = tilt.getPosition();
                 double posDiff = servoPosition - desiredPos;
+
+                // If the servo position is within the deadband, consider the movement complete
                 if (Math.abs(posDiff) < servoDeadband) {
-                    //Setting tiltState to CALL_TILT will continue refining position until deadband in CALL_TILT case is met
-//                    tiltState = tiltStates.CALL_TILT;
-                    //Setting tiltState to SETTLED will stop the loop
-//                    grabberState = grabberStates.MANUAL;
                     tiltState = tiltStates.SETTLED;
                 }
-                //If the difference is greater than the servo deadband, then the servo likely isn't finished tilting!
-                //However, servo deadband might need to be adjusted.
                 break;
         }
     }
