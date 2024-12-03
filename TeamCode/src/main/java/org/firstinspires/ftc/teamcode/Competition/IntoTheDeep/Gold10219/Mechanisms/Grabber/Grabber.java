@@ -158,7 +158,12 @@ public class Grabber {
         double currentAngle = getTilt(); // Get current tilt angle
         double difference = desiredAngle - currentAngle;
 
-        // Normalize the difference to ensure it fits in the [-150, 150] range (half of 300)
+        // Deadband to prevent unnecessary oscillation
+        if (Math.abs(difference) < 5) {
+            return; // Do nothing if within the deadband
+        }
+
+        // Normalize the difference to fit within [-150, 150] range
         if (difference > 150) {
             difference -= 300;
         } else if (difference < -150) {
@@ -167,10 +172,10 @@ public class Grabber {
 
         // Calculate the new servo position
         double currentServoPosition = tilt.getPosition();
-        double positionChange = difference / 300.0; // Map the angle difference to position range
+        double positionChange = difference / 300.0; // Map the angle difference to servo range
         double newServoPosition = currentServoPosition + positionChange;
 
-        // Ensure the new position is within [0, 1]
+        // Clamp the new position to [0.0, 1.0]
         newServoPosition = Math.max(0.0, Math.min(1.0, newServoPosition));
 
         // Set the servo to the new position
