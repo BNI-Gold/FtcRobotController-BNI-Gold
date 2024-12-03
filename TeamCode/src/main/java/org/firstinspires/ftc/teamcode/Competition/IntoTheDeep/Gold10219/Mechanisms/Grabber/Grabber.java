@@ -163,34 +163,33 @@ public class Grabber {
         // Calculate the difference between the current and desired angles
         double angleDifference = desiredAngle - currentAngle;
 
+        // Normalize the difference to avoid wrapping issues
+        if (angleDifference > 150) {
+            angleDifference -= 300;
+        } else if (angleDifference < -150) {
+            angleDifference += 300;
+        }
+
+        // Deadband to prevent unnecessary adjustments
         if (Math.abs(angleDifference) < 2) {
             return; // No adjustment needed
         }
 
-        // Normalize the difference to ensure the servo moves in the shortest direction
-        if (angleDifference > 150) {
-            angleDifference -= 300; // Wraparound to stay in range
-        } else if (angleDifference < -150) {
-            angleDifference += 300; // Wraparound to stay in range
-        }
-
         // Map the angle difference to a servo position adjustment
-        double positionChange = angleDifference / 300.0; // 300 degrees mapped to [0.0, 1.0]
+        double positionChange = angleDifference / 300.0; // Scale to the servo range
 
         // Get the current servo position
         double currentServoPosition = tilt.getPosition();
 
         // Calculate the new servo position
-        double newServoPosition = currentServoPosition + positionChange;
+        double newServoPosition = currentServoPosition - positionChange; // Use subtraction to adjust direction
 
-        // Clamp the servo position to the valid range [0.0, 1.0]
-        newServoPosition = Math.max(0.0, Math.min(1.0, newServoPosition));
+        // Clamp the servo position to the valid range [0.4, 1.0]
+        newServoPosition = Math.max(0.4, Math.min(1.0, newServoPosition));
 
         // Set the servo to the new position
         tilt.setPosition(newServoPosition);
     }
-
-    public double tiltTo = 0;
 
     public void doTuck() {
         close();
