@@ -116,8 +116,8 @@ public class Bot_TeleOp extends OpMode {
         if (gamepad2.a) grabber.close();
         else if (gamepad2.b) grabber.open();
 
-//        if (gamepad2.x) grabber.tiltToAngle(0);
-//        else if (gamepad2.y) grabber.tiltToAngle(85);
+        if (gamepad2.x) grabber.setCurrentState(Grabber.grabberStates.DOWN);
+        else if (gamepad2.y) grabber.setCurrentState(Grabber.grabberStates.OUT);
 
         if (gamepad2.dpad_left) grabber.headLeft();
         else if (gamepad2.dpad_right) grabber.headRight();
@@ -129,7 +129,10 @@ public class Bot_TeleOp extends OpMode {
         if (gamepad2.right_bumper) arm.setExtend();
         else if (gamepad2.left_bumper) arm.setRetract();
 
-        if (gamepad2.dpad_up && gamepad2.right_bumper) arm.up(true);
+        if (gamepad2.dpad_up && gamepad2.right_bumper) {
+            arm.up(true);
+            grabber.setDoForThis(false);
+        }
         else if (gamepad2.dpad_up) arm.up(false);
         else if (gamepad2.dpad_down && gamepad2.right_bumper) arm.down(true);
         else if (gamepad2.dpad_down) arm.down(false);

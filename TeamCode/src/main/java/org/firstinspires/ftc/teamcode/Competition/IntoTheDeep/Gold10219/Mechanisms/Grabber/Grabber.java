@@ -184,11 +184,11 @@ public class Grabber {
         double desiredAngle = 0;
         switch (currentState) {
             case OUT:
-                desiredAngle = 85;
+                desiredAngle = 45;
                 doForThis = true;
                 break;
             case DOWN:
-                desiredAngle = 0;
+                desiredAngle = -45;
                 doForThis = true;
                 break;
             case CONTROL:
