@@ -159,9 +159,9 @@ public class Grabber {
     }
 
     private void toAngle(double angle) {
-        double heading = getHeading();
+        double heading = getTilt();
 
-        double deadband = 2.0;
+        double deadband = 25.0;
         double difference = heading - angle;
 
         if (Math.abs(difference) > deadband) {
@@ -197,9 +197,9 @@ public class Grabber {
         tuck();
     }
 
-    public float getHeading() {
+    public float getTilt() {
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        heading = formatAngle(angles.angleUnit, angles.firstAngle);
+        heading = formatAngle(angles.angleUnit, angles.secondAngle);
         return heading;
     }
 

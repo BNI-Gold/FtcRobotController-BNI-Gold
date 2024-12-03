@@ -118,7 +118,7 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.b) grabber.open();
 
         if (gamepad2.x) grabber.tiltToAngle(0);
-        else if (gamepad2.y) grabber.tiltToAngle(-90);
+        else if (gamepad2.y) grabber.tiltToAngle(85);
 
         if (gamepad2.dpad_left) grabber.headLeft();
         else if (gamepad2.dpad_right) grabber.headRight();
