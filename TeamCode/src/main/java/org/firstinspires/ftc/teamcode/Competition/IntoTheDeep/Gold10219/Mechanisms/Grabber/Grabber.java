@@ -156,7 +156,37 @@ public class Grabber {
 
     private double lastTiltAngle = 0;
 
-    public void tiltToAngle(double desiredAngle) {
+    public enum grabberStates {
+        OUT, DOWN, CONTROL
+    }
+
+    private grabberStates currentState = grabberStates.CONTROL;
+
+    public void tiltToAngle(grabberStates state) {
+        double desiredAngle = 0;
+        switch (state) {
+            case OUT:
+                if (currentState == grabberStates.OUT) {
+                    desiredAngle = -1000;
+                    break;
+                } else {
+                    desiredAngle = 85;
+                    break;
+                }
+            case DOWN:
+                if (currentState == grabberStates.DOWN) {
+                    desiredAngle = -1000;
+                    break;
+                } else {
+                    desiredAngle = 0;
+                    break;
+                }
+            case CONTROL:
+                desiredAngle = -1000;
+                break;
+        }
+
+        if (desiredAngle == -1000) return;
         // Get the current tilt angle of the grabber from the IMU
         double currentAngle = getTilt(); // Measured in degrees
 
