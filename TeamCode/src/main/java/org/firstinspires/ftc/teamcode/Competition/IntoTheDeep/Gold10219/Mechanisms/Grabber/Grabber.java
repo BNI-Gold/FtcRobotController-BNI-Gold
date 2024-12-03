@@ -37,6 +37,12 @@ public class Grabber {
     public double rotationAdjust = .001;
     public double tiltAdjust = .001;
 
+    public double outAngle = 45;
+    public double downAngle = -45;
+
+    public double angleDeadband = 2;
+    public double servoDeadband = .05;
+
     public Grabber() {}
 
     public void initGrabber(HardwareMap hwMap) {
@@ -164,86 +170,157 @@ public class Grabber {
     public double nsp2 = 0;
 
     public enum grabberStates {
-        OUT, DOWN, CONTROL
+        OUT, DOWN, MANUAL
     }
 
-    public grabberStates currentState = grabberStates.CONTROL;
-
-    public void setCurrentState(grabberStates state) {
-        currentState = state;
+    public enum tiltStates {
+        SETTLED, CALL_TILT, TILTING
     }
 
-    public boolean doForThis = false;
+    public grabberStates grabberState = grabberStates.MANUAL;
 
-    public void setDoForThis(boolean t) {
-        doForThis = t;
+    public tiltStates tiltState = tiltStates.SETTLED;
+
+    public void setGrabberState(grabberStates state) {
+        grabberState = state;
     }
+
+    private double desiredPos = 0;
 
     public void tiltStateCheck() {
-        if (doForThis) return;
-        double desiredAngle = 0;
-        switch (currentState) {
-            case OUT:
-                desiredAngle = 45;
-                doForThis = true;
+        switch (tiltState) {
+            case SETTLED:
+                if (grabberState != grabberStates.MANUAL) tiltState = tiltStates.CALL_TILT;
                 break;
-            case DOWN:
-                desiredAngle = -45;
-                doForThis = true;
+            case CALL_TILT:
+                double desiredAngle = 0;
+
+                switch (grabberState) {
+                    case OUT:
+                        desiredAngle = outAngle;
+                        tiltState = tiltStates.TILTING;
+                        break;
+                    case DOWN:
+                        desiredAngle = downAngle;
+                        tiltState = tiltStates.TILTING;
+                        break;
+                }
+
+                double currentAngle = getTilt();
+                ang = currentAngle;
+
+                double angleDifference = desiredAngle - currentAngle;
+                diff = angleDifference;
+
+                if (angleDifference > 150) {
+                    angleDifference -= 300;
+                } else if (angleDifference < -150) {
+                    angleDifference += 300;
+                }
+                diff1 = angleDifference;
+
+                if (Math.abs(angleDifference) < angleDeadband) {
+                    tiltState = tiltStates.SETTLED;
+                    return;
+                }
+
+                double positionChange = angleDifference / 300.0;
+                pch = positionChange;
+
+                double currentServoPosition = tilt.getPosition();
+                csp = currentServoPosition;
+
+                double newServoPosition = currentServoPosition + positionChange;
+                nsp = newServoPosition;
+
+                newServoPosition = Range.clip(newServoPosition, .4, 1);
+                desiredPos = newServoPosition;
+                nsp2 = newServoPosition;
+
+                tilt.setPosition(newServoPosition);
+
+                tiltState = tiltStates.TILTING;
                 break;
-            case CONTROL:
-                desiredAngle = -1000;
+            case TILTING:
+                double servoPosition = tilt.getPosition();
+                double posDiff = servoPosition - desiredPos;
+                if (Math.abs(posDiff) < servoDeadband) {
+                    //Setting tiltState to CALL_TILT will continue refining position until deadband in CALL_TILT case is met
+//                    tiltState = tiltStates.CALL_TILT;
+                    //Setting tiltState to SETTLED will stop the loop
+                    tiltState = tiltStates.SETTLED;
+                }
+                //If the difference is greater than the servo deadband, then the servo likely isn't finished tilting!
+                //However, servo deadband might need to be adjusted.
                 break;
         }
-
-        if (desiredAngle == -1000) return;
-        // Get the current tilt angle of the grabber from the IMU
-        double currentAngle = getTilt(); // Measured in degrees
-
-        ang = currentAngle;
-
-        // Calculate the difference between the current and desired angles
-        double angleDifference = desiredAngle - currentAngle;
-
-        diff = angleDifference;
-
-        // Normalize the difference to avoid wrapping issues
-        if (angleDifference > 150) {
-            angleDifference -= 300;
-        } else if (angleDifference < -150) {
-            angleDifference += 300;
-        }
-
-        diff1 = angleDifference;
-
-        // Deadband to prevent unnecessary adjustments
-        if (Math.abs(angleDifference) < 2) {
-            return; // No adjustment needed
-        }
-
-        // Map the angle difference to a servo position adjustment
-        double positionChange = angleDifference / 300.0; // Scale to the servo range
-
-        pch = positionChange;
-
-        // Get the current servo position
-        double currentServoPosition = tilt.getPosition();
-
-        csp = currentServoPosition;
-
-        // Calculate the new servo position
-        double newServoPosition = currentServoPosition + positionChange;
-
-        nsp = newServoPosition;
-
-        // Clamp the servo position to the valid range [0.4, 1.0]
-        newServoPosition = Range.clip(newServoPosition, .4, 1);
-
-        nsp2 = newServoPosition;
-
-        // Set the servo to the new position
-        tilt.setPosition(newServoPosition);
     }
+
+//    public void tiltStateCheck() {
+//        if (doForThis) return;
+//        double desiredAngle = 0;
+//        switch (currentState) {
+//            case OUT:
+//                desiredAngle = 45;
+//                doForThis = true;
+//                break;
+//            case DOWN:
+//                desiredAngle = -45;
+//                doForThis = true;
+//                break;
+//            case CONTROL:
+//                desiredAngle = -1000;
+//                break;
+//        }
+//
+//        if (desiredAngle == -1000) return;
+//        // Get the current tilt angle of the grabber from the IMU
+//        double currentAngle = getTilt(); // Measured in degrees
+//
+//        ang = currentAngle;
+//
+//        // Calculate the difference between the current and desired angles
+//        double angleDifference = desiredAngle - currentAngle;
+//
+//        diff = angleDifference;
+//
+//        // Normalize the difference to avoid wrapping issues
+//        if (angleDifference > 150) {
+//            angleDifference -= 300;
+//        } else if (angleDifference < -150) {
+//            angleDifference += 300;
+//        }
+//
+//        diff1 = angleDifference;
+//
+//        // Deadband to prevent unnecessary adjustments
+//        if (Math.abs(angleDifference) < 2) {
+//            return; // No adjustment needed
+//        }
+//
+//        // Map the angle difference to a servo position adjustment
+//        double positionChange = angleDifference / 300.0; // Scale to the servo range
+//
+//        pch = positionChange;
+//
+//        // Get the current servo position
+//        double currentServoPosition = tilt.getPosition();
+//
+//        csp = currentServoPosition;
+//
+//        // Calculate the new servo position
+//        double newServoPosition = currentServoPosition + positionChange;
+//
+//        nsp = newServoPosition;
+//
+//        // Clamp the servo position to the valid range [0.4, 1.0]
+//        newServoPosition = Range.clip(newServoPosition, .4, 1);
+//
+//        nsp2 = newServoPosition;
+//
+//        // Set the servo to the new position
+//        tilt.setPosition(newServoPosition);
+//    }
 
     public void doTuck() {
         close();

@@ -30,32 +30,26 @@ public class TiltTester extends OpMode {
         grabber.tiltStateCheck();
     }
 
-    private double lastTiltAngle = 0;
-
-    boolean aSet = false;
-
     public void tiltControl() {
         if (gamepad1.dpad_up) {
             grabber.tiltUp();
         } else if (gamepad1.dpad_down) {
             grabber.tiltDown();
         } else if (gamepad1.a) {
-            grabber.setCurrentState(Grabber.grabberStates.OUT);
+            grabber.setGrabberState(Grabber.grabberStates.OUT);
         } else if (gamepad1.b) {
-            grabber.setCurrentState(Grabber.grabberStates.DOWN);
+            grabber.setGrabberState(Grabber.grabberStates.DOWN);
         } else if (gamepad1.y) {
-            grabber.setCurrentState(Grabber.grabberStates.CONTROL);
-        } else if (gamepad1.x && !aSet) {
-            grabber.setDoForThis(false);
-            aSet = true;
+            grabber.setGrabberState(Grabber.grabberStates.MANUAL);
         }
-
-        if (!gamepad1.x) aSet = false;
     }
 
     public void telemetry() {
         telemetry.addData("Current IMU Angle: ", grabber.getTilt());
         telemetry.addData("Servo Position: ", grabber.tilt.getPosition());
+        telemetry.addLine();
+        telemetry.addData("Grabber State: ", grabber.grabberState);
+        telemetry.addData("Tilt State: ", grabber.tiltState);
         telemetry.addLine();
         telemetry.addData("IMU Angle: ", grabber.ang);
         telemetry.addData("Diff: ", grabber.diff);
