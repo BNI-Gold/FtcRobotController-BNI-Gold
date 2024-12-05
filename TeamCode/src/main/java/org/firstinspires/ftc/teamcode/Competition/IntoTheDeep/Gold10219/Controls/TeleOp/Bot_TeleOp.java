@@ -171,7 +171,7 @@ public class Bot_TeleOp extends OpMode {
                 Bot.frontLeftMotor.setPower(frontLeftPower);
                 Bot.rearLeftMotor.setPower(backLeftPower);
                 Bot.frontRightMotor.setPower(frontRightPower);
-                Bot.rearLeftMotor.setPower(backRightPower);
+                Bot.rearRightMotor.setPower(backRightPower);
                 break;
         }
     }
