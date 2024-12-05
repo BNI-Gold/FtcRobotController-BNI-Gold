@@ -25,7 +25,7 @@ public class Grabber {
     private Orientation angles;
     public float heading = 0;
 
-    public double tuckPosition = .6428;
+    public double tuckPosition = .5;
 
     public double straight = .52;
     public double right = .8511;
@@ -37,6 +37,7 @@ public class Grabber {
 
     public double outAngle = 45;
     public double downAngle = -45;
+    public double finishHookAngle = 0;
 
     public double angleDeadband = 2;
     public double servoDeadband = .005;
@@ -160,7 +161,7 @@ public class Grabber {
     public double nsp2 = 0;
 
     public enum grabberStates {
-        OUT, DOWN, MANUAL
+        OUT, DOWN, FHOOK, MANUAL
     }
 
     public enum tiltStates {
@@ -195,6 +196,9 @@ public class Grabber {
                         break;
                     case DOWN:
                         desiredAngle = downAngle;
+                        break;
+                    case FHOOK:
+                        desiredAngle = finishHookAngle;
                         break;
                 }
 

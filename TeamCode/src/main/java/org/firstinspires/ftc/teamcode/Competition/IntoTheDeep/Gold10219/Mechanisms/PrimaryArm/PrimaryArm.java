@@ -99,4 +99,14 @@ public class PrimaryArm {
         double pos = extender.getPosition();
         extender.setPosition(pos - extenderAdjust);
     }
+
+    public void extend(double val) {
+        double pos = extender.getPosition();
+        extender.setPosition(pos + (extenderAdjust * val));
+    }
+
+    public void retract(double val) {
+        double pos = extender.getPosition();
+        extender.setPosition(pos - (extenderAdjust * val));
+    }
 }
