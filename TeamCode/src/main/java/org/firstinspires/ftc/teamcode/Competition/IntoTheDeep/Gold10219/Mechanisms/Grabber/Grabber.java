@@ -19,8 +19,8 @@ public class Grabber {
     public BNO055IMU imu = null;
 
     //TODO: Update these values
-    double grabberOpen = .625;
-    double grabberClosed = .925;
+    double grabberOpen = .3544;
+    double grabberClosed = .6494;
 
     private Orientation angles;
     public float heading = 0;
@@ -229,7 +229,7 @@ public class Grabber {
                 nsp = newServoPosition;
 
                 // Clamp the servo position to the valid range [0.4, 1]
-                newServoPosition = Range.clip(newServoPosition, 0.4, 1);
+                newServoPosition = Range.clip(newServoPosition, 0.5, 1);
                 desiredPos = newServoPosition;
                 nsp2 = newServoPosition;
 
