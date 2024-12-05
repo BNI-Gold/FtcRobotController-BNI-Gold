@@ -321,6 +321,7 @@ public class Grabber {
 //    }
 
     public void doTuck() {
+        setGrabberState(grabberStates.MANUAL);
         close();
         headStraight();
         tuck();

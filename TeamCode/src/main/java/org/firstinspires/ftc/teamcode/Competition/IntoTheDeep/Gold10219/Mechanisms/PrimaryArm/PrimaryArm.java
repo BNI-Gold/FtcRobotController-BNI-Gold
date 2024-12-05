@@ -102,11 +102,11 @@ public class PrimaryArm {
 
     public void extend(double val) {
         double pos = extender.getPosition();
-        extender.setPosition(pos + (extenderAdjust * val));
+        extender.setPosition(Math.min(pos + (extenderAdjust * val), extendedPosition));
     }
 
     public void retract(double val) {
         double pos = extender.getPosition();
-        extender.setPosition(pos - (extenderAdjust * val));
+        extender.setPosition(Math.max(pos - (extenderAdjust * val), retractedPosition));
     }
 }
