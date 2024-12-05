@@ -151,31 +151,6 @@ public class Bot_TeleOp extends OpMode {
         telemetry.addData("Rear Left: ", Bot.rearLeftMotor.getCurrentPosition());
         telemetry.addData("Rear Right: ", Bot.rearRightMotor.getCurrentPosition());
 
-        telemetry.addLine();
-
-//        double primaryArmPower = arm.arm.getPower();
-//        if (primaryArmPower > 0) telemetry.addData("Primary Arm Extending: ", primaryArmPower);
-//        else if (primaryArmPower < 0) telemetry.addData("Primary Arm Retracting: ", primaryArmPower);
-//        else telemetry.addLine("Primary Arm Stopped");
-
-//        telemetry.addLine();
-//
-//        double primaryArmRotatorPower = arm.rotator.getPower();
-//        if (primaryArmRotatorPower > 0) telemetry.addData("Primary Arm Going Up: ", primaryArmRotatorPower);
-//        else if (primaryArmRotatorPower < 0) telemetry.addData("Primary Arm Going Down: ", primaryArmRotatorPower);
-//        else telemetry.addLine("Primary Arm Not Rotating");
-//
-//        telemetry.addLine();
-//
-//        double intakePower = intake.intake.getPower();
-//        if (intakePower > 0) telemetry.addData("Intake Running Inwards: ", intakePower);
-//        else if (intakePower < 0) telemetry.addData("Intake Running Outwards: ", intakePower);
-//        else telemetry.addLine("Intake Stopped");
-
-//        telemetry.addLine();
-//
-//        telemetry.addData("Intake Rotation Position: ", intake.rotator.getPosition());
-
         telemetry.update();
     }
 
