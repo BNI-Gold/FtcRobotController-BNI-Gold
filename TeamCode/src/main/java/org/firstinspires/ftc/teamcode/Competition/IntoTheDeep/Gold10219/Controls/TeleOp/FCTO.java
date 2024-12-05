@@ -8,9 +8,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 
 @TeleOp(name = "A - TO", group = "competition")
 public class FCTO extends LinearOpMode {
+
+    public CompBotVars vars = new CompBotVars();
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -24,8 +28,10 @@ public class FCTO extends LinearOpMode {
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(vars.Motors.FrontLeft.direction);
+        frontRightMotor.setDirection(vars.Motors.FrontRight.direction);
+        backLeftMotor.setDirection(vars.Motors.RearLeft.direction);
+        backRightMotor.setDirection(vars.Motors.RearRight.direction);
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
