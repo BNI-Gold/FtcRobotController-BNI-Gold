@@ -111,6 +111,16 @@ public class Grabber {
         rotate.setPosition(position - rotationAdjust);
     }
 
+    public void centerOut() {
+        headStraight();
+        setGrabberState(grabberStates.OUT);
+    }
+
+    public void centerDown() {
+        headStraight();
+        setGrabberState(grabberStates.DOWN);
+    }
+
     public void rotate(double x, double y) {
         // Calculate the angle in radians, then convert to degrees
         double angle = Math.atan2(-x, -y); // Negative y to match joystick orientation
@@ -161,7 +171,7 @@ public class Grabber {
     public double nsp2 = 0;
 
     public enum grabberStates {
-        OUT, DOWN, FHOOK, MANUAL
+        OUT, DOWN, HOOK, MANUAL
     }
 
     public enum tiltStates {
@@ -197,7 +207,7 @@ public class Grabber {
                     case DOWN:
                         desiredAngle = downAngle;
                         break;
-                    case FHOOK:
+                    case HOOK:
                         desiredAngle = finishHookAngle;
                         break;
                 }
