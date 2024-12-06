@@ -54,8 +54,8 @@ public class PoseHelper {
 
     public Pose2D getSmartPose(Alliances alliance) {
         if (!LLInUse) {
+            vision.setPipeline(3);
             while (!vision.lastResultValid() || vision.Position.getTagCount() == 0) {
-                vision.setPipeline(3);
                 vision.getResult();
             }
 
@@ -136,6 +136,22 @@ public class PoseHelper {
 
         return null;
     }
+
+//    public Pose2D getPose() {
+//        if (!LLInUse) {
+//            vision.setPipeline(3);
+//            while (!vision.lastResultValid() || vision.Position.getTagCount() == 0) {
+//                vision.getResult();
+//            }
+//
+//            double heading = 0;
+//
+//            int tagCount = vision.Position.getTagCount();
+//            if (tagCount == 2) {
+//                heading = vision.Position
+//            }
+//        }
+//    }
 
     public void updateHeading() {
         if (!LLInUse) {
