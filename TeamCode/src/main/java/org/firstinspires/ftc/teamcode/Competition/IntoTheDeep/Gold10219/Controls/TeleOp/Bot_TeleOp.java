@@ -318,6 +318,7 @@ public class Bot_TeleOp extends OpMode {
                 break;
             case UP:
                 arm.up(1, false);
+                timer.reset();
                 grabSpecimenCase = grabSpecimenCases.TIMEOUT2;
                 break;
             case TIMEOUT2:
@@ -338,11 +339,57 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void hookSpecimen() {
-
+        switch (hookSpecimenCase) {
+            case HOOK:
+                grabber.setGrabberState(Grabber.grabberStates.HOOK);
+                timer.reset();
+                hookSpecimenCase = hookSpecimenCases.TIMEOUT1;
+                break;
+            case TIMEOUT1:
+                if (timer.time() > .5) {
+                    hookSpecimenCase = hookSpecimenCases.DOWN;
+                }
+                break;
+            case DOWN:
+                arm.down(.25, false);
+                shortcutCase = shortcutCases.NONE;
+                hookSpecimenCase = hookSpecimenCases.HOOK;
+                break;
+        }
     }
 
     public void retractFromChamber() {
-
+        switch (retractFromChamberCase) {
+            case OPEN:
+                grabber.open();
+                timer.reset();
+                retractFromChamberCase = retractFromChamberCases.TIMEOUT1;
+                break;
+            case TIMEOUT1:
+                if (timer.time() > .5) {
+                    retractFromChamberCase = retractFromChamberCases.UP;
+                }
+                break;
+            case UP:
+                arm.up(.5, false);
+                timer.reset();
+                retractFromChamberCase = retractFromChamberCases.TIMEOUT2;
+                break;
+            case TIMEOUT2:
+                if (timer.time() > .5) {
+                    retractFromChamberCase = retractFromChamberCases.RETRACT;
+                }
+                break;
+            case RETRACT:
+                arm.setRetract();
+                retractFromChamberCase = retractFromChamberCases.TUCK;
+                break;
+            case TUCK:
+                grabber.doTuck();
+                shortcutCase = shortcutCases.NONE;
+                retractFromChamberCase = retractFromChamberCases.OPEN;
+                break;
+        }
     }
 
     public void shortcuts() {
@@ -356,17 +403,13 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.dpad_down) {
             //This will open the grabber, slightly raise the arm, retract the arm, and tuck grabber.
             if (clipped && !dPressed) {
-                grabber.open();
-                arm.up(.5, false);
-                arm.setRetract();
-                grabber.doTuck();
+                shortcutCase = shortcutCases.RETRACT_FROM_CHAMBER;
                 clipped = false;
             }
 
             //This will set the grabber to the hook position and lower arm slightly.
             else if (!dPressed) {
-                grabber.setGrabberState(Grabber.grabberStates.HOOK);
-                arm.down(.25, false);
+                shortcutCase = shortcutCases.HOOK_SPECIMEN;
                 dPressed = true;
                 clipped = true;
             }
