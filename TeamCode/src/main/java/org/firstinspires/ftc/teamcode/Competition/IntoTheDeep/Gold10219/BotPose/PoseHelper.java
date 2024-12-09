@@ -62,15 +62,18 @@ public class PoseHelper {
             double heading = 0;
 
             int tagCount = vision.Position.getTagCount();
+            telemetry.addData("TagCount: ", tagCount);
             if (tagCount == 2) {
                 //Robot is facing two tags. Should get heading using MT, then set pinpoint heading. Then get position using MT2.
                 heading = vision.Position.getPose(PoseTypes.MT1).getOrientation().getYaw(AngleUnit.DEGREES);
+                telemetry.addData("H: ", heading);
                 if (heading > 180) {
                     heading -= 360;
                 }
             } else if (tagCount == 1) {
                 //Robot is only facing one tag. Should determine heading based off of known possible starts, then set pinpoint heading. Then get position using MT2.
                 int tag = vision.Position.getCurrentTags().get(0).getFiducialId();
+                telemetry.addData("Tag: ", tag);
 
                 switch (alliance) {
                     case BLUE:
@@ -126,6 +129,10 @@ public class PoseHelper {
                 }
             }
             pinpoint.updateHeading(heading);
+            pinpoint.update();
+
+            vision.Position.updateYaw();
+            vision.getResult();
 
             Position MT2 = vision.Position.getPose(PoseTypes.MT2).getPosition().toUnit(DistanceUnit.INCH);
             pinpoint.updateXYPosition(MT2.x, MT2.y);

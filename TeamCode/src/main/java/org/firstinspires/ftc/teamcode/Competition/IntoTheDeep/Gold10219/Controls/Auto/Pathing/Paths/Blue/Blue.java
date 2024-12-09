@@ -126,7 +126,7 @@ public class Blue extends OpMode {
                         .setHeading(HeadingTypes.CONSTANT, startPose));
 
         paths.put(toSample1,
-                new EasySafePath(startPose, poses.SampleLines.Audience.Blue.B1.Slip, poses.SampleLines.Audience.Blue.B1.Post, poses.SampleLines.Audience.Blue.B1.Sample,
+                new EasySafePath(getPath(toChambers1).getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Slip, poses.SampleLines.Audience.Blue.B1.Post, poses.SampleLines.Audience.Blue.B1.Sample,
                         new Offsets().remY(vars.Chassis.FRONT_LENGTH))
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.SampleLines.pushApproachAngle, .35));
 
