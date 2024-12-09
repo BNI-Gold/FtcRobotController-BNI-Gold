@@ -36,6 +36,8 @@ public class PrimaryArm {
         rotator.setDirection(DcMotor.Direction.REVERSE);
         extender.setDirection(Servo.Direction.FORWARD);
 
+        extender.setPosition(retractedPosition);
+
         rotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 

@@ -317,7 +317,7 @@ public class Bot_TeleOp extends OpMode {
                 }
                 break;
             case UP:
-                arm.up(1, false);
+                arm.up(2, false);
                 timer.reset();
                 grabSpecimenCase = grabSpecimenCases.TIMEOUT2;
                 break;
@@ -351,7 +351,7 @@ public class Bot_TeleOp extends OpMode {
                 }
                 break;
             case DOWN:
-                arm.down(.25, false);
+                arm.down(.3, false);
                 shortcutCase = shortcutCases.NONE;
                 hookSpecimenCase = hookSpecimenCases.HOOK;
                 break;
@@ -403,14 +403,15 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.dpad_down) {
             //This will open the grabber, slightly raise the arm, retract the arm, and tuck grabber.
             if (clipped && !dPressed) {
+                dPressed = true;
                 shortcutCase = shortcutCases.RETRACT_FROM_CHAMBER;
                 clipped = false;
             }
 
             //This will set the grabber to the hook position and lower arm slightly.
             else if (!dPressed) {
-                shortcutCase = shortcutCases.HOOK_SPECIMEN;
                 dPressed = true;
+                shortcutCase = shortcutCases.HOOK_SPECIMEN;
                 clipped = true;
             }
         }
