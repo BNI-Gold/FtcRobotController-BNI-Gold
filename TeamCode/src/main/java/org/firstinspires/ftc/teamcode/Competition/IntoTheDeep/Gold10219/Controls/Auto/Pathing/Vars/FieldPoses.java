@@ -37,7 +37,7 @@ public class FieldPoses {
                 public static final class B1 {
                     public Pose Sample = new Pose(x1, f-y);
 
-                    public Pose Slip = new Pose(30, f - 24);
+                    public Pose Slip = new Pose(30, f - 18);
                     public Pose Pre = new Pose(33, f - 24);
                     public Pose Post = new Pose(42, f - 66);
                 }
