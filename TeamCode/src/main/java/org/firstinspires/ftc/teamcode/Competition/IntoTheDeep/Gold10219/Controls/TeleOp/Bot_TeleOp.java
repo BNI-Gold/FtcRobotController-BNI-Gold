@@ -62,16 +62,26 @@ public class Bot_TeleOp extends OpMode {
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
         imu.initialize(parameters);
 
+        telemetry.addLine("IMU Initialized");
+
         pinpoint.setOp(this);
         pinpoint.initPinpoint(hardwareMap);
+
+        telemetry.addLine("Pinpoint Initialized");
 
         vision.setOp(this);
         vision.initVision(hardwareMap, pinpoint);
 
+        telemetry.addLine("Vision Initialized");
+
         pose.setOp(this);
         pose.setDevices(vision, pinpoint);
 
+        telemetry.addLine("Pose Initiated");
+
         vision.start();
+
+        telemetry.addLine("Vision Started");
 
         pose.updateLLUsage(false);
 
@@ -89,9 +99,13 @@ public class Bot_TeleOp extends OpMode {
         follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
 
+        telemetry.addLine("Follower Initialized");
+
         arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
         grabber.doTuck();
+
+        telemetry.update();
     }
 
     public Pose getCurrentPose() {
@@ -113,8 +127,8 @@ public class Bot_TeleOp extends OpMode {
         speedControl();
         driverProfileSwitcher();
         drive();
-        primaryArmControl();
-        grabberControl();
+        controlTypeSwitcher();
+        mechanismControl();
         grabber.tiltStateCheck();
         telemetryOutput();
     }
@@ -234,20 +248,36 @@ public class Bot_TeleOp extends OpMode {
     }
 
     private enum mechanismControlTypes {
-        SMART, ARM, GRABBER
+        SMART, CLASSIC
     }
 
     private mechanismControlTypes controlType = mechanismControlTypes.SMART;
+
+    private boolean guidePressed = false;
+
+    public void controlTypeSwitcher() {
+        if (gamepad2.guide && !guidePressed) {
+            guidePressed = true;
+            switch (controlType) {
+                case SMART:
+                    controlType = mechanismControlTypes.CLASSIC;
+                    break;
+                case CLASSIC:
+                    controlType = mechanismControlTypes.SMART;
+                    break;
+            }
+        } else {
+            guidePressed = false;
+        }
+    }
 
     public void mechanismControl() {
         switch (controlType) {
             case SMART:
                 smartControl();
                 break;
-            case ARM:
+            case CLASSIC:
                 primaryArmControl();
-                break;
-            case GRABBER:
                 grabberControl();
                 break;
         }
