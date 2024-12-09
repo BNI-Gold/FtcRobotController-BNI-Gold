@@ -64,42 +64,44 @@ public class Bot_TeleOp extends OpMode {
 
         telemetry.addLine("IMU Initialized");
 
-        pinpoint.setOp(this);
-        pinpoint.initPinpoint(hardwareMap);
+        timer.reset();
 
-        telemetry.addLine("Pinpoint Initialized");
-
-        vision.setOp(this);
-        vision.initVision(hardwareMap, pinpoint);
-
-        telemetry.addLine("Vision Initialized");
-
-        pose.setOp(this);
-        pose.setDevices(vision, pinpoint);
-
-        telemetry.addLine("Pose Initiated");
-
-        vision.start();
-
-        telemetry.addLine("Vision Started");
-
-        pose.updateLLUsage(false);
-
-        Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
-        telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
-        telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
-        telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
-
-        startPose = new Pose(
-                currentPose.getX(DistanceUnit.INCH),
-                currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.RADIANS)
-        );
-
-        follower = new Follower(hardwareMap);
-        follower.setStartingPose(startPose);
-
-        telemetry.addLine("Follower Initialized");
+//        pinpoint.setOp(this);
+//        pinpoint.initPinpoint(hardwareMap);
+//
+//        telemetry.addLine("Pinpoint Initialized");
+//
+//        vision.setOp(this);
+//        vision.initVision(hardwareMap, pinpoint);
+//
+//        telemetry.addLine("Vision Initialized");
+//
+//        pose.setOp(this);
+//        pose.setDevices(vision, pinpoint);
+//
+//        telemetry.addLine("Pose Initiated");
+//
+//        vision.start();
+//
+//        telemetry.addLine("Vision Started");
+//
+//        pose.updateLLUsage(false);
+//
+//        Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
+//        telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
+//        telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
+//        telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
+//
+//        startPose = new Pose(
+//                currentPose.getX(DistanceUnit.INCH),
+//                currentPose.getY(DistanceUnit.INCH),
+//                currentPose.getHeading(AngleUnit.RADIANS)
+//        );
+//
+//        follower = new Follower(hardwareMap);
+//        follower.setStartingPose(startPose);
+//
+//        telemetry.addLine("Follower Initialized");
 
         arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
@@ -122,13 +124,15 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void loop() {
-        pose.updatePose();
-        follower.update();
+//        pose.updatePose();
+//        follower.update();
         speedControl();
         driverProfileSwitcher();
         drive();
-        controlTypeSwitcher();
-        mechanismControl();
+        shortcutChecker();
+        shortcuts();
+        grabberControl();
+        primaryArmControl();
         grabber.tiltStateCheck();
         telemetryOutput();
     }
@@ -247,59 +251,111 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
-    private enum mechanismControlTypes {
-        SMART, CLASSIC
-    }
-
-    private mechanismControlTypes controlType = mechanismControlTypes.SMART;
-
-    private boolean guidePressed = false;
-
-    public void controlTypeSwitcher() {
-        if (gamepad2.guide && !guidePressed) {
-            guidePressed = true;
-            switch (controlType) {
-                case SMART:
-                    controlType = mechanismControlTypes.CLASSIC;
-                    break;
-                case CLASSIC:
-                    controlType = mechanismControlTypes.SMART;
-                    break;
-            }
-        } else {
-            guidePressed = false;
-        }
-    }
-
-    public void mechanismControl() {
-        switch (controlType) {
-            case SMART:
-                smartControl();
-                break;
-            case CLASSIC:
-                primaryArmControl();
-                grabberControl();
-                break;
-        }
-    }
-
     private boolean clipped = false;
-    private boolean bPressed = false;
+    private boolean dPressed = false;
 
-    public void smartControl() {
+    private shortcutCases shortcutCase = shortcutCases.NONE;
+
+    private enum shortcutCases {
+        NONE, GRAB_SPECIMEN, HOOK_SPECIMEN, RETRACT_FROM_CHAMBER
+    }
+
+    private grabSpecimenCases grabSpecimenCase = grabSpecimenCases.CLOSE;
+
+    private enum grabSpecimenCases {
+        CLOSE,
+        TIMEOUT1,
+        UP,
+        TIMEOUT2,
+        TUCK,
+        RETRACT
+    }
+
+    private hookSpecimenCases hookSpecimenCase = hookSpecimenCases.HOOK;
+
+    private enum hookSpecimenCases {
+        HOOK,
+        TIMEOUT1,
+        DOWN
+    }
+
+    private retractFromChamberCases retractFromChamberCase = retractFromChamberCases.OPEN;
+
+    private enum retractFromChamberCases {
+        OPEN,
+        TIMEOUT1,
+        UP,
+        TIMEOUT2,
+        RETRACT,
+        TUCK
+    }
+
+    public void shortcutChecker() {
+        switch (shortcutCase) {
+            case GRAB_SPECIMEN:
+                grabSpecimen();
+                break;
+            case HOOK_SPECIMEN:
+                hookSpecimen();
+                break;
+            case RETRACT_FROM_CHAMBER:
+                retractFromChamber();
+                break;
+        }
+    }
+
+    public void grabSpecimen() {
+        switch (grabSpecimenCase) {
+            case CLOSE:
+                grabber.close();
+                timer.reset();
+                grabSpecimenCase = grabSpecimenCases.TIMEOUT1;
+                break;
+            case TIMEOUT1:
+                if (timer.time() > .5) {
+                    grabSpecimenCase = grabSpecimenCases.UP;
+                }
+                break;
+            case UP:
+                arm.up(1, false);
+                grabSpecimenCase = grabSpecimenCases.TIMEOUT2;
+                break;
+            case TIMEOUT2:
+                if (timer.time() > .5) {
+                    grabSpecimenCase = grabSpecimenCases.TUCK;
+                }
+                break;
+            case TUCK:
+                grabber.doTuck();
+                grabSpecimenCase = grabSpecimenCases.RETRACT;
+                break;
+            case RETRACT:
+                arm.setRetract();
+                shortcutCase = shortcutCases.NONE;
+                grabSpecimenCase = grabSpecimenCases.CLOSE;
+                break;
+        }
+    }
+
+    public void hookSpecimen() {
+
+    }
+
+    public void retractFromChamber() {
+
+    }
+
+    public void shortcuts() {
         //Press gp2.a when grabber is aligned with specimen on wall.
         //This will grab specimen, lift arm slightly, tuck grabber, and retract arm.
-        if (gamepad2.a) {
-            grabber.close();
-            arm.up(1, false);
-            grabber.doTuck();
-            arm.setRetract();
+        if (gamepad2.dpad_up) {
+            shortcutCase = shortcutCases.GRAB_SPECIMEN;
         }
 
         //Press gp2.b when specimen is aligned with chamber, or after specimen has been hooked on chamber.
-        else if (gamepad2.b) {
+        else if (gamepad2.dpad_down) {
             //This will open the grabber, slightly raise the arm, retract the arm, and tuck grabber.
-            if (clipped && !bPressed) {
+            if (clipped && !dPressed) {
                 grabber.open();
                 arm.up(.5, false);
                 arm.setRetract();
@@ -308,18 +364,16 @@ public class Bot_TeleOp extends OpMode {
             }
 
             //This will set the grabber to the hook position and lower arm slightly.
-            else if (!bPressed) {
+            else if (!dPressed) {
                 grabber.setGrabberState(Grabber.grabberStates.HOOK);
                 arm.down(.25, false);
-                bPressed = true;
+                dPressed = true;
                 clipped = true;
             }
         }
         else {
-            bPressed = false;
+            dPressed = false;
         }
-
-        primaryArmRotationControl();
     }
 
     public void grabberControl() {
@@ -346,18 +400,13 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.left_bumper) arm.setRetract();
         else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger * 4);
 
-        primaryArmRotationControl();
-    }
-
-    public void primaryArmRotationControl() {
-        if (gamepad2.dpad_up && gamepad2.right_bumper) {
+        if (gamepad2.left_stick_y < -.35 && gamepad2.right_bumper) {
             arm.up(true);
-        } else if (gamepad2.dpad_up) arm.up(false);
-        else if (gamepad2.dpad_down && gamepad2.right_bumper) arm.down(true);
-        else if (gamepad2.dpad_down) arm.down(false);
+        } else if (gamepad2.left_stick_y < -.35) arm.up(false);
+        else if (gamepad2.left_stick_y > .35 && gamepad2.right_bumper) arm.down(true);
+        else if (gamepad2.left_stick_y > .35) arm.down(false);
         else arm.stopRotation();
     }
-
 
     public void telemetryOutput() {
         telemetry.addData("Front Left: ", Bot.frontLeftMotor.getCurrentPosition());
