@@ -37,7 +37,7 @@ public class FieldPoses {
                 public static final class B1 {
                     public Pose Sample = new Pose(x1, f-y);
 
-                    public Pose Slip = new Pose(30, f - 18);
+                    public Pose Slip = new Pose(27, f - 18);
                     public Pose Pre = new Pose(33, f - 24);
                     public Pose Post = new Pose(42, f - 66);
                 }
@@ -107,9 +107,16 @@ public class FieldPoses {
         private static final double y = 14;
 
         public Retreats Retreats = new Retreats();
+        public SpecimenApproaches SpecimenApproaches = new SpecimenApproaches();
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
         public Pose Red = new Pose(f - x, y);
+
+        public static final class SpecimenApproaches {
+            private static final double y = 22;
+            public Pose Blue = new Pose(x, f-y);
+            public Pose Red = new Pose(f-x, y);
+        }
 
         public static final class Retreats {
             private static final double y = 20;

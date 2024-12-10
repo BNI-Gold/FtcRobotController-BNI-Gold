@@ -1,17 +1,20 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.TeleOp;
+package org.firstinspires.ftc.teamcode.Lab;
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 
-@TeleOp(name = "A - TO", group = "competition")
-public class FCTO extends LinearOpMode {
+@Disabled
+@TeleOp(name = "A - Field-Centric TeleOp", group = "competition")
+public class FieldCentricTeleOp extends LinearOpMode {
 
     public CompBotVars vars = new CompBotVars();
 
@@ -30,8 +33,8 @@ public class FCTO extends LinearOpMode {
         // See the note about this earlier on this page.
         frontLeftMotor.setDirection(vars.Motors.FrontLeft.direction);
         frontRightMotor.setDirection(vars.Motors.FrontRight.direction);
-        backLeftMotor.setDirection(vars.Motors.RearLeft.direction);
-        backRightMotor.setDirection(vars.Motors.RearRight.direction);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");

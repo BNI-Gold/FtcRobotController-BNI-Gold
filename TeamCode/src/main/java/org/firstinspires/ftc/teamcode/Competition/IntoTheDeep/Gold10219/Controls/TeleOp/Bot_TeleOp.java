@@ -105,9 +105,14 @@ public class Bot_TeleOp extends OpMode {
 
         arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
-        grabber.doTuck();
 
         telemetry.update();
+    }
+
+    public void start() {
+        grabber.close();
+        grabber.headStraight();
+        arm.setRetract();
     }
 
     public Pose getCurrentPose() {
@@ -144,7 +149,7 @@ public class Bot_TeleOp extends OpMode {
             speedMultiply = 1;
         }
 
-        if (gamepad2.dpad_left) {
+        if (gamepad2.left_stick_button) {
             armSpeedMultiplier = true;
         } else {
             armSpeedMultiplier = false;
@@ -415,7 +420,7 @@ public class Bot_TeleOp extends OpMode {
                 clipped = true;
             }
         }
-        else if (gamepad2.dpad_right) {
+        else if (gamepad2.dpad_left) {
             clipped = false;
         }
         else {
@@ -429,7 +434,7 @@ public class Bot_TeleOp extends OpMode {
 
         if (gamepad2.x) grabber.setGrabberState(Grabber.grabberStates.DOWN);
         else if (gamepad2.y) grabber.setGrabberState(Grabber.grabberStates.OUT);
-        else if (gamepad2.start) grabber.doTuck();
+        else if (gamepad2.dpad_right) grabber.doTuck();
         else if (gamepad2.right_stick_button) grabber.setGrabberState(Grabber.grabberStates.HOOK);
 
         else if (gamepad2.back) grabber.headStraight();
@@ -443,10 +448,14 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.left_bumper) arm.setRetract();
         else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger * 4);
 
-        if (gamepad2.left_stick_y < -.35 && !gamepad2.left_stick_button) arm.up(armSpeedMultiplier);
-        else if (gamepad2.left_stick_y > .35 && !gamepad2.left_stick_button) arm.down(armSpeedMultiplier);
-        else if (gamepad2.left_stick_y < -.35 && gamepad2.left_stick_button) grabber.tiltUp();
-        else if (gamepad2.left_stick_y > -.35 && gamepad2.left_stick_button) grabber.tiltDown();
+        if (gamepad2.start) {
+            grabber.setGrabberState(Grabber.grabberStates.MANUAL);
+        }
+
+        if (gamepad2.left_stick_y < -.35 && !gamepad2.start) arm.up(armSpeedMultiplier);
+        else if (gamepad2.left_stick_y > .35 && !gamepad2.start) arm.down(armSpeedMultiplier);
+        else if (gamepad2.left_stick_y < -.35 && gamepad2.start) grabber.tiltUp(Math.abs(gamepad2.left_stick_y) * 3);
+        else if (gamepad2.left_stick_y > -.35 && gamepad2.start) grabber.tiltDown(Math.abs(gamepad2.left_stick_y) * 3 );
         else arm.stopRotation();
     }
 

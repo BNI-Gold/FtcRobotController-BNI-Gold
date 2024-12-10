@@ -19,17 +19,17 @@ public class Grabber {
     public BNO055IMU imu = null;
 
     //TODO: Update these values
-    double grabberOpen = .3544;
-    double grabberClosed = .6494;
+    double grabberOpen = .4472;
+    double grabberClosed = .7033;
 
     private Orientation angles;
     public float heading = 0;
 
     public double tuckPosition = .5;
 
-    public double straight = .52;
-    public double right = .8511;
-    public double left = .1906;
+    public double straight = .4911;
+    public double right = .82;
+    public double left = .1583;
 
     public double grabberAdjust = .001;
     public double rotationAdjust = .001;
@@ -38,6 +38,7 @@ public class Grabber {
     public double outAngle = 45;
     public double downAngle = -45;
     public double finishHookAngle = 0;
+    public double tuckAngle = -75;
 
     public double angleDeadband = 2;
     public double servoDeadband = .005;
@@ -83,10 +84,6 @@ public class Grabber {
     public void goClose() {
         double position = grabber.getPosition();
         grabber.setPosition(position - grabberAdjust);
-    }
-
-    private void tuck() {
-        tilt.setPosition(tuckPosition);
     }
 
     public void headStraight() {
@@ -162,6 +159,16 @@ public class Grabber {
         tilt.setPosition(Math.max(position - tiltAdjust, 0.0)); // Ensure position does not go below 0.0
     }
 
+    public void tiltUp(double mult) {
+        double position = tilt.getPosition();
+        tilt.setPosition(Math.min(position + (tiltAdjust * mult), 1.0)); // Ensure position does not exceed 1.0
+    }
+
+    public void tiltDown(double mult) {
+        double position = tilt.getPosition();
+        tilt.setPosition(Math.max(position - (tiltAdjust * mult), 0.0)); // Ensure position does not go below 0.0
+    }
+
     public double ang = 0;
     public double diff = 0;
     public double diff1 = 0;
@@ -171,7 +178,7 @@ public class Grabber {
     public double nsp2 = 0;
 
     public enum grabberStates {
-        OUT, DOWN, HOOK, MANUAL
+        OUT, DOWN, HOOK, TUCK, MANUAL
     }
 
     public enum tiltStates {
@@ -210,6 +217,9 @@ public class Grabber {
                     case HOOK:
                         desiredAngle = finishHookAngle;
                         break;
+                    case TUCK:
+                        desiredAngle = tuckAngle;
+                        break;
                 }
 
                 double currentAngle = getTilt();
@@ -243,7 +253,7 @@ public class Grabber {
                 nsp = newServoPosition;
 
                 // Clamp the servo position to the valid range [0.4, 1]
-                newServoPosition = Range.clip(newServoPosition, 0.5, 1);
+                newServoPosition = Range.clip(newServoPosition, 0, 0.5);
                 desiredPos = newServoPosition;
                 nsp2 = newServoPosition;
 
@@ -265,10 +275,9 @@ public class Grabber {
     }
 
     public void doTuck() {
-        setGrabberState(grabberStates.MANUAL);
         close();
         headStraight();
-        tuck();
+        setGrabberState(grabberStates.TUCK);
     }
 
     public float getTilt() {

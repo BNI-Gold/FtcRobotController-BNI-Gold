@@ -216,16 +216,33 @@ public class Blue extends OpMode {
             case holdObservation1:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.Observations.Blue),
-                            poses.Observations.Blue.getHeading()
+                            new EasyPoint(poses.Observations.SpecimenApproaches.Blue),
+                            poses.Observations.SpecimenApproaches.Blue.getHeading()
                     );
                     setPathState(observation1Timeout);
                 }
                 break;
             case observation1Timeout:
                 if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(toSample2);
+//                    setPathState(alignObservation1);
                 }
+                break;
+            case alignObservation1:
+                pose.updateLLUsage(true);
+                vision.setPipeline(2);
+                setPathState(approach1);
+                break;
+            case approach1:
+                setPathState(approach1Timeout);
+                break;
+            case approach1Timeout:
+                setPathState(grabSpecimen1);
+                break;
+            case grabSpecimen1:
+                setPathState(grabSpecimen1Timeout);
+                break;
+            case grabSpecimen1Timeout:
+                setPathState(toSample2);
                 break;
             case toSample2:
                 follower.followPath(getPath(toSample2));
