@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars;
 
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 
 public class FieldPoses {
@@ -8,6 +9,8 @@ public class FieldPoses {
     public Nets Nets = new Nets();
     public Observations Observations = new Observations();
     public Recalibration Recalibration = new Recalibration();
+
+    private static CompBotVars vars = new CompBotVars();
 
     private static final int f = 144;
 
@@ -39,21 +42,21 @@ public class FieldPoses {
 
                     public Pose Slip = new Pose(27, f - 18);
                     public Pose Pre = new Pose(33, f - 24);
-                    public Pose Post = new Pose(42, f - 66);
+                    public Pose Post = new Pose(40, f - 66);
                 }
 
                 public static final class B2 {
                     public Pose Sample = new Pose(x2, f-y);
 
                     public Pose Pre = new Pose(28, f-24);
-                    public Pose Post = new Pose(35, f-66);
+                    public Pose Post = new Pose(30, f-66);
                 }
 
                 public static final class B3 {
                     public Pose Sample = new Pose(x3, f-y);
 
                     public Pose Pre = new Pose(13, f-24);
-                    public Pose Post = new Pose(22, f-66);
+                    public Pose Post = new Pose(20, f-66);
                 }
             }
         }
@@ -103,18 +106,26 @@ public class FieldPoses {
     }
 
     public static final class Observations {
-        private static final double x = 12;
+        private static final double x = 15;
         private static final double y = 14;
 
+        public Approaches Approaches = new Approaches();
+        public Grabs Grabs = new Grabs();
         public Retreats Retreats = new Retreats();
-        public SpecimenApproaches SpecimenApproaches = new SpecimenApproaches();
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
         public Pose Red = new Pose(f - x, y);
 
-        public static final class SpecimenApproaches {
+        //NOTE: X value for Approaches and Grabs must be same in order for offset calculation to work in auto
+        public static final class Approaches {
             private static final double y = 22;
-            public Pose Blue = new Pose(x, f-y);
+            public Pose Blue = new Pose(x, f-y, Math.toRadians(90));
+            public Pose Red = new Pose(f-x, y);
+        }
+
+        public static final class Grabs {
+            private static final double y = vars.Chassis.FRONT_LENGTH + 3.5;
+            public Pose Blue = new Pose(x, f-y, Math.toRadians(90));
             public Pose Red = new Pose(f-x, y);
         }
 

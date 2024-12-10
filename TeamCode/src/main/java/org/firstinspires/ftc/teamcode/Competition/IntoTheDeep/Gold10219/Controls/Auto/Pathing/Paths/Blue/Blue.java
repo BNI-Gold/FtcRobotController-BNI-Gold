@@ -44,9 +44,10 @@ public class Blue extends OpMode {
 
     private Timer pathTimer;
 
-    //This is setup for a theoretical 5-specimen auto
     private final Map<BluePathStates, Path> paths = new HashMap<>();
     private BluePathStates pathState;
+
+    private final Map<BluePathStates, Double> specimenOffsets = new HashMap<>();
 
     @Override
     public void init() {
@@ -131,8 +132,8 @@ public class Blue extends OpMode {
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.SampleLines.pushApproachAngle, .35));
 
         paths.put(toObservation1,
-                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Pre, poses.Observations.Blue)
-                        .setHeading(HeadingTypes.CONSTANT, poses.Observations.Blue));
+                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Pre, poses.Observations.Approaches.Blue)
+                        .setHeading(HeadingTypes.CONSTANT, poses.Observations.Approaches.Blue));
 
         paths.put(toSample2,
                 new EasySafePath(getPath(toObservation1).getLastControlPoint(), poses.Observations.Retreats.Blue, poses.SampleLines.Audience.Blue.B2.Pre, poses.SampleLines.Audience.Blue.B2.Post, poses.SampleLines.Audience.Blue.B2.Sample,
@@ -216,27 +217,44 @@ public class Blue extends OpMode {
             case holdObservation1:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.Observations.SpecimenApproaches.Blue),
-                            poses.Observations.SpecimenApproaches.Blue.getHeading()
+                            new EasyPoint(poses.Observations.Approaches.Blue),
+                            poses.Observations.Approaches.Blue.getHeading()
                     );
+
+                    pose.updateLLUsage(true);
+                    vision.setPipeline(2);
+
                     setPathState(observation1Timeout);
                 }
                 break;
             case observation1Timeout:
                 if (pathTimer.getElapsedTime() > 500) {
-//                    setPathState(alignObservation1);
+                    setPathState(alignObservation1);
                 }
                 break;
             case alignObservation1:
-                pose.updateLLUsage(true);
-                vision.setPipeline(2);
-                setPathState(approach1);
+                vision.getResult();
+
+                double[] offsets = vision.getOffsets();
+                double xOffset = offsets[0];
+                double targetXOffset = 2.25;
+                xOffset -= targetXOffset;
+
+                //Each inch on the field is 3.8 units on x offset.
+                double xPoseOffset = xOffset / 3.8;
+                specimenOffsets.put(grabSpecimen1, xPoseOffset);
+
+                setPathState(approachGrabSpecimen1);
                 break;
-            case approach1:
-                setPathState(approach1Timeout);
+            case approachGrabSpecimen1:
+                double a = specimenOffsets.get(grabSpecimen1);
+                Pose updatedPose = poses.Observations.Grabs.Blue;
+                updatedPose.setX(poses.Observations.Grabs.Blue.getX() + a);
+                follower.holdPoint(new EasyPoint(updatedPose), poses.Observations.Grabs.Blue.getHeading());
+                setPathState(approachGrabSpecimen1Timeout);
                 break;
-            case approach1Timeout:
-                setPathState(grabSpecimen1);
+            case approachGrabSpecimen1Timeout:
+//                if (pathTimer.getElapsedTime() > 1000) setPathState(grabSpecimen1);
                 break;
             case grabSpecimen1:
                 setPathState(grabSpecimen1Timeout);

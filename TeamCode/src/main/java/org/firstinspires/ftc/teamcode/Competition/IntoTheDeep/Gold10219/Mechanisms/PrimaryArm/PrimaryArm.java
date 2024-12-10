@@ -63,6 +63,31 @@ public class PrimaryArm {
     public void stopRotation() {
         rotator.setPower(0);
     }
+
+    public enum rotationStates {
+        STOPPED, DO_UP, GOING_UP, DO_DOWN, GOING_DOWN
+    }
+
+    private rotationStates rotationState = rotationStates.STOPPED;
+    public double rotations = 0;
+    private double startRotations = 0;
+    public boolean s = false;
+
+    public void setRotation(rotationStates state, double rotations, boolean s) {
+        rotationState = state;
+        this.rotations = rotations;
+        this.s = s;
+    }
+
+    public void rotationChecker() {
+        switch (rotationState) {
+            case STOPPED:
+                break;
+            case DO_UP:
+                startRotations = rotator.getCurrentPosition();
+        }
+    }
+
     public void up(double rotations, boolean s) {
         double ticks = rotations * MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
