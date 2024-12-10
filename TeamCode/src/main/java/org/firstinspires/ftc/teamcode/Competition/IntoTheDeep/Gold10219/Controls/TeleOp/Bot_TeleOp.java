@@ -33,7 +33,7 @@ public class Bot_TeleOp extends OpMode {
 
     double powerThreshold = 0;
     double speedMultiply = 1;
-    double armSpeedMultiplier = 1;
+    boolean armSpeedMultiplier = false;
 
     private final Vision vision = new Vision();
     private final Pinpoint pinpoint = new Pinpoint();
@@ -145,9 +145,9 @@ public class Bot_TeleOp extends OpMode {
         }
 
         if (gamepad2.dpad_left) {
-            armSpeedMultiplier = 0.3;
+            armSpeedMultiplier = true;
         } else {
-            armSpeedMultiplier = 1;
+            armSpeedMultiplier = false;
         }
     }
 
@@ -250,9 +250,6 @@ public class Bot_TeleOp extends OpMode {
                 break;
         }
     }
-
-    private boolean clipped = false;
-    private boolean dPressed = false;
 
     private shortcutCases shortcutCase = shortcutCases.NONE;
 
@@ -392,6 +389,9 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
+    private boolean clipped = false;
+    private boolean dPressed = false;
+
     public void shortcuts() {
         //Press gp2.a when grabber is aligned with specimen on wall.
         //This will grab specimen, lift arm slightly, tuck grabber, and retract arm.
@@ -415,6 +415,9 @@ public class Bot_TeleOp extends OpMode {
                 clipped = true;
             }
         }
+        else if (gamepad2.dpad_right) {
+            clipped = false;
+        }
         else {
             dPressed = false;
         }
@@ -427,12 +430,8 @@ public class Bot_TeleOp extends OpMode {
         if (gamepad2.x) grabber.setGrabberState(Grabber.grabberStates.DOWN);
         else if (gamepad2.y) grabber.setGrabberState(Grabber.grabberStates.OUT);
         else if (gamepad2.start) grabber.doTuck();
-        else if (gamepad2.left_stick_button) grabber.setGrabberState(Grabber.grabberStates.HOOK);
+        else if (gamepad2.right_stick_button) grabber.setGrabberState(Grabber.grabberStates.HOOK);
 
-
-        if (gamepad2.dpad_left && !(gamepad2.dpad_down || gamepad2.dpad_up)) grabber.headLeft();
-        else if (gamepad2.dpad_right && !(gamepad2.dpad_down || gamepad2.dpad_up))
-            grabber.headRight();
         else if (gamepad2.back) grabber.headStraight();
         else if (Math.abs(gamepad2.right_stick_x) > .35 || Math.abs(gamepad2.right_stick_y) > .35)
             grabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
@@ -444,11 +443,10 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.left_bumper) arm.setRetract();
         else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger * 4);
 
-        if (gamepad2.left_stick_y < -.35 && gamepad2.right_bumper) {
-            arm.up(true);
-        } else if (gamepad2.left_stick_y < -.35) arm.up(false);
-        else if (gamepad2.left_stick_y > .35 && gamepad2.right_bumper) arm.down(true);
-        else if (gamepad2.left_stick_y > .35) arm.down(false);
+        if (gamepad2.left_stick_y < -.35 && !gamepad2.left_stick_button) arm.up(armSpeedMultiplier);
+        else if (gamepad2.left_stick_y > .35 && !gamepad2.left_stick_button) arm.down(armSpeedMultiplier);
+        else if (gamepad2.left_stick_y < -.35 && gamepad2.left_stick_button) grabber.tiltUp();
+        else if (gamepad2.left_stick_y > -.35 && gamepad2.left_stick_button) grabber.tiltDown();
         else arm.stopRotation();
     }
 
