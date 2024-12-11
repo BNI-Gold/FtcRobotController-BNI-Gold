@@ -38,7 +38,7 @@ public class Grabber {
     public double outAngle = 45;
     public double downAngle = -45;
     public double finishHookAngle = 0;
-    public double tuckAngle = -75;
+    public double tuckAngle = -70;
 
     public double angleDeadband = 2;
     public double servoDeadband = .005;

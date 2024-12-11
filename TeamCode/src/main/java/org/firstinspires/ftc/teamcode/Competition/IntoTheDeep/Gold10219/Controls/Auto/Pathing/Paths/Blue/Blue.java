@@ -11,6 +11,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.O;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
@@ -38,6 +40,10 @@ public class Blue extends OpMode {
 
     private final FieldPoses poses = new FieldPoses();
 
+    Grabber grabber = new Grabber();
+
+    PrimaryArm arm = new PrimaryArm();
+
     private Pose startPose;
 
     private Follower follower;
@@ -52,6 +58,9 @@ public class Blue extends OpMode {
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
+
+        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
+        grabber.initGrabber(hardwareMap);
 
         pinpoint.setOp(this);
         pinpoint.initPinpoint(hardwareMap);
@@ -68,34 +77,31 @@ public class Blue extends OpMode {
 
         pose.updateLLUsage(false);
 
-        Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
-        telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
-        telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
-        telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
-
-        startPose = new Pose(
-                currentPose.getX(DistanceUnit.INCH),
-                currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.RADIANS)
-        );
-
-        telemetry.addData("Start Pose: ", startPose);
-        telemetry.update();
-
         follower = new Follower(hardwareMap);
-        follower.setStartingPose(startPose);
     }
 
     public void start() {
-        buildPaths();
-        setPathState(toChambers1);
+        grabber.close();
+        grabber.headStraight();
+        grabber.setGrabberState(Grabber.grabberStates.TUCK);
+        arm.setRetract();
+        setPathState(raiseArm);
     }
 
     public void loop() {
-        pose.updatePose();
-        follower.update();
+        if (!(
+                pathState == raiseArm ||
+                        pathState == raiseArmTimeout ||
+                        pathState == getPosition ||
+                        pathState == getGetPositionTimeout ||
+                        pathState == buildPaths ||
+                        pathState == buildPathsTimeout
+                )) {
+            pose.updatePose();
+            follower.update();
+        }
         autonomousPathUpdate();
-        tel();
+//        tel();
     }
 
     Pose l = null;
@@ -176,8 +182,56 @@ public class Blue extends OpMode {
 
     public void autonomousPathUpdate() {
         switch (pathState) {
+            case raiseArm:
+                arm.up(2, true);
+                setPathState(raiseArmTimeout);
+                break;
+            case raiseArmTimeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(getPosition);
+                }
+            case getPosition: {
+                Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
+                telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
+                telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
+                telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
+
+                startPose = new Pose(
+                        currentPose.getX(DistanceUnit.INCH),
+                        currentPose.getY(DistanceUnit.INCH),
+                        currentPose.getHeading(AngleUnit.RADIANS)
+                );
+
+                telemetry.addData("Start Pose: ", startPose);
+                telemetry.update();
+
+                follower.setStartingPose(startPose);
+                setPathState(getGetPositionTimeout);
+                break;
+            }
+            case getGetPositionTimeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(buildPaths);
+                }
+            case buildPaths:
+                buildPaths();
+                setPathState(buildPathsTimeout);
+                break;
+            case buildPathsTimeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(toChambers1);
+                }
             case toChambers1:
-                follower.followPath(getPath(toChambers1));
+//                follower.followPath(getPath(toChambers1));
+                Path p = getPath(toChambers1);
+                Pose po = follower.getPose();
+                telemetry.addData("PFX: ", p.getFirstControlPoint().getX());
+                telemetry.addData("PFY: ", p.getFirstControlPoint().getY());
+                telemetry.addData("PLX: ", p.getLastControlPoint().getX());
+                telemetry.addData("PLY: ", p.getLastControlPoint().getY());
+                telemetry.addLine();
+                telemetry.addData("Pose X: ", po.getX());
+                telemetry.addData("Pose Y: ", po.getY());
                 setPathState(chambers1Heading);
                 break;
             case chambers1Heading:
@@ -252,7 +306,7 @@ public class Blue extends OpMode {
                     setPathState(alignObservation1);
                 }
                 break;
-            case alignObservation1:
+            case alignObservation1: {
                 vision.getResult();
 
                 double[] offsets = vision.getOffsets();
@@ -287,6 +341,7 @@ public class Blue extends OpMode {
                     setPathState(alignObservation1Timeout);
                 }
                 break;
+            }
             case alignObservation1Timeout:
                 if (pathTimer.getElapsedTime() > 500) {
                     setPathState(alignObservation1);
