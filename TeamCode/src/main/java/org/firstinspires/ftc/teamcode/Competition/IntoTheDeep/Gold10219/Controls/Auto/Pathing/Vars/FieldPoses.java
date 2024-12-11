@@ -141,12 +141,12 @@ public class FieldPoses {
         public Double Double = new Double();
 
         public static final class Single {
-            public Pose A11 = new Pose(48, 120, Math.toRadians(-180));
+            public Pose A11 = new Pose(24, 120, Math.toRadians(-180));
             public Pose A12 = new Pose(72, 120, Math.toRadians(90));
-            public Pose A13 = new Pose(96, 120, Math.toRadians(0));
-            public Pose A14 = new Pose(96, 24, Math.toRadians(0));
+            public Pose A13 = new Pose(108, 120, Math.toRadians(0));
+            public Pose A14 = new Pose(108, 24, Math.toRadians(0));
             public Pose A15 = new Pose(72, 24, Math.toRadians(-90));
-            public Pose A16 = new Pose(48, 24, Math.toRadians(180));
+            public Pose A16 = new Pose(24, 24, Math.toRadians(180));
         }
 
         public static final class Double {

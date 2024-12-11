@@ -131,8 +131,12 @@ public class Blue extends OpMode {
                         new Offsets().remY(vars.Chassis.FRONT_LENGTH))
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.SampleLines.pushApproachAngle, .35));
 
+        paths.put(toRecal1,
+                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Pre, poses.Recalibration.Single.A11)
+                        .setHeading(HeadingTypes.CONSTANT, poses.Recalibration.Single.A11));
+
         paths.put(toObservation1,
-                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Pre, poses.Observations.Approaches.Blue)
+                new EasySafePath(getPath(toRecal1).getLastControlPoint(), poses.Observations.Approaches.Blue)
                         .setHeading(HeadingTypes.CONSTANT, poses.Observations.Approaches.Blue));
 
         paths.put(toSample2,
@@ -207,8 +211,24 @@ public class Blue extends OpMode {
                             new EasyPoint(poses.SampleLines.Audience.Blue.B1.Sample),
                             poses.SampleLines.pushApproachAngle
                     );
-                    setPathState(toObservation1);
+                    setPathState(toRecal1);
                 }
+                break;
+            case toRecal1:
+                follower.followPath(getPath(toRecal1));
+                setPathState(holdRecal1);
+                break;
+            case holdRecal1:
+                if (!follower.isBusy()) {
+                    follower.holdPoint(
+                            new EasyPoint(poses.Recalibration.Single.A11),
+                            poses.Recalibration.Single.A11.getHeading()
+                    );
+                    setPathState(recal1Timeout);
+                }
+                break;
+            case recal1Timeout:
+                setPathState(toObservation1);
                 break;
             case toObservation1:
                 follower.followPath(getPath(toObservation1));
@@ -237,10 +257,12 @@ public class Blue extends OpMode {
 
                 double[] offsets = vision.getOffsets();
                 double currentXOffset = offsets[0];
-                double targetXOffset = 2.25;
-                double correctionFactor = 0.1;
+                double targetXOffset = 2.15;
+                double majorCorrectionFactor = 0.25;
+                double minorCorrectionFactor = 0.6;
+                double majorMinorBreakpoint = 5;
 
-                if (Math.abs(currentXOffset - targetXOffset) < .5) {
+                if (Math.abs(currentXOffset - targetXOffset) < .4) {
                     Pose originalPose = poses.Observations.Approaches.Blue;
                     Pose currentPose = follower.getPose();
                     double xDiff = originalPose.getX() - currentPose.getX();
@@ -250,32 +272,38 @@ public class Blue extends OpMode {
                 } else {
                     double error = targetXOffset - currentXOffset;
 
-                    double adjustment = error * correctionFactor;
+                    double adjustment;
 
-                    Pose updatedPose = poses.Observations.Approaches.Blue;
-                    updatedPose.setX(poses.Observations.Approaches.Blue.getX() + adjustment);
+                    if (Math.abs(currentXOffset-targetXOffset) > majorMinorBreakpoint) {
+                        adjustment = error * majorCorrectionFactor;
+                    } else {
+                        adjustment = error * minorCorrectionFactor;
+                    }
+
+                    Pose updatedPose = follower.getPose();
+                    updatedPose.setX(updatedPose.getX() - adjustment);
                     follower.holdPoint(new EasyPoint(updatedPose), poses.Observations.Approaches.Blue.getHeading());
 
                     setPathState(alignObservation1Timeout);
                 }
                 break;
             case alignObservation1Timeout:
-                if (!follower.isBusy()) {
+                if (pathTimer.getElapsedTime() > 500) {
                     setPathState(alignObservation1);
                 }
                 break;
             case approachGrabSpecimen1:
                 double a = specimenOffsets.get(grabSpecimen1);
                 Pose updatedPose = poses.Observations.Grabs.Blue;
-                updatedPose.setX(poses.Observations.Grabs.Blue.getX() + a);
+                updatedPose.setX(poses.Observations.Grabs.Blue.getX() - a);
                 follower.holdPoint(new EasyPoint(updatedPose), poses.Observations.Grabs.Blue.getHeading());
                 setPathState(approachGrabSpecimen1Timeout);
                 break;
             case approachGrabSpecimen1Timeout:
-//                if (pathTimer.getElapsedTime() > 1000) setPathState(grabSpecimen1);
+                if (pathTimer.getElapsedTime() > 1000) setPathState(grabSpecimen1);
                 break;
             case grabSpecimen1:
-                setPathState(grabSpecimen1Timeout);
+//                setPathState(grabSpecimen1Timeout);
                 break;
             case grabSpecimen1Timeout:
                 setPathState(toSample2);
