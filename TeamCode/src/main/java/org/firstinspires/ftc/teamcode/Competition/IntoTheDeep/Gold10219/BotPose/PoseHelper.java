@@ -141,7 +141,7 @@ public class PoseHelper {
             return getPose();
         }
 
-        return null;
+        return new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
     }
 
 //    public Pose2D getPose() {
