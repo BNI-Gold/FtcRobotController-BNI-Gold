@@ -11,6 +11,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.O;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
@@ -37,6 +39,10 @@ public class Blue extends OpMode {
     private final PoseHelper pose = new PoseHelper();
 
     private final FieldPoses poses = new FieldPoses();
+
+    Grabber grabber = new Grabber();
+
+    PrimaryArm arm = new PrimaryArm();
 
     private Pose startPose;
 
@@ -84,9 +90,21 @@ public class Blue extends OpMode {
 
         follower = new Follower(hardwareMap);
         follower.setStartingPose(startPose);
+
+        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
+        grabber.initGrabber(hardwareMap);
+
+        grabber.close();
+        grabber.headStraight();
+        grabber.setGrabberState(Grabber.grabberStates.TUCK);
+        arm.setRetract();
     }
 
     public void start() {
+        grabber.close();
+        grabber.headStraight();
+        grabber.setGrabberState(Grabber.grabberStates.TUCK);
+        arm.setRetract();
         buildPaths();
         setPathState(toChambers1);
     }
@@ -94,6 +112,7 @@ public class Blue extends OpMode {
     public void loop() {
         pose.updatePose();
         follower.update();
+        grabber.tiltStateCheck();
         autonomousPathUpdate();
         tel();
     }
@@ -123,7 +142,7 @@ public class Blue extends OpMode {
     public void buildPaths() {
         paths.put(toChambers1,
                 new EasySafePath(startPose, poses.Chambers.Blue,
-                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION))
+                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.CONSTANT, startPose));
 
         paths.put(toSample1,
@@ -131,12 +150,9 @@ public class Blue extends OpMode {
                         new Offsets().remY(vars.Chassis.FRONT_LENGTH))
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.SampleLines.pushApproachAngle, .35));
 
-        paths.put(toRecal1,
-                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Pre, poses.Recalibration.Single.A11)
-                        .setHeading(HeadingTypes.CONSTANT, poses.Recalibration.Single.A11));
-
         paths.put(toObservation1,
-                new EasySafePath(getPath(toRecal1).getLastControlPoint(), poses.Observations.Approaches.Blue)
+                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.Observations.Approaches.Blue,
+                        new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT))
                         .setHeading(HeadingTypes.CONSTANT, poses.Observations.Approaches.Blue));
 
         paths.put(toSample2,
@@ -150,27 +166,27 @@ public class Blue extends OpMode {
 
         paths.put(toChambers2,
                 new EasySafePath(getPath(toObservation2).getLastControlPoint(), poses.Chambers.Blue,
-                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION))
+                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.LINEAR, getPath(toObservation2), poses.Chambers.Blue));
 
         paths.put(toObservation3,
                 new EasySafePath(getPath(toChambers2).getLastControlPoint(), poses.Observations.Blue,
-                        new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION))
+                        new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers2), poses.Observations.Blue));
 
         paths.put(toChambers3,
                 new EasySafePath(getPath(toObservation3).getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue,
-                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION))
+                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.LINEAR, getPath(toObservation3), poses.Chambers.Blue));
 
         paths.put(toObservation4,
                 new EasySafePath(getPath(toChambers3).getLastControlPoint(), poses.Observations.Blue,
-                        new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.GRABBER_EXTENDED_POSITION))
+                        new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers3), poses.Observations.Blue));
 
         paths.put(toChambers4,
                 new EasySafePath(getPath(toObservation4).getLastControlPoint(), poses.Chambers.Midpoints.Blue, poses.Chambers.Blue,
-                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION))
+                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.LINEAR, getPath(toObservation4), poses.Chambers.Blue));
     }
 
@@ -183,20 +199,53 @@ public class Blue extends OpMode {
             case chambers1Heading:
                 if (follower.getCurrentTValue() > 0.1) {
                     ((EasySafePath) getPath(toChambers1)).setHeading(HeadingTypes.LINEAR, startPose, poses.Chambers.Blue);
-                    setPathState(holdChambers1);
+                    setPathState(chambers1RaiseArm);
                 }
+                break;
+            case chambers1RaiseArm:
+                arm.up(6, true);
+                grabber.setGrabberState(Grabber.grabberStates.OUT);
+                setPathState(holdChambers1);
                 break;
             case holdChambers1:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
                             poses.Chambers.Blue.getHeading()
                     );
                     setPathState(chambers1Timeout);
                 }
                 break;
             case chambers1Timeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(chambers1LowerArm);
+                }
+                break;
+
+            case chambers1LowerArm:
+                grabber.setGrabberState(Grabber.grabberStates.HOOK);
+                if (pathTimer.getElapsedTime() > 500) {
+                    arm.down(.75, false);
+                    setPathState(chambers1LowerArmTimeout);
+                }
+                break;
+            case chambers1LowerArmTimeout:
+                if (pathTimer.getElapsedTime() > 500) {
+                    setPathState(chambers1ReleaseAndBack);
+                }
+                break;
+            case chambers1ReleaseAndBack:
+                grabber.open();
+                grabber.setGrabberState(Grabber.grabberStates.OUT);
+                follower.holdPoint(
+                        new EasyPoint(poses.Chambers.Retreats.Blue,
+                                new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
+                        poses.Chambers.Retreats.Blue.getHeading()
+                );
+                setPathState(chambers1ReleaseAndBackTimeout);
+                break;
+            case chambers1ReleaseAndBackTimeout:
                 if (pathTimer.getElapsedTime() > 500) {
                     setPathState(toSample1);
                 }
@@ -211,24 +260,8 @@ public class Blue extends OpMode {
                             new EasyPoint(poses.SampleLines.Audience.Blue.B1.Sample),
                             poses.SampleLines.pushApproachAngle
                     );
-                    setPathState(toRecal1);
+                    setPathState(toObservation1);
                 }
-                break;
-            case toRecal1:
-                follower.followPath(getPath(toRecal1));
-                setPathState(holdRecal1);
-                break;
-            case holdRecal1:
-                if (!follower.isBusy()) {
-                    follower.holdPoint(
-                            new EasyPoint(poses.Recalibration.Single.A11),
-                            poses.Recalibration.Single.A11.getHeading()
-                    );
-                    setPathState(recal1Timeout);
-                }
-                break;
-            case recal1Timeout:
-                setPathState(toObservation1);
                 break;
             case toObservation1:
                 follower.followPath(getPath(toObservation1));
@@ -236,6 +269,7 @@ public class Blue extends OpMode {
                 break;
             case holdObservation1:
                 if (!follower.isBusy()) {
+                    arm.down(3, false);
                     follower.holdPoint(
                             new EasyPoint(poses.Observations.Approaches.Blue),
                             poses.Observations.Approaches.Blue.getHeading()
@@ -293,10 +327,9 @@ public class Blue extends OpMode {
                 }
                 break;
             case approachGrabSpecimen1:
+                grabber.setGrabberState(Grabber.grabberStates.OUT);
                 double a = specimenOffsets.get(grabSpecimen1);
-                Pose updatedPose = poses.Observations.Grabs.Blue;
-                updatedPose.setX(poses.Observations.Grabs.Blue.getX() - a);
-                follower.holdPoint(new EasyPoint(updatedPose), poses.Observations.Grabs.Blue.getHeading());
+                follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remX(a).remY(vars.Mechanisms.Grabber.AtObservation.OUT)), poses.Observations.Grabs.Blue.getHeading());
                 setPathState(approachGrabSpecimen1Timeout);
                 break;
             case approachGrabSpecimen1Timeout:
@@ -348,7 +381,7 @@ public class Blue extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
                             poses.Chambers.Blue.getHeading()
                     );
                     setPathState(chambers2Timeout);
@@ -385,7 +418,7 @@ public class Blue extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
                             poses.Chambers.Blue.getHeading()
                     );
                     setPathState(chambers3Timeout);
@@ -422,7 +455,7 @@ public class Blue extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Chambers.Blue,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.GRABBER_HOOK_POSITION)),
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
                             poses.Chambers.Blue.getHeading()
                     );
                     setPathState(chambers4Timeout);

@@ -86,7 +86,16 @@ public class FieldPoses {
         public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
         public Pose Red = new Pose(x, y);
 
+        public Retreats Retreats = new Retreats();
         public Midpoints Midpoints = new Midpoints();
+
+        public static final class Retreats {
+            private static final double x = 72;
+            private static final double y = 42;
+
+            public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
+            public Pose Red = new Pose(x, y);
+        }
 
         public static final class Midpoints {
             private static final double x = 36;
@@ -106,7 +115,7 @@ public class FieldPoses {
     }
 
     public static final class Observations {
-        private static final double x = 15;
+        private static final double x = 8;
         private static final double y = 14;
 
         public Approaches Approaches = new Approaches();

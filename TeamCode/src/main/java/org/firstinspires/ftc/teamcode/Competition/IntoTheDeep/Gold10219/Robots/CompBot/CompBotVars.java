@@ -13,6 +13,8 @@ public class CompBotVars {
     public CompBotVars() {
     }
 
+    public double sample = 3;
+
     public static final class Motors {
 
         public Motor FrontLeft = new Motor("front_left_motor", DcMotor.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE);
@@ -48,9 +50,17 @@ public class CompBotVars {
     public static final class Mechanisms {
         public Grabber Grabber = new Grabber();
         public static final class Grabber {
-            public double GRABBER_RETRACTED_POSITION = 2;
-            public double GRABBER_EXTENDED_POSITION = 5;
-            public double GRABBER_HOOK_POSITION = 3;
+            public AtChambers AtChambers = new AtChambers();
+            public AtObservation AtObservation = new AtObservation();
+
+            public static final class AtChambers {
+                public double GRABBER_RETRACTED_POSITION = 2;
+                public double OUT = 1;
+            }
+
+            public static final class AtObservation {
+                public double OUT = 7.5;
+            }
         }
     }
 }
