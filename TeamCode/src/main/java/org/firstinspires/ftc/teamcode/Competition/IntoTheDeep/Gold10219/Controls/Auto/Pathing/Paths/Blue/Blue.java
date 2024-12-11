@@ -89,19 +89,10 @@ public class Blue extends OpMode {
     }
 
     public void loop() {
-        if (!(
-                pathState == raiseArm ||
-                        pathState == raiseArmTimeout ||
-                        pathState == getPosition ||
-                        pathState == getGetPositionTimeout ||
-                        pathState == buildPaths ||
-                        pathState == buildPathsTimeout
-                )) {
-            pose.updatePose();
-            follower.update();
-        }
+        pose.updatePose();
+        follower.update();
         autonomousPathUpdate();
-//        tel();
+        tel();
     }
 
     Pose l = null;
@@ -190,6 +181,7 @@ public class Blue extends OpMode {
                 if (pathTimer.getElapsedTime() > 500) {
                     setPathState(getPosition);
                 }
+                break;
             case getPosition: {
                 Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
                 telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
@@ -213,6 +205,7 @@ public class Blue extends OpMode {
                 if (pathTimer.getElapsedTime() > 500) {
                     setPathState(buildPaths);
                 }
+                break;
             case buildPaths:
                 buildPaths();
                 setPathState(buildPathsTimeout);
@@ -221,8 +214,9 @@ public class Blue extends OpMode {
                 if (pathTimer.getElapsedTime() > 500) {
                     setPathState(toChambers1);
                 }
+                break;
             case toChambers1:
-//                follower.followPath(getPath(toChambers1));
+                follower.followPath(getPath(toChambers1));
                 Path p = getPath(toChambers1);
                 Pose po = follower.getPose();
                 telemetry.addData("PFX: ", p.getFirstControlPoint().getX());
