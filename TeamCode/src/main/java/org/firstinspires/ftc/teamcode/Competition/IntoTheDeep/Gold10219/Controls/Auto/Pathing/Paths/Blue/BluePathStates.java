@@ -11,6 +11,7 @@ public enum BluePathStates {
     holdObservation1,
     observation1Timeout,
     alignObservation1,
+    alignObservation1Timeout,
     approachGrabSpecimen1,
     approachGrabSpecimen1Timeout,
     grabSpecimen1,

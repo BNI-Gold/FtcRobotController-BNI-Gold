@@ -236,15 +236,33 @@ public class Blue extends OpMode {
                 vision.getResult();
 
                 double[] offsets = vision.getOffsets();
-                double xOffset = offsets[0];
+                double currentXOffset = offsets[0];
                 double targetXOffset = 2.25;
-                xOffset -= targetXOffset;
+                double correctionFactor = 0.1;
 
-                //Each inch on the field is 3.8 units on x offset.
-                double xPoseOffset = xOffset / 3.8;
-                specimenOffsets.put(grabSpecimen1, xPoseOffset);
+                if (Math.abs(currentXOffset - targetXOffset) < .5) {
+                    Pose originalPose = poses.Observations.Approaches.Blue;
+                    Pose currentPose = follower.getPose();
+                    double xDiff = originalPose.getX() - currentPose.getX();
+                    specimenOffsets.put(grabSpecimen1, xDiff);
+                    pose.updateLLUsage(false);
+                    setPathState(approachGrabSpecimen1);
+                } else {
+                    double error = targetXOffset - currentXOffset;
 
-                setPathState(approachGrabSpecimen1);
+                    double adjustment = error * correctionFactor;
+
+                    Pose updatedPose = poses.Observations.Approaches.Blue;
+                    updatedPose.setX(poses.Observations.Approaches.Blue.getX() + adjustment);
+                    follower.holdPoint(new EasyPoint(updatedPose), poses.Observations.Approaches.Blue.getHeading());
+
+                    setPathState(alignObservation1Timeout);
+                }
+                break;
+            case alignObservation1Timeout:
+                if (!follower.isBusy()) {
+                    setPathState(alignObservation1);
+                }
                 break;
             case approachGrabSpecimen1:
                 double a = specimenOffsets.get(grabSpecimen1);
