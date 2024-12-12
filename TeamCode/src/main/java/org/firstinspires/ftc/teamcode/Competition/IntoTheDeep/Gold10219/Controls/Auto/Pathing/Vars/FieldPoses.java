@@ -39,7 +39,7 @@ public class FieldPoses {
                 public B3 B3 = new B3();
 
                 public static final class B1 {
-                    public Pose Sample = new Pose(x1, f-y);
+                    public Pose Sample = new Pose(x1, f - y);
 
                     public Pose Slip = new Pose(27, f - 18);
                     public Pose Pre = new Pose(33, f - 24);
@@ -47,17 +47,17 @@ public class FieldPoses {
                 }
 
                 public static final class B2 {
-                    public Pose Sample = new Pose(x2, f-y);
+                    public Pose Sample = new Pose(x2, f - y);
 
-                    public Pose Pre = new Pose(28, f-24);
-                    public Pose Post = new Pose(30, f-66);
+                    public Pose Pre = new Pose(28, f - 24);
+                    public Pose Post = new Pose(30, f - 66);
                 }
 
                 public static final class B3 {
-                    public Pose Sample = new Pose(x3, f-y);
+                    public Pose Sample = new Pose(x3, f - y);
 
-                    public Pose Pre = new Pose(13, f-24);
-                    public Pose Post = new Pose(20, f-66);
+                    public Pose Pre = new Pose(13, f - 24);
+                    public Pose Post = new Pose(20, f - 66);
                 }
             }
         }
@@ -85,7 +85,7 @@ public class FieldPoses {
         private static final double y = 48;
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
-        public Pose Red = new Pose(x, y);
+        public Pose Red = new Pose(x, y, Math.toRadians(90));
 
         public Retreats Retreats = new Retreats();
         public Midpoints Midpoints = new Midpoints();
@@ -95,7 +95,7 @@ public class FieldPoses {
             private static final double y = 42;
 
             public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
-            public Pose Red = new Pose(x, y);
+            public Pose Red = new Pose(x, y, Math.toRadians(90));
         }
 
         public static final class Midpoints {
@@ -112,7 +112,7 @@ public class FieldPoses {
         private static final double y = 12;
 
         public Pose Blue = new Pose(f - x, f - y, Math.toRadians(45));
-        public Pose Red = new Pose(x, y);
+        public Pose Red = new Pose(x, y, Math.toRadians(-135));
     }
 
     public static final class Observations {
@@ -129,20 +129,20 @@ public class FieldPoses {
         //NOTE: X value for Approaches and Grabs must be same in order for offset calculation to work in auto
         public static final class Approaches {
             private static final double y = 22;
-            public Pose Blue = new Pose(x, f-y, Math.toRadians(90));
-            public Pose Red = new Pose(f-x, y);
+            public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
+            public Pose Red = new Pose(f - x, y);
         }
 
         public static final class Grabs {
             private static final double y = vars.Chassis.FRONT_LENGTH + 3.5;
-            public Pose Blue = new Pose(x, f-y, Math.toRadians(90));
-            public Pose Red = new Pose(f-x, y);
+            public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
+            public Pose Red = new Pose(f - x, y);
         }
 
         public static final class Retreats {
             private static final double y = 20;
-            public Pose Blue = new Pose(x, f-y);
-            public Pose Red = new Pose(f-x, y);
+            public Pose Blue = new Pose(x, f - y);
+            public Pose Red = new Pose(f - x, y);
         }
     }
 
@@ -153,26 +153,34 @@ public class FieldPoses {
         private static final double offset = 12;
 
         public Blue Blue = new Blue();
+        public Red Red = new Red();
         public Pre Pre = new Pre();
         public Post Post = new Post();
 
         public static final class Blue {
-            public Pose Left = new Pose(f-x, y-offset, Math.toRadians(180));
-            public Pose Right = new Pose(f-x, y+offset, Math.toRadians(180));
+            public Pose Left = new Pose(f - x, y - offset, Math.toRadians(180));
+            public Pose Right = new Pose(f - x, y + offset, Math.toRadians(180));
+        }
+
+        public static final class Red {
+            public Pose Left = new Pose(x, y + offset, Math.toRadians(0));
+            public Pose Right = new Pose(x, y - offset, Math.toRadians(0));
         }
 
         public static final class Pre {
             private static final double x = 24;
             private static final double y = 24;
 
-            public Pose Blue = new Pose(f-x, f - y);
+            public Pose Blue = new Pose(f - x, f - y);
+            public Pose Red = new Pose(x, y);
         }
 
         public static final class Post {
             private static final double x = 24;
             private static final double y = 72;
 
-            public Pose Blue = new Pose(f-x, f - y);
+            public Pose Blue = new Pose(f - x, f - y);
+            public Pose Red = new Pose(x, y);
         }
     }
 
