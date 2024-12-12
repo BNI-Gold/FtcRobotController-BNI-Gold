@@ -166,9 +166,9 @@ public class BlueDropSampleTouchAscentRight extends OpMode {
                         .setHeading(HeadingTypes.CONSTANT, startPose));
 
         paths.put(toAscentR,
-                new EasySafePath(getPath(toNets1).getLastControlPoint(), poses.Ascents.Pre.Blue, poses.Ascents.Post.Blue, poses.Ascents.Blue.Left,
+                new EasySafePath(getPath(toNets1).getLastControlPoint(), poses.Ascents.Pre.Blue, poses.Ascents.Post.Blue, poses.Ascents.Blue.Right,
                         new Offsets().addX(vars.Chassis.FRONT_LENGTH))
-                        .setHeading(HeadingTypes.LINEAR, getPath(toNets1), poses.Ascents.Blue.Left, .35));
+                        .setHeading(HeadingTypes.LINEAR, getPath(toNets1), poses.Ascents.Blue.Right, .35));
     }
 
     public void autonomousPathUpdate() {
@@ -252,9 +252,9 @@ public class BlueDropSampleTouchAscentRight extends OpMode {
             case holdAscentR:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.Ascents.Blue.Left,
+                            new EasyPoint(poses.Ascents.Blue.Right,
                                     new Offsets().addX(vars.Chassis.FRONT_LENGTH)),
-                            poses.Ascents.Blue.Left.getHeading()
+                            poses.Ascents.Blue.Right.getHeading()
                     );
                     setPathState(ascentRGrabberOut);
                 }
