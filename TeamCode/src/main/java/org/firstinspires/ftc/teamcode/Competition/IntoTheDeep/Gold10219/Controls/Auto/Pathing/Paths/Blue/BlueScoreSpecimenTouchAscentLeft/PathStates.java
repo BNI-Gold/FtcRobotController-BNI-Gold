@@ -10,11 +10,12 @@ public enum PathStates {
     chambers1LowerArmTimeout,
     chambers1ReleaseAndBack,
     chambers1ReleaseAndBackTimeout,
-    toAscentR,
-    ascentRGrabberOut,
-    ascentRTimeout,
-    ascentRExtendArm,
-    ascentRExtendArmTimeout,
-    ascentRLowerArm,
+    toAscentL,
+    holdAscentL,
+    ascentLGrabberOut,
+    ascentLTimeout,
+    ascentLExtendArm,
+    ascentLExtendArmTimeout,
+    ascentLLowerArm,
     opModeStop
 }
