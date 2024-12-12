@@ -8,6 +8,7 @@ public class FieldPoses {
     public Chambers Chambers = new Chambers();
     public Nets Nets = new Nets();
     public Observations Observations = new Observations();
+    public Ascents Ascents = new Ascents();
     public Recalibration Recalibration = new Recalibration();
 
     private static CompBotVars vars = new CompBotVars();
@@ -142,6 +143,28 @@ public class FieldPoses {
             private static final double y = 20;
             public Pose Blue = new Pose(x, f-y);
             public Pose Red = new Pose(f-x, y);
+        }
+    }
+
+    public static final class Ascents {
+        public static final double x = 57;
+        public static final double y = 72;
+
+        private static final double offset = 12;
+
+        public Blue Blue = new Blue();
+        public Midpoints Midpoints = new Midpoints();
+
+        public static final class Blue {
+            public Pose Left = new Pose(f-x, y-offset, Math.toRadians(180));
+            public Pose Right = new Pose(f-x, y+offset, Math.toRadians(180));
+        }
+
+        public static final class Midpoints {
+            private static final double x = 24;
+            private static final double y = 24;
+
+            public Pose Blue = new Pose(f-x, f - y);
         }
     }
 
