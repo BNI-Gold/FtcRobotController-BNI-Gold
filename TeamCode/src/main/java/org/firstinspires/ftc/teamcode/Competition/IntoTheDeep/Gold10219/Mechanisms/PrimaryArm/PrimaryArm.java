@@ -72,6 +72,10 @@ public class PrimaryArm {
     public double rotations = 0;
     public boolean s = false;
 
+    public rotationStates getRotationState() {
+        return rotationState;
+    }
+
     public void setRotation(rotationStates state, double rotations, boolean s) {
         if (state == rotationStates.GOING_UP || state == rotationStates.GOING_DOWN) return;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -110,7 +114,7 @@ public class PrimaryArm {
                 break;
             case GOING_DOWN:
                 double currentRotations2 = getCurrentRotations();
-                if (currentRotations2 < rotations) {
+                if (currentRotations2 > rotations) {
                     stopRotation();
                     setState(rotationStates.STOPPED);
                 }

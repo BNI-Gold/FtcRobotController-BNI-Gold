@@ -111,7 +111,7 @@ public class FieldPoses {
         private static final double x = 12;
         private static final double y = 12;
 
-        public Pose Blue = new Pose(f - x, f - y);
+        public Pose Blue = new Pose(f - x, f - y, Math.toRadians(45));
         public Pose Red = new Pose(x, y);
     }
 
@@ -153,16 +153,24 @@ public class FieldPoses {
         private static final double offset = 12;
 
         public Blue Blue = new Blue();
-        public Midpoints Midpoints = new Midpoints();
+        public Pre Pre = new Pre();
+        public Post Post = new Post();
 
         public static final class Blue {
             public Pose Left = new Pose(f-x, y-offset, Math.toRadians(180));
             public Pose Right = new Pose(f-x, y+offset, Math.toRadians(180));
         }
 
-        public static final class Midpoints {
+        public static final class Pre {
             private static final double x = 24;
             private static final double y = 24;
+
+            public Pose Blue = new Pose(f-x, f - y);
+        }
+
+        public static final class Post {
+            private static final double x = 24;
+            private static final double y = 72;
 
             public Pose Blue = new Pose(f-x, f - y);
         }

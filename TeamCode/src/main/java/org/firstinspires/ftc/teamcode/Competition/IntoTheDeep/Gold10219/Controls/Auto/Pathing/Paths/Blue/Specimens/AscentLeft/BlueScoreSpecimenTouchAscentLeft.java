@@ -1,23 +1,24 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft;
 
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.ascentRExtendArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.ascentRExtendArmTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.ascentRGrabberOut;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.ascentRLowerArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.ascentRTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1Back;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1BackTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1Heading;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1LowerArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1LowerArmTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1RaiseArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1Release;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.chambers1Timeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.holdAscentR;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.holdChambers1;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.opModeStop;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.toAscentR;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight.PathStates.toChambers1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.ascentLExtendArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.ascentLExtendArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.ascentLLowerArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.ascentLGrabberOut;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.ascentLTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1Back;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1BackTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1Heading;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1LowerArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1LowerArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1RaiseArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1RaiseArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1Release;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.chambers1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.holdAscentL;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.holdChambers1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.opModeStop;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.toAscentL;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentLeft.PathStates.toChambers1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -46,8 +47,8 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 import java.util.HashMap;
 import java.util.Map;
 
-@Autonomous(name = "Blue Score Specimen Touch Ascent Right", group = "Auto - Blue")
-public class BlueScoreSpecimenTouchAscentRight extends OpMode {
+@Autonomous(name = "Blue Score Specimen Touch Ascent Left", group = "Auto - Blue - Specimen")
+public class BlueScoreSpecimenTouchAscentLeft extends OpMode {
     private final CompBot Bot = new CompBot();
     private final CompBotVars vars = new CompBotVars();
 
@@ -69,8 +70,6 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
 
     private final Map<PathStates, Path> paths = new HashMap<>();
     private PathStates pathState;
-
-    private final Map<PathStates, Double> specimenOffsets = new HashMap<>();
 
     @Override
     public void init() {
@@ -123,13 +122,14 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
         grabber.setGrabberState(Grabber.grabberStates.TUCK);
         arm.setRetract();
         buildPaths();
-        setPathState(toChambers1);
+        setPathState(chambers1RaiseArm);
     }
 
     public void loop() {
         pose.updatePose();
         follower.update();
         grabber.tiltStateCheck();
+        arm.rotationChecker();
         autonomousPathUpdate();
         tel();
     }
@@ -162,14 +162,24 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
                         new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.CONSTANT, startPose));
 
-        paths.put(toAscentR,
-                new EasySafePath(getPath(toChambers1).getLastControlPoint(), poses.Ascents.Midpoints.Blue, poses.Ascents.Blue.Right,
+        paths.put(toAscentL,
+                new EasySafePath(getPath(toChambers1).getLastControlPoint(), poses.Ascents.Pre.Blue, poses.Ascents.Post.Blue, poses.Ascents.Blue.Left,
                         new Offsets().addX(vars.Chassis.FRONT_LENGTH))
-                        .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.Ascents.Blue.Right, .35));
+                        .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.Ascents.Blue.Left, .35));
     }
 
     public void autonomousPathUpdate() {
         switch (pathState) {
+            case chambers1RaiseArm:
+                arm.setRotation(PrimaryArm.rotationStates.UP, 6, true);
+                grabber.setGrabberState(Grabber.grabberStates.OUT);
+                setPathState(chambers1RaiseArmTimeout);
+                break;
+            case chambers1RaiseArmTimeout:
+                if (pathTimer.getElapsedTime() > 1000) {
+                    setPathState(toChambers1);
+                }
+                break;
             case toChambers1:
                 follower.followPath(getPath(toChambers1));
                 setPathState(chambers1Heading);
@@ -177,13 +187,8 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
             case chambers1Heading:
                 if (follower.getCurrentTValue() > 0.1) {
                     ((EasySafePath) getPath(toChambers1)).setHeading(HeadingTypes.LINEAR, startPose, poses.Chambers.Blue);
-                    setPathState(chambers1RaiseArm);
+                    setPathState(holdChambers1);
                 }
-                break;
-            case chambers1RaiseArm:
-                arm.up(6, true);
-                grabber.setGrabberState(Grabber.grabberStates.OUT);
-                setPathState(holdChambers1);
                 break;
             case holdChambers1:
                 if (!follower.isBusy()) {
@@ -196,15 +201,14 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
                 }
                 break;
             case chambers1Timeout:
-                if (pathTimer.getElapsedTime() > 500) {
+                if (pathTimer.getElapsedTime() > 500 && !follower.isBusy()) {
                     setPathState(chambers1LowerArm);
                 }
                 break;
-
             case chambers1LowerArm:
                 grabber.setGrabberState(Grabber.grabberStates.HOOK);
                 if (pathTimer.getElapsedTime() > 500) {
-                    arm.down(.75, false);
+                    arm.setRotation(PrimaryArm.rotationStates.DOWN, .75, false);
                     setPathState(chambers1LowerArmTimeout);
                 }
                 break;
@@ -220,56 +224,58 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
                 setPathState(chambers1Back);
                 break;
             case chambers1Back:
+                grabber.open();
+                grabber.setGrabberState(Grabber.grabberStates.OUT);
                 follower.holdPoint(
                         new EasyPoint(poses.Chambers.Retreats.Blue,
                                 new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
                         poses.Chambers.Retreats.Blue.getHeading()
                 );
                 setPathState(chambers1BackTimeout);
-                break;
             case chambers1BackTimeout:
                 if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(toAscentR);
+                    setPathState(toAscentL);
                 }
+            case toAscentL:
+                follower.followPath(getPath(toAscentL));
+                setPathState(holdAscentL);
                 break;
-            case toAscentR:
-                follower.followPath(getPath(toAscentR));
-                setPathState(holdAscentR);
-                break;
-            case holdAscentR:
+            case holdAscentL:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.Ascents.Blue.Right,
+                            new EasyPoint(poses.Ascents.Blue.Left,
                                     new Offsets().addX(vars.Chassis.FRONT_LENGTH)),
-                            poses.Ascents.Blue.Right.getHeading()
+                            poses.Ascents.Blue.Left.getHeading()
                     );
-                    setPathState(ascentRGrabberOut);
+                    setPathState(ascentLGrabberOut);
                 }
                 break;
-            case ascentRGrabberOut:
+            case ascentLGrabberOut:
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
-                setPathState(ascentRTimeout);
+                setPathState(ascentLTimeout);
                 break;
-            case ascentRTimeout:
+            case ascentLTimeout:
                 if (pathTimer.getElapsedTime() > 500 && !follower.isBusy()) {
-                    setPathState(ascentRExtendArm);
+                    setPathState(ascentLExtendArm);
                 }
                 break;
-            case ascentRExtendArm:
+            case ascentLExtendArm:
                 arm.setExtend();
-                setPathState(ascentRExtendArmTimeout);
+                setPathState(ascentLExtendArmTimeout);
                 break;
-            case ascentRExtendArmTimeout:
+            case ascentLExtendArmTimeout:
                 if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(ascentRLowerArm);
+                    setPathState(ascentLLowerArm);
                 }
                 break;
-            case ascentRLowerArm:
-                arm.down(1.75, false);
+            case ascentLLowerArm:
+                arm.setRotation(PrimaryArm.rotationStates.DOWN, 2.5, false);
                 setPathState(opModeStop);
                 break;
             case opModeStop:
-                requestOpModeStop();
+                if (arm.getRotationState() == PrimaryArm.rotationStates.STOPPED) {
+                    requestOpModeStop();
+                }
                 break;
         }
     }

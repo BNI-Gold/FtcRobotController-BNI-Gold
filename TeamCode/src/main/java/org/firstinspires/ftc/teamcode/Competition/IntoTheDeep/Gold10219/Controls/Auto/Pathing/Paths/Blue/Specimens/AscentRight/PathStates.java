@@ -1,15 +1,15 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.BlueScoreSpecimenTouchAscentRight;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentRight;
 
 public enum PathStates {
+    chambers1RaiseArm,
+    chambers1RaiseArmTimeout,
     toChambers1,
     chambers1Heading,
-    chambers1RaiseArm,
     holdChambers1,
     chambers1Timeout,
     chambers1LowerArm,
     chambers1LowerArmTimeout,
     chambers1Release,
-    chambers1ReleaseTimeout,
     chambers1Back,
     chambers1BackTimeout,
     toAscentR,
