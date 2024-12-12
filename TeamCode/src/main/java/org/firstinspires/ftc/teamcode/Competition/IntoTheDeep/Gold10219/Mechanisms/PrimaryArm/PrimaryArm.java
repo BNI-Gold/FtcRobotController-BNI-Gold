@@ -70,22 +70,23 @@ public class PrimaryArm {
 
     private rotationStates rotationState = rotationStates.STOPPED;
     public double rotations = 0;
-    private double startRotations = 0;
     public boolean s = false;
 
     public void setRotation(rotationStates state, double rotations, boolean s) {
+        if (state == rotationStates.GOING_UP || state == rotationStates.GOING_DOWN) return;
+        rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rotationState = state;
         this.rotations = rotations;
         this.s = s;
     }
 
     private void setState(rotationStates state) {
-        if (state == rotationStates.GOING_UP || state == rotationStates.GOING_DOWN) return;
         rotationState = state;
     }
 
     private double getCurrentRotations() {
-        return rotator.getCurrentPosition() / MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
+        return Math.abs(rotator.getCurrentPosition()) / MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
     }
 
     public void rotationChecker() {
@@ -93,25 +94,23 @@ public class PrimaryArm {
             case STOPPED:
                 break;
             case UP:
-                startRotations = getCurrentRotations();
                 up(s);
                 setState(rotationStates.GOING_UP);
                 break;
             case GOING_UP:
                 double currentRotations = getCurrentRotations();
-                if (currentRotations > startRotations + rotations) {
+                if (currentRotations > rotations) {
                     stopRotation();
                     setState(rotationStates.STOPPED);
                 }
                 break;
             case DOWN:
-                startRotations = getCurrentRotations();
                 down(s);
                 setState(rotationStates.GOING_DOWN);
                 break;
             case GOING_DOWN:
                 double currentRotations2 = getCurrentRotations();
-                if (currentRotations2 < startRotations - rotations) {
+                if (currentRotations2 < rotations) {
                     stopRotation();
                     setState(rotationStates.STOPPED);
                 }

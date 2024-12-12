@@ -45,8 +45,8 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 import java.util.HashMap;
 import java.util.Map;
 
-@Autonomous(name = "Blue Score Specimen Touch Accent Left", group = "Auto - Blue")
-public class BlueScoreSpecimenTouchAccentLeft extends OpMode {
+@Autonomous(name = "Blue Score Specimen Touch Ascent Left", group = "Auto - Blue")
+public class BlueScoreSpecimenTouchAscentLeft extends OpMode {
     private final CompBot Bot = new CompBot();
     private final CompBotVars vars = new CompBotVars();
 
