@@ -162,12 +162,12 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
     public void buildPaths() {
         paths.put(toNets1,
                 new EasySafePath(startPose, poses.Nets.Red,
-                        new Offsets().remY(vars.Chassis.FRONT_LENGTH).remX(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT).remX(vars.Mechanisms.Grabber.AtChambers.OUT))
+                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addX(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT).addX(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.CONSTANT, startPose));
 
         paths.put(toAscentL,
                 new EasySafePath(getPath(toNets1).getLastControlPoint(), poses.Ascents.Pre.Red, poses.Ascents.Post.Red, poses.Ascents.Red.Left,
-                        new Offsets().addX(vars.Chassis.FRONT_LENGTH))
+                        new Offsets().remX(vars.Chassis.FRONT_LENGTH))
                         .setHeading(HeadingTypes.LINEAR, getPath(toNets1), poses.Ascents.Red.Left, .35));
     }
 
@@ -197,7 +197,7 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Nets.Red,
-                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remX(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT).remX(vars.Mechanisms.Grabber.AtChambers.OUT)),
+                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addX(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT).addX(vars.Mechanisms.Grabber.AtChambers.OUT)),
                             poses.Nets.Red.getHeading()
                     );
                     setPathState(nets1Timeout);
@@ -253,7 +253,7 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Ascents.Red.Left,
-                                    new Offsets().addX(vars.Chassis.FRONT_LENGTH)),
+                                    new Offsets().remX(vars.Chassis.FRONT_LENGTH)),
                             poses.Ascents.Red.Left.getHeading()
                     );
                     setPathState(ascentLGrabberOut);

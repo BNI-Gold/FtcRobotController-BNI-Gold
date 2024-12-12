@@ -116,7 +116,7 @@ public class FieldPoses {
     }
 
     public static final class Observations {
-        private static final double x = 8;
+        private static final double x = 12;
         private static final double y = 14;
 
         public Approaches Approaches = new Approaches();
@@ -134,7 +134,7 @@ public class FieldPoses {
         }
 
         public static final class Grabs {
-            private static final double y = vars.Chassis.FRONT_LENGTH + 3.5;
+            private static final double y = 7;
             public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
             public Pose Red = new Pose(f - x, y);
         }

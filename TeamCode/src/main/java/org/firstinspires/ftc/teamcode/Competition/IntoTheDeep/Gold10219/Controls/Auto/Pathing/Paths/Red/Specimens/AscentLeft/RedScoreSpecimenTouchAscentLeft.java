@@ -159,12 +159,12 @@ public class RedScoreSpecimenTouchAscentLeft extends OpMode {
     public void buildPaths() {
         paths.put(toChambers1,
                 new EasySafePath(startPose, poses.Chambers.Red,
-                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT))
+                        new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.CONSTANT, startPose));
 
         paths.put(toAscentL,
                 new EasySafePath(getPath(toChambers1).getLastControlPoint(), poses.Ascents.Pre.Red, poses.Ascents.Post.Red, poses.Ascents.Red.Left,
-                        new Offsets().addX(vars.Chassis.FRONT_LENGTH))
+                        new Offsets().remX(vars.Chassis.FRONT_LENGTH))
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.Ascents.Red.Left, .35));
     }
 
@@ -194,7 +194,7 @@ public class RedScoreSpecimenTouchAscentLeft extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Chambers.Red,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
+                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT)),
                             poses.Chambers.Red.getHeading()
                     );
                     setPathState(chambers1Timeout);
@@ -228,7 +228,7 @@ public class RedScoreSpecimenTouchAscentLeft extends OpMode {
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 follower.holdPoint(
                         new EasyPoint(poses.Chambers.Retreats.Red,
-                                new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT)),
+                                new Offsets().remY(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT)),
                         poses.Chambers.Retreats.Red.getHeading()
                 );
                 setPathState(chambers1BackTimeout);
@@ -244,7 +244,7 @@ public class RedScoreSpecimenTouchAscentLeft extends OpMode {
                 if (!follower.isBusy()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Ascents.Red.Left,
-                                    new Offsets().addX(vars.Chassis.FRONT_LENGTH)),
+                                    new Offsets().remX(vars.Chassis.FRONT_LENGTH)),
                             poses.Ascents.Red.Left.getHeading()
                     );
                     setPathState(ascentLGrabberOut);

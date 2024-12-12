@@ -151,8 +151,7 @@ public class Blue extends OpMode {
                         .setHeading(HeadingTypes.LINEAR, getPath(toChambers1), poses.SampleLines.pushApproachAngle, .35));
 
         paths.put(toObservation1,
-                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.Observations.Approaches.Blue,
-                        new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT))
+                new EasySafePath(getPath(toSample1).getLastControlPoint(), poses.SampleLines.Audience.Blue.B1.Slip, poses.Observations.Approaches.Blue)
                         .setHeading(HeadingTypes.CONSTANT, poses.Observations.Approaches.Blue));
 
         paths.put(toSample2,
@@ -269,7 +268,7 @@ public class Blue extends OpMode {
                 break;
             case holdObservation1:
                 if (!follower.isBusy()) {
-                    arm.down(3, false);
+                    arm.down(4.25, false);
                     follower.holdPoint(
                             new EasyPoint(poses.Observations.Approaches.Blue),
                             poses.Observations.Approaches.Blue.getHeading()
@@ -291,7 +290,7 @@ public class Blue extends OpMode {
 
                 double[] offsets = vision.getOffsets();
                 double currentXOffset = offsets[0];
-                double targetXOffset = 2.15;
+                double targetXOffset = -20.5;
                 double majorCorrectionFactor = 0.25;
                 double minorCorrectionFactor = 0.6;
                 double majorMinorBreakpoint = 5;
@@ -329,17 +328,23 @@ public class Blue extends OpMode {
             case approachGrabSpecimen1:
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 double a = specimenOffsets.get(grabSpecimen1);
-                follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remX(a).remY(vars.Mechanisms.Grabber.AtObservation.OUT)), poses.Observations.Grabs.Blue.getHeading());
+                follower.holdPoint(
+                        new EasyPoint(poses.Observations.Grabs.Blue,
+                                new Offsets().remX(a).remY(vars.Mechanisms.Grabber.AtObservation.OUT)),
+                        poses.Observations.Grabs.Blue.getHeading());
                 setPathState(approachGrabSpecimen1Timeout);
                 break;
             case approachGrabSpecimen1Timeout:
                 if (pathTimer.getElapsedTime() > 1000) setPathState(grabSpecimen1);
                 break;
             case grabSpecimen1:
-//                setPathState(grabSpecimen1Timeout);
+                grabber.close();
+                setPathState(grabSpecimen1Timeout);
                 break;
             case grabSpecimen1Timeout:
-                setPathState(toSample2);
+                if (pathTimer.getElapsedTime() > 500) {
+//                    setPathState(toSample2);
+                }
                 break;
             case toSample2:
                 follower.followPath(getPath(toSample2));
