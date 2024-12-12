@@ -65,7 +65,7 @@ public class PrimaryArm {
     }
 
     public enum rotationStates {
-        STOPPED, DO_UP, GOING_UP, DO_DOWN, GOING_DOWN
+        STOPPED, UP, GOING_UP, DOWN, GOING_DOWN
     }
 
     private rotationStates rotationState = rotationStates.STOPPED;
@@ -79,12 +79,43 @@ public class PrimaryArm {
         this.s = s;
     }
 
+    private void setState(rotationStates state) {
+        if (state == rotationStates.GOING_UP || state == rotationStates.GOING_DOWN) return;
+        rotationState = state;
+    }
+
+    private double getCurrentRotations() {
+        return rotator.getCurrentPosition() / MecanumDrive.WORMGEAR_TICKS_PER_ROTATION;
+    }
+
     public void rotationChecker() {
         switch (rotationState) {
             case STOPPED:
                 break;
-            case DO_UP:
-                startRotations = rotator.getCurrentPosition();
+            case UP:
+                startRotations = getCurrentRotations();
+                up(s);
+                setState(rotationStates.GOING_UP);
+                break;
+            case GOING_UP:
+                double currentRotations = getCurrentRotations();
+                if (currentRotations > startRotations + rotations) {
+                    stopRotation();
+                    setState(rotationStates.STOPPED);
+                }
+                break;
+            case DOWN:
+                startRotations = getCurrentRotations();
+                down(s);
+                setState(rotationStates.GOING_DOWN);
+                break;
+            case GOING_DOWN:
+                double currentRotations2 = getCurrentRotations();
+                if (currentRotations2 < startRotations - rotations) {
+                    stopRotation();
+                    setState(rotationStates.STOPPED);
+                }
+                break;
         }
     }
 

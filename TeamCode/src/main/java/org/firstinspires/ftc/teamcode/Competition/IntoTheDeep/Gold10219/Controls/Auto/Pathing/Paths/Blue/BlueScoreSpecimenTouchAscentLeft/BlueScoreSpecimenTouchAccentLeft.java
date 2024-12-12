@@ -45,7 +45,7 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 import java.util.HashMap;
 import java.util.Map;
 
-@Autonomous(name = "A - Blue Auto", group = "Auto")
+@Autonomous(name = "Blue Score Specimen Touch Accent Left", group = "Auto - Blue")
 public class BlueScoreSpecimenTouchAccentLeft extends OpMode {
     private final CompBot Bot = new CompBot();
     private final CompBotVars vars = new CompBotVars();
@@ -129,6 +129,7 @@ public class BlueScoreSpecimenTouchAccentLeft extends OpMode {
         pose.updatePose();
         follower.update();
         grabber.tiltStateCheck();
+        arm.rotationChecker();
         autonomousPathUpdate();
         tel();
     }
@@ -180,7 +181,8 @@ public class BlueScoreSpecimenTouchAccentLeft extends OpMode {
                 }
                 break;
             case chambers1RaiseArm:
-                arm.up(6, true);
+                arm.setRotation(PrimaryArm.rotationStates.UP, 6, true);
+//                arm.up(6, true);
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 setPathState(holdChambers1);
                 break;
@@ -202,7 +204,8 @@ public class BlueScoreSpecimenTouchAccentLeft extends OpMode {
             case chambers1LowerArm:
                 grabber.setGrabberState(Grabber.grabberStates.HOOK);
                 if (pathTimer.getElapsedTime() > 500) {
-                    arm.down(.75, false);
+                    arm.setRotation(PrimaryArm.rotationStates.DOWN, .75, false);
+//                    arm.down(.75, false);
                     setPathState(chambers1LowerArmTimeout);
                 }
                 break;
@@ -258,7 +261,8 @@ public class BlueScoreSpecimenTouchAccentLeft extends OpMode {
                 }
                 break;
             case ascentLLowerArm:
-                arm.down(1.75, false);
+                arm.setRotation(PrimaryArm.rotationStates.DOWN, 1.75, false);
+//                arm.down(1.75, false);
                 setPathState(opModeStop);
                 break;
             case opModeStop:
