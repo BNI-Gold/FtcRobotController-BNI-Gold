@@ -49,7 +49,7 @@ public class TiltTester extends OpMode {
         telemetry.addData("Servo Position: ", grabber.tilt.getPosition());
         telemetry.addLine();
         telemetry.addData("Grabber State: ", grabber.grabberState);
-        telemetry.addData("Tilt State: ", grabber.tiltState);
+        telemetry.addData("Tilt State: ", grabber.getTiltState());
         telemetry.addLine();
         telemetry.addData("IMU Angle: ", grabber.ang);
         telemetry.addData("Diff: ", grabber.diff);

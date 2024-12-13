@@ -187,10 +187,18 @@ public class Grabber {
 
     public grabberStates grabberState = grabberStates.MANUAL;
 
-    public tiltStates tiltState = tiltStates.SETTLED;
+    private tiltStates tiltState = tiltStates.SETTLED;
 
     public void setGrabberState(grabberStates state) {
         grabberState = state;
+    }
+
+    public tiltStates getTiltState() {
+        return tiltState;
+    }
+
+    public boolean isSettled() {
+        return tiltState == tiltStates.SETTLED;
     }
 
     private double desiredPos = 0;

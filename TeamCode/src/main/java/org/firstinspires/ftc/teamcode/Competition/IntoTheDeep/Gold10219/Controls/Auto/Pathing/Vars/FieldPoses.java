@@ -41,7 +41,7 @@ public class FieldPoses {
                 public static final class B1 {
                     public Pose Sample = new Pose(x1, f - y);
 
-                    public Pose Slip = new Pose(27, f - 18);
+                    public Pose Slip = new Pose(30, f - 18);
                     public Pose Pre = new Pose(33, f - 24);
                     public Pose Post = new Pose(36, f - 66);
                 }
@@ -49,8 +49,9 @@ public class FieldPoses {
                 public static final class B2 {
                     public Pose Sample = new Pose(x2, f - y);
 
-                    public Pose Pre = new Pose(28, f - 24);
-                    public Pose Post = new Pose(30, f - 66);
+                    public Pose Slip = new Pose(20, f - 18);
+                    public Pose Pre = new Pose(23, f - 24);
+                    public Pose Post = new Pose(26, f - 66);
                 }
 
                 public static final class B3 {
@@ -134,7 +135,7 @@ public class FieldPoses {
         }
 
         public static final class Grabs {
-            private static final double y = 7;
+            private static final double y = 7.5;
             public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
             public Pose Red = new Pose(f - x, y);
         }
