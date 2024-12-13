@@ -8,18 +8,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseTypes;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.O;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths.EasyPath;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths.EasySafePath;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths.HeadingTypes;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars.FieldPoses;
@@ -249,6 +245,7 @@ public class Blue extends OpMode {
                 break;
             case holdSample1:
                 if (!follower.isBusy()) {
+                    grabber.setGrabberState(Grabber.grabberStates.DOWN);
                     follower.holdPoint(
                             new EasyPoint(poses.SampleLines.Audience.Blue.B1.Sample),
                             poses.SampleLines.pushApproachAngle
@@ -268,11 +265,10 @@ public class Blue extends OpMode {
                                     new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT).addY(pushSampleOffset).remX(pushSampleOffset)),
                             poses.Observations.Grabs.Blue.getHeading());
 
-                    setPathState(retreatPushSample1);
+                    setPathState(observationRetreat1);
                 }
                 break;
-            case retreatPushSample1:
-                grabber.setGrabberState(Grabber.grabberStates.DOWN);
+            case observationRetreat1:
                 follower.holdPoint(
                         new EasyPoint(poses.Observations.Retreats.Blue),
                         poses.Observations.Retreats.Blue.getHeading());
@@ -280,9 +276,9 @@ public class Blue extends OpMode {
                 pose.updateLLUsage(true);
                 vision.setPipeline(2);
 
-                setPathState(retreatPushSample1Timeout);
+                setPathState(observationRetreat1Timeout);
                 break;
-            case retreatPushSample1Timeout:
+            case observationRetreat1Timeout:
                 if (pathTimer.getElapsedTime() > 500 & !follower.isBusy()) {
                     setPathState(alignObservation1);
                 }
