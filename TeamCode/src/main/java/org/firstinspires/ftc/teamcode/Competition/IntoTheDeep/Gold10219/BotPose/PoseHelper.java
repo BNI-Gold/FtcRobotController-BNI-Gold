@@ -207,11 +207,15 @@ public class PoseHelper {
     }
 
     private Pose2D ShortenXY(Pose2D oldPose) {
-        double x = BigDecimal.valueOf(oldPose.getX(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue() + 72;
-        double y = BigDecimal.valueOf(oldPose.getY(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue() + 72;
-        double heading = oldPose.getHeading(AngleUnit.DEGREES);
+        try {
+            double x = BigDecimal.valueOf(oldPose.getX(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue() + 72;
+            double y = BigDecimal.valueOf(oldPose.getY(DistanceUnit.INCH)).setScale(4, RoundingMode.DOWN).doubleValue() + 72;
+            double heading = oldPose.getHeading(AngleUnit.DEGREES);
 
-        return new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, heading);
+            return new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, heading);
+        } catch (Exception e) {
+            return oldPose;
+        }
     }
 
     public Pose2D getPose() {

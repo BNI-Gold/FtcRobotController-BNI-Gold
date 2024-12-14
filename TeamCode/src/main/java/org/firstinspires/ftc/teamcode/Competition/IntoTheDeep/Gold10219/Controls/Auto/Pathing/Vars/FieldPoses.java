@@ -16,67 +16,57 @@ public class FieldPoses {
     private static final int f = 144;
 
     public static final class SampleLines {
-        public Audience Audience = new Audience();
-        public Rear Rear = new Rear();
-
-        public double pushApproachAngle = Math.toRadians(90);
-
         private static final double x1 = 23.5;
         private static final double x2 = 13.5;
         private static final double x3 = 3.5;
         private static final double y = 46.25;
 
-        public static final class Audience {
-            public Blue Blue = new Blue();
+        public Blue Blue = new Blue();
+        public Red Red = new Red();
 
-            public Pose Neutral1 = new Pose(x1, y);
-            public Pose Neutral2 = new Pose(x2, y);
-            public Pose Neutral3 = new Pose(x3, y);
+        public static final class Blue {
+            public double pushApproachAngle = Math.toRadians(90);
 
-            public static final class Blue {
-                public B1 B1 = new B1();
-                public B2 B2 = new B2();
-                public B3 B3 = new B3();
+            public B1 B1 = new B1();
+            public B2 B2 = new B2();
 
-                public static final class B1 {
-                    public Pose Sample = new Pose(x1, f - y);
+            public static final class B1 {
+                public Pose Sample = new Pose(x1, f - y);
 
-                    public Pose Slip = new Pose(30, f - 18);
-                    public Pose Pre = new Pose(33, f - 24);
-                    public Pose Post = new Pose(36, f - 66);
-                }
+                public Pose Slip = new Pose(30, f - 18);
+                public Pose Pre = new Pose(33, f - 24);
+                public Pose Post = new Pose(36, f - 60);
+            }
 
-                public static final class B2 {
-                    public Pose Sample = new Pose(x2, f - y);
+            public static final class B2 {
+                public Pose Sample = new Pose(x2, f - y);
 
-                    public Pose Slip = new Pose(20, f - 18);
-                    public Pose Pre = new Pose(23, f - 24);
-                    public Pose Post = new Pose(26, f - 66);
-                }
-
-                public static final class B3 {
-                    public Pose Sample = new Pose(x3, f - y);
-
-                    public Pose Pre = new Pose(13, f - 24);
-                    public Pose Post = new Pose(20, f - 66);
-                }
+                public Pose Slip = new Pose(20, f - 18);
+                public Pose Pre = new Pose(23, f - 24);
+                public Pose Post = new Pose(26, f - 60);
             }
         }
 
-        public static final class Rear {
-            public Midpoints Midpoints = new Midpoints();
+        public static final class Red {
+            public double pushApproachAngle = Math.toRadians(-90);
 
-            public Pose Neutral1 = new Pose(f - x1, f - y);
-            public Pose Neutral2 = new Pose(f - x2, f - y);
-            public Pose Neutral3 = new Pose(f - x3, f - y);
+            public R1 R1 = new R1();
+            public R2 R2 = new R2();
 
-            public Pose Red1 = new Pose(f - x1, y);
-            public Pose Red2 = new Pose(f - x2, y);
-            public Pose Red3 = new Pose(f - x2, y);
+            public static final class R1 {
+                public Pose Sample = new Pose(f - x1, y);
 
-            public static final class Midpoints {
-                public Pose Pre = new Pose(f - 36, f - 36);
-                public Pose Post = new Pose(f - 36, f - 60);
+                public Pose Slip = new Pose(f - 30, 18);
+                public Pose Pre = new Pose(f - 33, 24);
+                public Pose Post = new Pose(f - 36, 60);
+            }
+
+            public static final class R2 {
+                public Pose Sample = new Pose(f - x2, y);
+
+                public Pose Slip = new Pose(f - 20, 18);
+                public Pose Pre = new Pose(f - 23, 24);
+                public Pose Post = new Pose(f - 26, 60);
             }
         }
     }
@@ -125,25 +115,25 @@ public class FieldPoses {
         public Retreats Retreats = new Retreats();
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
-        public Pose Red = new Pose(f - x, y);
+        public Pose Red = new Pose(f - x, y, Math.toRadians(-90));
 
         //NOTE: X value for Approaches and Grabs must be same in order for offset calculation to work in auto
         public static final class Approaches {
             private static final double y = 24;
             public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
-            public Pose Red = new Pose(f - x, y);
+            public Pose Red = new Pose(f - x, y, Math.toRadians(-90));
         }
 
         public static final class Grabs {
             private static final double y = 8;
             public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
-            public Pose Red = new Pose(f - x, y);
+            public Pose Red = new Pose(f - x, y, Math.toRadians(-90));
         }
 
         public static final class Retreats {
             private static final double y = 24;
             public Pose Blue = new Pose(x, f - y, Math.toRadians(90));
-            public Pose Red = new Pose(f - x, y);
+            public Pose Red = new Pose(f - x, y, Math.toRadians(-90));
         }
     }
 
