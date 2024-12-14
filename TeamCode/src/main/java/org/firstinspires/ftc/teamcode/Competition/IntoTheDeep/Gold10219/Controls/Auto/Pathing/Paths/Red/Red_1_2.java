@@ -57,11 +57,11 @@ public class Red_1_2 extends OpMode {
 
     double pushSampleOffset = 2;
 
-    double targetXOffset = -20.5;
+    double targetXOffset = -20;
     double majorCorrectionFactor = 0.25;
     double minorCorrectionFactor = 0.6;
     double majorMinorBreakpoint = 5;
-    double permissibleOffset = .75;
+    double permissibleOffset = .7;
 
     @Override
     public void init() {
