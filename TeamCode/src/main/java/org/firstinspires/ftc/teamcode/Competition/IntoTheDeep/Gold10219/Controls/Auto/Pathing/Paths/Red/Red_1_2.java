@@ -305,7 +305,7 @@ public class Red_1_2 extends OpMode {
                 if (Math.abs(currentXOffset - targetXOffset) < permissibleOffset) {
                     Pose originalPose = poses.Observations.Approaches.Red;
                     Pose currentPose = follower.getPose();
-                    double xDiff = originalPose.getX() + currentPose.getX();
+                    double xDiff = originalPose.getX() - currentPose.getX();
                     specimenOffsets.put(grabSpecimen1, xDiff);
                     pose.updateLLUsage(false);
                     setPathState(grabberOut1);
