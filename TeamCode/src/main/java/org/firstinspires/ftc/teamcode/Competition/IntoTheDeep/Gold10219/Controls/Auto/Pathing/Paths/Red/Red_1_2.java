@@ -57,11 +57,11 @@ public class Red_1_2 extends OpMode {
 
     double pushSampleOffset = 2;
 
-    double targetXOffset = -20;
+    double targetXOffset = -23;
     double majorCorrectionFactor = 0.25;
     double minorCorrectionFactor = 0.6;
     double majorMinorBreakpoint = 5;
-    double permissibleOffset = .7;
+    double permissibleOffset = .6;
 
     @Override
     public void init() {
@@ -347,7 +347,7 @@ public class Red_1_2 extends OpMode {
                 double a = specimenOffsets.get(grabSpecimen1);
                 follower.holdPoint(
                         new EasyPoint(poses.Observations.Grabs.Red,
-                                new Offsets().addX(a).addY(vars.Mechanisms.Grabber.AtObservation.OUT)),
+                                new Offsets().remX(a).addY(vars.Mechanisms.Grabber.AtObservation.OUT)),
                         poses.Observations.Grabs.Red.getHeading());
                 setPathState(approachGrabSpecimen1Timeout);
                 break;
@@ -360,7 +360,7 @@ public class Red_1_2 extends OpMode {
                 setPathState(grabSpecimen1Timeout);
                 break;
             case grabSpecimen1Timeout:
-                if (pathTimer.getElapsedTime() > 250) {
+                if (pathTimer.getElapsedTime() > 500) {
                     setPathState(liftSpecimen1);
                 }
                 break;
@@ -498,10 +498,6 @@ public class Red_1_2 extends OpMode {
 
                 double[] offsets2 = vision.getOffsets();
                 double currentXOffset2 = offsets2[0];
-//                double targetXOffset = -20.5;
-//                double majorCorrectionFactor = 0.25;
-//                double minorCorrectionFactor = 0.6;
-//                double majorMinorBreakpoint = 5;
 
                 if (Math.abs(currentXOffset2 - targetXOffset) < permissibleOffset) {
                     Pose originalPose = poses.Observations.Approaches.Red;
@@ -522,7 +518,7 @@ public class Red_1_2 extends OpMode {
                     }
 
                     Pose updatedPose2 = follower.getPose();
-                    updatedPose2.setX(updatedPose2.getX() - adjustment2);
+                    updatedPose2.setX(updatedPose2.getX() + adjustment2);
                     follower.holdPoint(new EasyPoint(updatedPose2), poses.Observations.Approaches.Red.getHeading());
 
                     setPathState(alignObservation2Timeout);
@@ -548,7 +544,7 @@ public class Red_1_2 extends OpMode {
                 double a2 = specimenOffsets.get(grabSpecimen2);
                 follower.holdPoint(
                         new EasyPoint(poses.Observations.Grabs.Red,
-                                new Offsets().addX(a2).addY(vars.Mechanisms.Grabber.AtObservation.OUT)),
+                                new Offsets().remX(a2).addY(vars.Mechanisms.Grabber.AtObservation.OUT)),
                         poses.Observations.Grabs.Red.getHeading());
                 setPathState(approachGrabSpecimen2Timeout);
                 break;
@@ -561,7 +557,7 @@ public class Red_1_2 extends OpMode {
                 setPathState(grabSpecimen2Timeout);
                 break;
             case grabSpecimen2Timeout:
-                if (pathTimer.getElapsedTime() > 250) {
+                if (pathTimer.getElapsedTime() > 500) {
                     setPathState(liftSpecimen2);
                 }
                 break;
