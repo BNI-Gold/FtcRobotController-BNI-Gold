@@ -640,6 +640,7 @@ public class Blue_1_2 extends OpMode {
                 break;
             case chambers3ReleaseAndBackTimeout:
                 if (pathTimer.getElapsedTime() > 500) {
+                    requestOpModeStop();
 //                    setPathState();
                 }
                 break;
