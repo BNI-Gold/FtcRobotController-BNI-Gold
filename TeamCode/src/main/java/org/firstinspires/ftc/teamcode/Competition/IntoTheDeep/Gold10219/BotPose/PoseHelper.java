@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -24,6 +25,13 @@ public class PoseHelper {
     public enum StartTypes {
         BLUE, RED
     }
+
+    private Offsets A11Offsets = new Offsets();
+    private Offsets A12Offsets = new Offsets();
+    private Offsets A13Offsets = new Offsets();
+    private Offsets A14Offsets = new Offsets().addX(.75).remY(.25);
+    private Offsets A15Offsets = new Offsets();
+    private Offsets A16Offsets = new Offsets();
 
     public PoseHelper() {}
 
@@ -63,6 +71,7 @@ public class PoseHelper {
 
             int tagCount = vision.Position.getTagCount();
             telemetry.addData("TagCount: ", tagCount);
+            Offsets offsets = new Offsets();
             if (tagCount == 2) {
                 //Robot is facing two tags. Should get heading using MT, then set pinpoint heading. Then get position using MT2.
                 heading = vision.Position.getPose(PoseTypes.MT1).getOrientation().getYaw(AngleUnit.DEGREES);
@@ -80,6 +89,7 @@ public class PoseHelper {
                         switch (tag) {
                             case 11:
                                 heading = 180;
+                                offsets = A11Offsets;
                                 break;
                             case 12:
                                 double yaw = vision.Position.getPose(PoseTypes.MT1).getOrientation().getYaw(AngleUnit.DEGREES);
@@ -92,12 +102,16 @@ public class PoseHelper {
                                 } else if (yaw < -90 || yaw > 90) {
                                     heading = 180;
                                 }
+
+                                offsets = A12Offsets;
                                 break;
                             case 13:
                                 heading = 0;
+                                offsets = A13Offsets;
                                 break;
                             case 15:
                                 heading = -90;
+                                offsets = A15Offsets;
                                 break;
                         }
                         break;
@@ -105,9 +119,11 @@ public class PoseHelper {
                         switch (tag) {
                             case 12:
                                 heading = 90;
+                                offsets = A12Offsets;
                                 break;
                             case 14:
                                 heading = 0;
+                                offsets = A14Offsets;
                                 break;
                             case 15:
                                 double yaw = vision.Position.getPose(PoseTypes.MT1).getOrientation().getYaw(AngleUnit.DEGREES);
@@ -120,9 +136,12 @@ public class PoseHelper {
                                 } else if (yaw < -90 || yaw > 90) {
                                     heading = 180;
                                 }
+
+                                offsets = A15Offsets;
                                 break;
                             case 16:
                                 heading = 180;
+                                offsets = A16Offsets;
                                 break;
                         }
                         break;
@@ -135,7 +154,7 @@ public class PoseHelper {
             vision.getResult();
 
             Position MT2 = vision.Position.getPose(PoseTypes.MT2).getPosition().toUnit(DistanceUnit.INCH);
-            pinpoint.updateXYPosition(MT2.x, MT2.y);
+            pinpoint.updateXYPosition(MT2.x + offsets.getXTotalOffsets(), MT2.y + offsets.getYTotalOffsets());
 
             updatePose();
             return getPose();

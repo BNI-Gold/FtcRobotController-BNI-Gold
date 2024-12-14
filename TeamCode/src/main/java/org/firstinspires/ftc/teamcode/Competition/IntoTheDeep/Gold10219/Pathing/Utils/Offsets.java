@@ -9,6 +9,8 @@ public class Offsets {
     public Offsets() {
         this.x = new ArrayList<>();
         this.y = new ArrayList<>();
+        this.x.add(0.0);
+        this.y.add(0.0);
     }
 
     public Offsets(double[] xOffsets, double[] yOffsets) {

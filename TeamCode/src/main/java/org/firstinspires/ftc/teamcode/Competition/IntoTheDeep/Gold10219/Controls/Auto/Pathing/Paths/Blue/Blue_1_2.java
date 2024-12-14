@@ -360,7 +360,7 @@ public class Blue_1_2 extends OpMode {
                 setPathState(grabSpecimen1Timeout);
                 break;
             case grabSpecimen1Timeout:
-                if (pathTimer.getElapsedTime() > 250) {
+                if (pathTimer.getElapsedTime() > 500) {
                     setPathState(liftSpecimen1);
                 }
                 break;
@@ -498,10 +498,6 @@ public class Blue_1_2 extends OpMode {
 
                 double[] offsets2 = vision.getOffsets();
                 double currentXOffset2 = offsets2[0];
-//                double targetXOffset = -20.5;
-//                double majorCorrectionFactor = 0.25;
-//                double minorCorrectionFactor = 0.6;
-//                double majorMinorBreakpoint = 5;
 
                 if (Math.abs(currentXOffset2 - targetXOffset) < permissibleOffset) {
                     Pose originalPose = poses.Observations.Approaches.Blue;
@@ -561,7 +557,7 @@ public class Blue_1_2 extends OpMode {
                 setPathState(grabSpecimen2Timeout);
                 break;
             case grabSpecimen2Timeout:
-                if (pathTimer.getElapsedTime() > 250) {
+                if (pathTimer.getElapsedTime() > 500) {
                     setPathState(liftSpecimen2);
                 }
                 break;
