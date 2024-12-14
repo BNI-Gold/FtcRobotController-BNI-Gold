@@ -68,6 +68,20 @@ public class Grabber {
         imu.initialize(parameters);
     }
 
+    public void imuGyroCheck() {
+        if (!imu.isGyroCalibrated()) {
+            // Re-init steps here
+            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+            parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+            parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+            parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample OpMode
+            parameters.loggingEnabled      = true;
+            parameters.loggingTag          = "IMU";
+            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+            imu.initialize(parameters);
+        }
+    }
+
     public void open() {
         grabber.setPosition(grabberOpen);
     }
@@ -289,9 +303,14 @@ public class Grabber {
     }
 
     public float getTilt() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        heading = formatAngle(angles.angleUnit, angles.secondAngle);
-        return heading;
+        try {
+            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            heading = formatAngle(angles.angleUnit, angles.secondAngle);
+            return heading;
+        } catch (Exception e) {
+            imuGyroCheck();
+            return 0;
+        }
     }
 
     float formatAngle(AngleUnit angleUnit, double angle) {
