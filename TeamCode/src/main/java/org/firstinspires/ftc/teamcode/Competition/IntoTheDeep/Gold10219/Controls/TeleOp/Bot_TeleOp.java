@@ -110,7 +110,7 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void start() {
-        grabber.close();
+        grabber.grab();
         grabber.headStraight();
         arm.setRetract();
     }
@@ -309,7 +309,7 @@ public class Bot_TeleOp extends OpMode {
     public void grabSpecimen() {
         switch (grabSpecimenCase) {
             case CLOSE:
-                grabber.close();
+                grabber.grab();
                 timer.reset();
                 grabSpecimenCase = grabSpecimenCases.TIMEOUT1;
                 break;
@@ -363,7 +363,7 @@ public class Bot_TeleOp extends OpMode {
     public void retractFromChamber() {
         switch (retractFromChamberCase) {
             case OPEN:
-                grabber.open();
+                grabber.release();
                 timer.reset();
                 retractFromChamberCase = retractFromChamberCases.TIMEOUT1;
                 break;
@@ -429,8 +429,8 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void grabberControl() {
-        if (gamepad2.a) grabber.close();
-        else if (gamepad2.b) grabber.open();
+        if (gamepad2.a) grabber.grab();
+        else if (gamepad2.b) grabber.release();
 
         if (gamepad2.x) grabber.setGrabberState(Grabber.grabberStates.DOWN);
         else if (gamepad2.y) grabber.setGrabberState(Grabber.grabberStates.OUT);

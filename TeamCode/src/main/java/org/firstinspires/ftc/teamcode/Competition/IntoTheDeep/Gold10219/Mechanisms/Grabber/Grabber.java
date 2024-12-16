@@ -18,9 +18,12 @@ public class Grabber {
     public Servo rotate = null;
     public BNO055IMU imu = null;
 
+    double grabberOuterOpen = .4472;
+    double grabberOuterClosed = .7033;
+
     //TODO: Update these values
-    double grabberOpen = .4472;
-    double grabberClosed = .7033;
+    double grabberInnerOpen = .7033;
+    double grabberInnerClosed = .4472;
 
     private Orientation angles;
     public float heading = 0;
@@ -82,12 +85,20 @@ public class Grabber {
         }
     }
 
-    public void open() {
-        grabber.setPosition(grabberOpen);
+    public void release() {
+        if (grabberState == grabberStates.DOWN) {
+            grabber.setPosition(grabberInnerClosed);
+        } else {
+            grabber.setPosition(grabberOuterOpen);
+        }
     }
 
-    public void close() {
-        grabber.setPosition(grabberClosed);
+    public void grab() {
+        if (grabberState == grabberStates.DOWN) {
+            grabber.setPosition(grabberInnerOpen);
+        } else {
+            grabber.setPosition(grabberOuterClosed);
+        }
     }
 
     public void goOpen() {
@@ -297,7 +308,7 @@ public class Grabber {
     }
 
     public void doTuck() {
-        close();
+        grab();
         headStraight();
         setGrabberState(grabberStates.TUCK);
     }

@@ -113,14 +113,14 @@ public class BlueDropSampleTouchAscentRight extends OpMode {
         arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
 
-        grabber.close();
+        grabber.grab();
         grabber.headStraight();
         grabber.setGrabberState(Grabber.grabberStates.TUCK);
         arm.setRetract();
     }
 
     public void start() {
-        grabber.close();
+        grabber.grab();
         grabber.headStraight();
         grabber.setGrabberState(Grabber.grabberStates.TUCK);
         arm.setRetract();
@@ -228,7 +228,7 @@ public class BlueDropSampleTouchAscentRight extends OpMode {
                 break;
             case nets1DropSample:
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
-                grabber.open();
+                grabber.release();
                 setPathState(nets1DropSampleTimeout);
                 break;
             case nets1DropSampleTimeout:
@@ -237,7 +237,7 @@ public class BlueDropSampleTouchAscentRight extends OpMode {
                 }
                 break;
             case nets1ResetMechanisms:
-                grabber.close();
+                grabber.grab();
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 arm.setRetract();
                 setPathState(nets1ResetMechanismsTimeout);

@@ -110,14 +110,14 @@ public class RedScoreSpecimenTouchAscentLeft extends OpMode {
         arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
 
-        grabber.close();
+        grabber.grab();
         grabber.headStraight();
         grabber.setGrabberState(Grabber.grabberStates.TUCK);
         arm.setRetract();
     }
 
     public void start() {
-        grabber.close();
+        grabber.grab();
         grabber.headStraight();
         grabber.setGrabberState(Grabber.grabberStates.TUCK);
         arm.setRetract();
@@ -218,13 +218,13 @@ public class RedScoreSpecimenTouchAscentLeft extends OpMode {
                 }
                 break;
             case chambers1Release:
-                grabber.open();
+                grabber.release();
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 arm.up(.5, false);
                 setPathState(chambers1Back);
                 break;
             case chambers1Back:
-                grabber.open();
+                grabber.release();
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 follower.holdPoint(
                         new EasyPoint(poses.Chambers.Retreats.Red,

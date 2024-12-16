@@ -102,14 +102,14 @@ public class Red_1_2 extends OpMode {
         arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
 
-        grabber.close();
+        grabber.grab();
         grabber.headStraight();
         grabber.setGrabberState(Grabber.grabberStates.TUCK);
         arm.setRetract();
     }
 
     public void start() {
-        grabber.close();
+        grabber.grab();
         grabber.headStraight();
         grabber.setGrabberState(Grabber.grabberStates.TUCK);
         arm.setRetract();
@@ -231,7 +231,7 @@ public class Red_1_2 extends OpMode {
                 }
                 break;
             case chambers1ReleaseAndBack:
-                grabber.open();
+                grabber.release();
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 follower.holdPoint(
                         new EasyPoint(poses.Chambers.Retreats.Red,
@@ -356,7 +356,7 @@ public class Red_1_2 extends OpMode {
                     setPathState(grabSpecimen1);
                 break;
             case grabSpecimen1:
-                grabber.close();
+                grabber.grab();
                 setPathState(grabSpecimen1Timeout);
                 break;
             case grabSpecimen1Timeout:
@@ -428,7 +428,7 @@ public class Red_1_2 extends OpMode {
                 }
                 break;
             case chambers2ReleaseAndBack:
-                grabber.open();
+                grabber.release();
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 follower.holdPoint(
                         new EasyPoint(poses.Chambers.Retreats.Red,
@@ -553,7 +553,7 @@ public class Red_1_2 extends OpMode {
                     setPathState(grabSpecimen2);
                 break;
             case grabSpecimen2:
-                grabber.close();
+                grabber.grab();
                 setPathState(grabSpecimen2Timeout);
                 break;
             case grabSpecimen2Timeout:
@@ -625,7 +625,7 @@ public class Red_1_2 extends OpMode {
                 }
                 break;
             case chambers3ReleaseAndBack:
-                grabber.open();
+                grabber.release();
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
                 follower.holdPoint(
                         new EasyPoint(poses.Chambers.Retreats.Red,
