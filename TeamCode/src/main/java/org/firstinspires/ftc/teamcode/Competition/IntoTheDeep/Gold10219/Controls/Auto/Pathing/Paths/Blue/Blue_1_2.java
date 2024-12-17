@@ -87,10 +87,16 @@ public class Blue_1_2 extends OpMode {
         telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
         telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
 
+//        startPose = new Pose(
+//                currentPose.getX(DistanceUnit.INCH),
+//                currentPose.getY(DistanceUnit.INCH),
+//                currentPose.getHeading(AngleUnit.RADIANS)
+//        );
+
         startPose = new Pose(
-                currentPose.getX(DistanceUnit.INCH),
-                currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.RADIANS)
+                48,
+                136,
+                Math.toRadians(180)
         );
 
         telemetry.addData("Start Pose: ", startPose);

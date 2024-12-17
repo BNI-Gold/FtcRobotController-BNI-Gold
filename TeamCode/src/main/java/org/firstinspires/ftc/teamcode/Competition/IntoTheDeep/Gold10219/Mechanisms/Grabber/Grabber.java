@@ -19,11 +19,9 @@ public class Grabber {
     public BNO055IMU imu = null;
 
     double grabberOuterOpen = .4472;
-    double grabberOuterClosed = .7033;
+    double grabberOuterClosed = .7333;
 
-    //TODO: Update these values
-    double grabberInnerOpen = .7033;
-    double grabberInnerClosed = .4472;
+    double grabberInnerOpen = .665;
 
     private Orientation angles;
     public float heading = 0;
@@ -71,23 +69,43 @@ public class Grabber {
         imu.initialize(parameters);
     }
 
+    private enum imuCheckStates {
+        RUNNING,
+        INITIALIZE,
+        INITIALIZING
+    }
+
+    private imuCheckStates imuCheckState = imuCheckStates.RUNNING;
+
     public void imuGyroCheck() {
-        if (!imu.isGyroCalibrated()) {
-            // Re-init steps here
-            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-            parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-            parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-            parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample OpMode
-            parameters.loggingEnabled      = true;
-            parameters.loggingTag          = "IMU";
-            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-            imu.initialize(parameters);
+        switch (imuCheckState) {
+            case RUNNING:
+                if (imu.getSystemStatus() != BNO055IMU.SystemStatus.RUNNING_FUSION && imu.getSystemStatus() != BNO055IMU.SystemStatus.IDLE) {
+                    imuCheckState = imuCheckStates.INITIALIZE;
+                }
+                break;
+            case INITIALIZE:
+                BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+                parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+                parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+                parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample OpMode
+                parameters.loggingEnabled      = true;
+                parameters.loggingTag          = "IMU";
+                parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+                imu.initialize(parameters);
+                imuCheckState = imuCheckStates.INITIALIZING;
+                break;
+            case INITIALIZING:
+                if (imu.getSystemStatus() == BNO055IMU.SystemStatus.RUNNING_FUSION || imu.getSystemStatus() == BNO055IMU.SystemStatus.IDLE) {
+                    imuCheckState = imuCheckStates.RUNNING;
+                }
+                break;
         }
     }
 
     public void release() {
         if (grabberState == grabberStates.DOWN) {
-            grabber.setPosition(grabberInnerClosed);
+            grabber.setPosition(grabberOuterClosed);
         } else {
             grabber.setPosition(grabberOuterOpen);
         }

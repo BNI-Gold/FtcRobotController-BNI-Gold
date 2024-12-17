@@ -26,12 +26,12 @@ public class PoseHelper {
         BLUE, RED
     }
 
-    private Offsets A11Offsets = new Offsets();
+    private Offsets A11Offsets = new Offsets().remX(.3).addY(.5);
     private Offsets A12Offsets = new Offsets();
-    private Offsets A13Offsets = new Offsets();
-    private Offsets A14Offsets = new Offsets().addX(.75).remY(.25);
+    private Offsets A13Offsets = new Offsets().addY(.25);
+    private Offsets A14Offsets = new Offsets().remY(.25);
     private Offsets A15Offsets = new Offsets();
-    private Offsets A16Offsets = new Offsets();
+    private Offsets A16Offsets = new Offsets().remX(.25).remY(1.2);
 
     public PoseHelper() {}
 

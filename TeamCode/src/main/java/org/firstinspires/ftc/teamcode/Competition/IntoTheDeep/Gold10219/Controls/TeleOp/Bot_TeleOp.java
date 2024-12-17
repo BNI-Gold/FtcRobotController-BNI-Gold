@@ -138,6 +138,8 @@ public class Bot_TeleOp extends OpMode {
         shortcuts();
         grabberControl();
         primaryArmControl();
+        arm.rotationChecker();
+        grabber.imuGyroCheck();
         grabber.tiltStateCheck();
         telemetryOutput();
     }
@@ -248,10 +250,10 @@ public class Bot_TeleOp extends OpMode {
                 double frontRightPower = (rotY - rotX - rx) / denominator;
                 double backRightPower = (rotY + rotX - rx) / denominator;
 
-                Bot.frontLeftMotor.setPower(frontLeftPower);
-                Bot.rearLeftMotor.setPower(backLeftPower);
-                Bot.frontRightMotor.setPower(frontRightPower);
-                Bot.rearRightMotor.setPower(backRightPower);
+                Bot.frontLeftMotor.setPower(frontLeftPower * speedMultiply);
+                Bot.rearLeftMotor.setPower(backLeftPower * speedMultiply);
+                Bot.frontRightMotor.setPower(frontRightPower * speedMultiply);
+                Bot.rearRightMotor.setPower(backRightPower * speedMultiply);
                 break;
         }
     }
@@ -319,7 +321,7 @@ public class Bot_TeleOp extends OpMode {
                 }
                 break;
             case UP:
-                arm.up(2, false);
+                arm.setRotation(PrimaryArm.rotationStates.UP, 2, true);
                 timer.reset();
                 grabSpecimenCase = grabSpecimenCases.TIMEOUT2;
                 break;
@@ -353,7 +355,7 @@ public class Bot_TeleOp extends OpMode {
                 }
                 break;
             case DOWN:
-                arm.down(.3, false);
+                arm.setRotation(PrimaryArm.rotationStates.DOWN, .3, false);
                 shortcutCase = shortcutCases.NONE;
                 hookSpecimenCase = hookSpecimenCases.HOOK;
                 break;
@@ -373,7 +375,7 @@ public class Bot_TeleOp extends OpMode {
                 }
                 break;
             case UP:
-                arm.up(.5, false);
+                arm.setRotation(PrimaryArm.rotationStates.UP, .5, false);
                 timer.reset();
                 retractFromChamberCase = retractFromChamberCases.TIMEOUT2;
                 break;
@@ -444,9 +446,9 @@ public class Bot_TeleOp extends OpMode {
 
     public void primaryArmControl() {
         if (gamepad2.right_bumper) arm.setExtend();
-        else if (gamepad2.right_trigger > 0.35) arm.extend(gamepad2.right_trigger * 4);
+        else if (gamepad2.right_trigger > 0.35) arm.extend(gamepad2.right_trigger * 6);
         else if (gamepad2.left_bumper) arm.setRetract();
-        else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger * 4);
+        else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger * 6);
 
         if (gamepad2.start) {
             grabber.setGrabberState(Grabber.grabberStates.MANUAL);
@@ -462,7 +464,7 @@ public class Bot_TeleOp extends OpMode {
             grabber.tiltDown(Math.abs(gamepad2.left_stick_y));
             arm.stopRotation();
         }
-        else arm.stopRotation();
+        else if (arm.isStopped()) arm.stopRotation();
     }
 
     public void telemetryOutput() {
