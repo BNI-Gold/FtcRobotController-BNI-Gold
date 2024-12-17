@@ -454,8 +454,14 @@ public class Bot_TeleOp extends OpMode {
 
         if (gamepad2.left_stick_y < -.35 && !gamepad2.start) arm.up(armSpeedMultiplier);
         else if (gamepad2.left_stick_y > .35 && !gamepad2.start) arm.down(armSpeedMultiplier);
-        else if (gamepad2.left_stick_y < -.35 && gamepad2.start) grabber.tiltUp(Math.abs(gamepad2.left_stick_y) * 3);
-        else if (gamepad2.left_stick_y > -.35 && gamepad2.start) grabber.tiltDown(Math.abs(gamepad2.left_stick_y) * 3 );
+        else if (gamepad2.left_stick_y < -.35 && gamepad2.start) {
+            grabber.tiltUp(Math.abs(gamepad2.left_stick_y));
+            arm.stopRotation();
+        }
+        else if (gamepad2.left_stick_y > -.35 && gamepad2.start) {
+            grabber.tiltDown(Math.abs(gamepad2.left_stick_y));
+            arm.stopRotation();
+        }
         else arm.stopRotation();
     }
 

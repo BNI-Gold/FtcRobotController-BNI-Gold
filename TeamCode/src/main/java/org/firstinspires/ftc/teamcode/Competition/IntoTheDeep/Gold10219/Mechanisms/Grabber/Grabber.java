@@ -186,12 +186,12 @@ public class Grabber {
 
     public void tiltUp(double mult) {
         double position = tilt.getPosition();
-        tilt.setPosition(Math.min(position + (tiltAdjust * mult), 1.0)); // Ensure position does not exceed 1.0
+        tilt.setPosition(Math.min(position + (tiltAdjust * 7 * mult), 1.0)); // Ensure position does not exceed 1.0
     }
 
     public void tiltDown(double mult) {
         double position = tilt.getPosition();
-        tilt.setPosition(Math.max(position - (tiltAdjust * mult), 0.0)); // Ensure position does not go below 0.0
+        tilt.setPosition(Math.max(position - (tiltAdjust * 7 * mult), 0.0)); // Ensure position does not go below 0.0
     }
 
     public double ang = 0;
