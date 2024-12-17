@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PinpointVars;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Encoder;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Localizer;
@@ -63,6 +64,8 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
     public static double FORWARD_TICKS_TO_INCHES = 0.002;
     public static double STRAFE_TICKS_TO_INCHES = 0.002;
 
+    private PinpointVars vars = new PinpointVars();
+
     /**
      * This creates a new TwoWheelLocalizer from a HardwareMap, with a starting Pose at (0,0)
      * facing 0 heading.
@@ -82,8 +85,8 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
      */
     public TwoWheelPinpointIMULocalizer(HardwareMap map, Pose setStartPose) {
         // TODO: replace these with your encoder positions
-        forwardEncoderPose = new Pose(-6.75, -2.75, 0);
-        strafeEncoderPose = new Pose(-6.625, 2.5, Math.toRadians(-90));
+        forwardEncoderPose = new Pose(-6.75, vars.Offsets.x/25.4, 0);
+        strafeEncoderPose = new Pose(vars.Offsets.y/25.4, 2.5, Math.toRadians(-90));
 
         hardwareMap = map;
 
