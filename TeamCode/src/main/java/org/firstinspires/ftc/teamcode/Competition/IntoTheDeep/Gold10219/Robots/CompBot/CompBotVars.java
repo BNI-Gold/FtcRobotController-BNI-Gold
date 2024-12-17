@@ -42,8 +42,8 @@ public class CompBotVars {
     }
 
     public static final class Chassis {
-        public double FRONT_LENGTH = 8.5;
-        public double BACK_LENGTH = 8.5;
+        public double FRONT_LENGTH = 8;
+        public double BACK_LENGTH = 9;
         public double WIDTH = 16;
     }
 

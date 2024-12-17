@@ -85,7 +85,7 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
      */
     public TwoWheelPinpointIMULocalizer(HardwareMap map, Pose setStartPose) {
         // TODO: replace these with your encoder positions
-        forwardEncoderPose = new Pose(-6.75, 2.75, 0);
+        forwardEncoderPose = new Pose(-6.75, 2.75, 180);
         strafeEncoderPose = new Pose(-6.625, 2.5, Math.toRadians(-90));
 
         hardwareMap = map;
@@ -99,6 +99,8 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
 
         // TODO: reverse any encoders necessary
         forwardEncoder.setDirection(Encoder.REVERSE);
+
+        //Previously was FORWARD in PinpointLocalizer, now REVERSE to reflect correct position on FTCDashboard
         strafeEncoder.setDirection(Encoder.REVERSE);
 
         setStartPose(setStartPose);

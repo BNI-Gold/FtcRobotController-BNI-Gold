@@ -88,16 +88,10 @@ public class Blue_1_2 extends OpMode {
         telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
 
         startPose = new Pose(
-                currentPose.getX(DistanceUnit.INCH),
-                currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.RADIANS)
+                48,
+                136,
+                Math.toRadians(180)
         );
-
-//        startPose = new Pose(
-//                48,
-//                136,
-//                Math.toRadians(180)
-//        );
 
         telemetry.addData("Start Pose: ", startPose);
         telemetry.update();
@@ -147,6 +141,8 @@ public class Blue_1_2 extends OpMode {
             telemetry.addData("LY: ", l.getY());
             telemetry.addData("LH: ", l.getHeading());
         }
+        telemetry.addLine();
+        telemetry.addData("Imu Status: ", grabber.imu.getSystemStatus());
         telemetry.update();
     }
 
@@ -195,12 +191,14 @@ public class Blue_1_2 extends OpMode {
         switch (pathState) {
             case toChambers1:
                 follower.followPath(getPath(toChambers1));
+                grabber.setGrabberState(Grabber.grabberStates.TUCK);
                 setPathState(chambers1Heading);
                 break;
             case chambers1Heading:
                 if (follower.getCurrentTValue() > 0.1) {
                     ((EasySafePath) getPath(toChambers1)).setHeading(HeadingTypes.LINEAR, startPose, poses.Chambers.Blue);
-                    setPathState(chambers1RaiseArm);
+                    setPathState(
+                            chambers1RaiseArm);
                 }
                 break;
             case chambers1RaiseArm:
@@ -209,7 +207,7 @@ public class Blue_1_2 extends OpMode {
                 setPathState(holdChambers1);
                 break;
             case holdChambers1:
-                if (!follower.isBusy() && arm.isStopped()) {
+                if (!follower.isBusy() && arm.isStopped() && grabber.isSettled()) {
                     follower.holdPoint(
                             new EasyPoint(poses.Chambers.Blue,
                                     new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT).addX(vars.sample)),
@@ -219,7 +217,7 @@ public class Blue_1_2 extends OpMode {
                 }
                 break;
             case chambers1Timeout:
-                if (pathTimer.getElapsedTime() > 250) {
+                if (!follower.isBusy() && pathTimer.getElapsedTime() > 500 && grabber.isSettled()) {
                     setPathState(chambers1LowerArm);
                 }
                 break;

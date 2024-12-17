@@ -11,7 +11,7 @@ public class PinpointVars {
 
     public static final class Offsets {
         public double x = -66.88;
-        public double y = -180.98;
+        public double y = -168.28;
     }
 
     public static final class Directions {

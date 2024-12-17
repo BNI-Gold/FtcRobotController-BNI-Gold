@@ -446,9 +446,9 @@ public class Bot_TeleOp extends OpMode {
 
     public void primaryArmControl() {
         if (gamepad2.right_bumper) arm.setExtend();
-        else if (gamepad2.right_trigger > 0.35) arm.extend(gamepad2.right_trigger * 6);
+        else if (gamepad2.right_trigger > 0.35) arm.extend(gamepad2.right_trigger);
         else if (gamepad2.left_bumper) arm.setRetract();
-        else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger * 6);
+        else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger);
 
         if (gamepad2.start) {
             grabber.setGrabberState(Grabber.grabberStates.MANUAL);

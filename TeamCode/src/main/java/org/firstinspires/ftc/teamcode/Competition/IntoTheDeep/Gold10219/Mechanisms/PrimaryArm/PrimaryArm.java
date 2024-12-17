@@ -165,11 +165,11 @@ public class PrimaryArm {
 
     public void extend(double val) {
         double pos = extender.getPosition();
-        extender.setPosition(Math.min(pos + (extenderAdjust * val), extendedPosition));
+        extender.setPosition(Math.min(pos + (extenderAdjust * val * 8), extendedPosition));
     }
 
     public void retract(double val) {
         double pos = extender.getPosition();
-        extender.setPosition(Math.max(pos - (extenderAdjust * val), retractedPosition));
+        extender.setPosition(Math.max(pos - (extenderAdjust * val * 8), retractedPosition));
     }
 }

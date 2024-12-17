@@ -21,7 +21,7 @@ public class Grabber {
     double grabberOuterOpen = .4472;
     double grabberOuterClosed = .7333;
 
-    double grabberInnerOpen = .665;
+    double grabberInnerOpen = .6167;
 
     private Orientation angles;
     public float heading = 0;
@@ -43,6 +43,20 @@ public class Grabber {
 
     public double angleDeadband = 2;
     public double servoDeadband = .005;
+
+    public class GrabberPoses {
+        private double out;
+        private double hook;
+        private double down;
+
+        public GrabberPoses(double out, double hook, double down) {
+            this.out = out;
+            this.hook = hook;
+            this.down = down;
+        }
+    }
+
+//    public GrabberPoses armAtChambersGrabberPoses = new GrabberPoses(0.4967, )
 
     public Grabber() {}
 
@@ -77,6 +91,10 @@ public class Grabber {
 
     private imuCheckStates imuCheckState = imuCheckStates.RUNNING;
 
+    public boolean isImuRunning() {
+        return imu.getSystemStatus() == BNO055IMU.SystemStatus.RUNNING_FUSION;
+    }
+
     public void imuGyroCheck() {
         switch (imuCheckState) {
             case RUNNING:
@@ -104,7 +122,7 @@ public class Grabber {
     }
 
     public void release() {
-        if (grabberState == grabberStates.DOWN) {
+        if (grabberState == grabberStates.DOWN || grabberState == grabberStates.HOOK) {
             grabber.setPosition(grabberOuterClosed);
         } else {
             grabber.setPosition(grabberOuterOpen);
@@ -112,7 +130,7 @@ public class Grabber {
     }
 
     public void grab() {
-        if (grabberState == grabberStates.DOWN) {
+        if (grabberState == grabberStates.DOWN || grabberState == grabberStates.HOOK) {
             grabber.setPosition(grabberInnerOpen);
         } else {
             grabber.setPosition(grabberOuterClosed);
@@ -304,7 +322,7 @@ public class Grabber {
                 nsp = newServoPosition;
 
                 // Clamp the servo position to the valid range [0.4, 1]
-                newServoPosition = Range.clip(newServoPosition, 0, 0.5);
+                newServoPosition = Range.clip(newServoPosition, .34, 0.85);
                 desiredPos = newServoPosition;
                 nsp2 = newServoPosition;
 
