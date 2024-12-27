@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 
-@TeleOp(name = "B - Tilt Tester", group = "testers")
-public class TiltTester extends OpMode {
+@TeleOp(name = "B - Grabber Tilt Tester", group = "testers")
+public class GrabberTiltTester extends OpMode {
 
     public CompBot Bot = new CompBot();
 

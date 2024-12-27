@@ -18,15 +18,11 @@ public class Grabber {
     public Servo rotate = null;
     public BNO055IMU imu = null;
 
-    double grabberOuterOpen = .4472;
-    double grabberOuterClosed = .7333;
-
-    double grabberInnerOpen = .6167;
+    double grabberOpen = .4472;
+    double grabberClosed = .7333;
 
     private Orientation angles;
     public float heading = 0;
-
-    public double tuckPosition = .5;
 
     public double straight = .4911;
     public double right = .82;
@@ -44,28 +40,14 @@ public class Grabber {
     public double angleDeadband = 2;
     public double servoDeadband = .005;
 
-    public class GrabberPoses {
-        private double out;
-        private double hook;
-        private double down;
-
-        public GrabberPoses(double out, double hook, double down) {
-            this.out = out;
-            this.hook = hook;
-            this.down = down;
-        }
-    }
-
-//    public GrabberPoses armAtChambersGrabberPoses = new GrabberPoses(0.4967, )
-
     public Grabber() {}
 
     public void initGrabber(HardwareMap hwMap) {
         hwBot = hwMap;
 
         grabber = hwBot.servo.get("grabber");
-        tilt = hwBot.servo.get("tilt");
-        rotate = hwBot.servo.get("rotate");
+        tilt = hwBot.servo.get("grabber_tilt");
+        rotate = hwBot.servo.get("grabber_rotate");
 
         grabber.setDirection(Servo.Direction.FORWARD);
         tilt.setDirection(Servo.Direction.FORWARD);
@@ -122,19 +104,11 @@ public class Grabber {
     }
 
     public void release() {
-        if (grabberState == grabberStates.DOWN || grabberState == grabberStates.HOOK) {
-            grabber.setPosition(grabberOuterClosed);
-        } else {
-            grabber.setPosition(grabberOuterOpen);
-        }
+        grabber.setPosition(grabberOpen);
     }
 
     public void grab() {
-        if (grabberState == grabberStates.DOWN || grabberState == grabberStates.HOOK) {
-            grabber.setPosition(grabberInnerOpen);
-        } else {
-            grabber.setPosition(grabberOuterClosed);
-        }
+        grabber.setPosition(grabberClosed);
     }
 
     public void goOpen() {
@@ -167,16 +141,6 @@ public class Grabber {
     public void rotateLeft() {
         double position = rotate.getPosition();
         rotate.setPosition(position - rotationAdjust);
-    }
-
-    public void centerOut() {
-        headStraight();
-        setGrabberState(grabberStates.OUT);
-    }
-
-    public void centerDown() {
-        headStraight();
-        setGrabberState(grabberStates.DOWN);
     }
 
     public void rotate(double x, double y) {
