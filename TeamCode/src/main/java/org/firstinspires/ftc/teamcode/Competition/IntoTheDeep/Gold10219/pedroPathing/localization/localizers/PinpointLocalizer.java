@@ -6,50 +6,53 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PinpointVars;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Localizer;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Vector;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.util.NanoTimer;
 
 /**
  * This is the Pinpoint class. This class extends the Localizer superclass and is a
  * localizer that uses the two wheel odometry set up with the IMU to have more accurate heading
  * readings. The diagram below, which is modified from Road Runner, shows a typical set up.
-         *
-         * The view is from the top of the robot looking downwards.
-         *
-         * left on robot is the y positive direction
-         *
-         * forward on robot is the x positive direction
-         *
-         *    /--------------\
-         *    |     ____     |
-         *    |     ----     |
-         *    | ||           |
-         *    | ||           |  ----> left (y positive)
-         *    |              |
-         *    |              |
-         *    \--------------/
-         *           |
-         *           |
-         *           V
-         *    forward (x positive)
-         * With the pinpoint your readings will be used in mm
-         * to use inches ensure to divide your mm value by 25.4
-         * @author Logan Nash
-         * @author Havish Sripada 12808 - RevAmped Robotics
-         * @author Ethan Doak - Gobilda
-         * @version 1.0, 10/2/2024
+ *
+ * The view is from the top of the robot looking downwards.
+ *
+ * left on robot is the y positive direction
+ *
+ * forward on robot is the x positive direction
+ *
+ *    /--------------\
+ *    |     ____     |
+ *    |     ----     |
+ *    | ||           |
+ *    | ||           |  ----> left (y positive)
+ *    |              |
+ *    |              |
+ *    \--------------/
+ *           |
+ *           |
+ *           V
+ *    forward (x positive)
+ * With the pinpoint your readings will be used in mm
+ * to use inches ensure to divide your mm value by 25.4
+ * @author Logan Nash
+ * @author Havish Sripada 12808 - RevAmped Robotics
+ * @author Ethan Doak - Gobilda
+ * @version 1.0, 10/2/2024
  */
 public class PinpointLocalizer extends Localizer {
-    private final HardwareMap hardwareMap;
-    private Pose startPose;
-    private final GoBildaPinpointDriver odo;
+    private HardwareMap hardwareMap;
+    private GoBildaPinpointDriver odo;
     private double previousHeading;
     private double totalHeading;
-    private final PinpointVars vars = new PinpointVars();
+    private Pose startPose;
+    private long deltaTimeNano;
+    private NanoTimer timer;
+    private Pose currentVelocity;
+    private Pose previousPinpointPose;
 
     /**
      * This creates a new PinpointLocalizer from a HardwareMap, with a starting Pose at (0,0)
@@ -68,19 +71,30 @@ public class PinpointLocalizer extends Localizer {
      */
     public PinpointLocalizer(HardwareMap map, Pose setStartPose){
         hardwareMap = map;
+
         odo = hardwareMap.get(GoBildaPinpointDriver.class,"pinpoint");
 
-        odo.setOffsets(vars.Offsets.x, vars.Offsets.y);
+        //The default units are inches, but you can swap the units if you wish.
+        //If you have already tuned the TwoWheelLocalizer, you can simply use the forwardEncoderPose's y value and strafeEncoderPose's x values.
+        setOffsets(-2.625, -6.625, DistanceUnit.INCH); //these are tuned for 3110-0002-0001 Product Insight #1
+
+        //TODO: Tune urself if needed
+//        odo.setYawScalar(1.0);
+
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        //odo.setEncoderResolution(13.26291192);
+
         odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
-        odo.resetPosAndIMU();
+        resetPinpoint();
 
         setStartPose(setStartPose);
         totalHeading = 0;
-        previousHeading = startPose.getHeading();
-
-        resetPinpoint();
+        timer = new NanoTimer();
+        previousPinpointPose = new Pose();
+        currentVelocity = new Pose();
+        deltaTimeNano = 1;
+        previousHeading = setStartPose.getHeading();
     }
 
     /**
@@ -90,10 +104,7 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public Pose getPose() {
-        Pose2D rawPose = odo.getPosition();
-        Pose pose = new Pose(rawPose.getX(DistanceUnit.INCH), rawPose.getY(DistanceUnit.INCH), rawPose.getHeading(AngleUnit.RADIANS));
-
-        return MathFunctions.addPoses(startPose, MathFunctions.rotatePose(pose, startPose.getHeading(), false));
+        return MathFunctions.addPoses(startPose, MathFunctions.rotatePose(previousPinpointPose, startPose.getHeading(), false));
     }
 
     /**
@@ -103,8 +114,7 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public Pose getVelocity() {
-        Pose2D pose = odo.getVelocity();
-        return new Pose(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH), pose.getHeading(AngleUnit.RADIANS));
+        return currentVelocity.copy();
     }
 
     /**
@@ -114,20 +124,19 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public Vector getVelocityVector() {
-        Pose2D pose = odo.getVelocity();
-        Vector returnVector = new Vector();
-        returnVector.setOrthogonalComponents(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH));
-        return returnVector;
+        return currentVelocity.getVector();
     }
 
     /**
-     * This sets the start pose. Changing the start pose should move the robot as if all its
-     * previous movements were displacing it from its new start pose.
+     * This sets the start pose. Since nobody should be using this after the robot has begun moving,
+     * and due to issues with the PinpointLocalizer, this is functionally the same as setPose(Pose).
      *
      * @param setStart the new start pose
      */
     @Override
-    public void setStartPose(Pose setStart) {startPose = setStart;}
+    public void setStartPose(Pose setStart) {
+        this.startPose = setStart;
+    }
 
     /**
      * This sets the current pose estimate. Changing this should just change the robot's current
@@ -137,9 +146,8 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public void setPose(Pose setPose) {
-    resetPinpoint();
-    Pose setPinpointPose = MathFunctions.subtractPoses(setPose, startPose);
-    odo.setPosition(new Pose2D(DistanceUnit.INCH, setPinpointPose.getX(), setPinpointPose.getY(), AngleUnit.RADIANS, setPinpointPose.getHeading()));
+        Pose setNewPose = MathFunctions.subtractPoses(setPose, startPose);
+        odo.setPosition(new Pose2D(DistanceUnit.INCH, setNewPose.getX(), setNewPose.getY(), AngleUnit.RADIANS, setNewPose.getHeading()));
     }
 
     /**
@@ -147,9 +155,16 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public void update() {
+        deltaTimeNano = timer.getElapsedTime();
+        timer.resetTimer();
         odo.update();
-    totalHeading += MathFunctions.getSmallestAngleDifference(odo.getHeading(),previousHeading);
-    previousHeading = odo.getHeading();
+        Pose2D pinpointPose = odo.getPosition();
+        Pose currentPinpointPose = new Pose(pinpointPose.getX(DistanceUnit.INCH), pinpointPose.getY(DistanceUnit.INCH), pinpointPose.getHeading(AngleUnit.RADIANS));
+        totalHeading += MathFunctions.getSmallestAngleDifference(currentPinpointPose.getHeading(), previousHeading);
+        previousHeading = currentPinpointPose.getHeading();
+        Pose deltaPose = MathFunctions.subtractPoses(currentPinpointPose, previousPinpointPose);
+        currentVelocity = new Pose(deltaPose.getX() / (deltaTimeNano / Math.pow(10.0, 9)), deltaPose.getY() / (deltaTimeNano / Math.pow(10.0, 9)), deltaPose.getHeading() / (deltaTimeNano / Math.pow(10.0, 9)));
+        previousPinpointPose = currentPinpointPose;
     }
 
     /**
@@ -191,17 +206,39 @@ public class PinpointLocalizer extends Localizer {
     }
 
     /**
-     * This resets the IMU.
+     * This sets the offsets and converts inches to millimeters
+     * @param xOffset How far to the side from the center of the robot is the x-pod? Use positive values if it's to the left and negative if it's to the right.
+     * @param yOffset How far forward from the center of the robot is the y-pod? Use positive values if it's forward and negative if it's to the back.
+     * @param unit The units that the measurements are given in
      */
-    @Override
-    public void resetIMU() {
-    odo.recalibrateIMU();
+    private void setOffsets(double xOffset, double yOffset, DistanceUnit unit) {
+        odo.setOffsets(unit.toMm(xOffset), unit.toMm(yOffset));
     }
 
     /**
-     * This resets the OTOS.
+     * This resets the IMU. Does not change heading estimation.
      */
-    public void resetPinpoint(){
+    @Override
+    public void resetIMU() throws InterruptedException {
+        odo.recalibrateIMU();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * This resets the pinpoint.
+     */
+    private void resetPinpoint() {
         odo.resetPosAndIMU();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

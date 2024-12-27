@@ -141,13 +141,13 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
     //enum that captures the direction the encoders are set to
     public enum EncoderDirection{
         FORWARD,
-        REVERSED
+        REVERSED;
     }
 
     //enum that captures the kind of goBILDA odometry pods, if goBILDA pods are used
     public enum GoBildaOdometryPods {
         goBILDA_SWINGARM_POD,
-        goBILDA_4_BAR_POD
+        goBILDA_4_BAR_POD;
     }
     //enum that captures a limited scope of read data. More options may be added in future update
     public enum readData {
@@ -314,8 +314,15 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
      * @param yEncoder FORWARD or REVERSED, Y (strafe) pod should increase when the robot is moving left
      */
     public void setEncoderDirections(EncoderDirection xEncoder, EncoderDirection yEncoder){
+        if (xEncoder == EncoderDirection.FORWARD){
+            writeInt(Register.DEVICE_CONTROL,1<<5);
+        }
         if (xEncoder == EncoderDirection.REVERSED) {
             writeInt(Register.DEVICE_CONTROL,1<<4);
+        }
+
+        if (yEncoder == EncoderDirection.FORWARD){
+            writeInt(Register.DEVICE_CONTROL,1<<3);
         }
         if (yEncoder == EncoderDirection.REVERSED){
             writeInt(Register.DEVICE_CONTROL,1<<2);

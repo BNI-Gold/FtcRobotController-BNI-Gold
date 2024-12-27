@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.tuning;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
@@ -24,21 +24,21 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 public class FollowerConstants {
 
     // This section is for configuring your motors
-    public static String leftFrontMotorName = "leftFront";
-    public static String leftRearMotorName = "leftRear";
-    public static String rightFrontMotorName = "rightFront";
-    public static String rightRearMotorName = "rightRear";
+    public static String leftFrontMotorName = "front_left_motor";
+    public static String leftRearMotorName = "rear_left_motor";
+    public static String rightFrontMotorName = "front_right_motor";
+    public static String rightRearMotorName = "rear_right_motor";
 
-    public static DcMotorSimple.Direction leftFrontMotorDirection = DcMotorSimple.Direction.REVERSE;
-    public static DcMotorSimple.Direction rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
-    public static DcMotorSimple.Direction leftRearMotorDirection = DcMotorSimple.Direction.REVERSE;
-    public static DcMotorSimple.Direction rightRearMotorDirection = DcMotorSimple.Direction.FORWARD;
+    public static DcMotor.Direction leftFrontMotorDirection = DcMotor.Direction.REVERSE;
+    public static DcMotor.Direction leftRearMotorDirection = DcMotor.Direction.REVERSE;
+    public static DcMotor.Direction rightFrontMotorDirection = DcMotor.Direction.FORWARD;
+    public static DcMotor.Direction rightRearMotorDirection = DcMotor.Direction.FORWARD;
 
     // This section is for setting the actual drive vector for the front left wheel, if the robot
     // is facing a heading of 0 radians with the wheel centered at (0,0)
     private static final double xMovement = 64.6;
     private static final double yMovement = 52.5;
-    private static double[] convertToPolar = Point.cartesianToPolar(xMovement, -yMovement);
+    private static final double[] convertToPolar = Point.cartesianToPolar(xMovement, -yMovement);
     public static Vector frontLeftVector = MathFunctions.normalizeVector(new Vector(convertToPolar[0], convertToPolar[1]));
 
 
