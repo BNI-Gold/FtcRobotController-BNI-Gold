@@ -11,16 +11,16 @@ public class Outgrabber {
     public Servo tilt = null;
     public Servo rotate = null;
 
-    double grabberOpen = .4472;
-    double grabberClosed = .7333;
+    double grabberOpen = .13;
+    double grabberClosed = .3072;
 
     //TODO: calibrate
-    double grabberUp = 0;
-    double grabberDown = 0;
+    double grabberUp = .275;
+    double grabberDown = .2044;
 
-    public double straight = .4911;
-    public double right = .82;
-    public double left = .1583;
+    public double straight = .3756;
+    public double right = .7206;
+    public double left = .0444;
 
     public double grabberAdjust = .001;
     public double rotationAdjust = .001;
