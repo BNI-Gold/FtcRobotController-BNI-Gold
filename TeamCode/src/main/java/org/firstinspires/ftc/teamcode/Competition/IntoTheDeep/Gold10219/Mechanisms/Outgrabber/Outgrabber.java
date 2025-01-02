@@ -28,7 +28,7 @@ public class Outgrabber {
 
     public Outgrabber() {}
 
-    public void initGrabber(HardwareMap hwMap) {
+    public void initOutgrabber(HardwareMap hwMap) {
         hwBot = hwMap;
 
         outgrabber = hwBot.servo.get("outgrabber");

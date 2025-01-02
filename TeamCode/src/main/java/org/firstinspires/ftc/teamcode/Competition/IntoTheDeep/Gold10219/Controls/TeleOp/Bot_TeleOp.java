@@ -14,7 +14,9 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Outgrabber.Outgrabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.SecondaryArm.SecondaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
@@ -45,13 +47,18 @@ public class Bot_TeleOp extends OpMode {
 
     Grabber grabber = new Grabber();
 
-    PrimaryArm arm = new PrimaryArm();
+    PrimaryArm primaryArm = new PrimaryArm();
+
+    Outgrabber outgrabber = new Outgrabber();
+
+    SecondaryArm secondaryArm = new SecondaryArm();
 
     private Pose startPose;
 
     private Follower follower;
 
-    ElapsedTime timer = new ElapsedTime();
+    ElapsedTime primaryTimer = new ElapsedTime();
+    ElapsedTime secondaryTimer = new ElapsedTime();
 
     public void init() {
         Bot.initRobot(hardwareMap);
@@ -64,7 +71,7 @@ public class Bot_TeleOp extends OpMode {
 
         telemetry.addLine("IMU Initialized");
 
-        timer.reset();
+        primaryTimer.reset();
 
 //        pinpoint.setOp(this);
 //        pinpoint.initPinpoint(hardwareMap);
@@ -103,8 +110,11 @@ public class Bot_TeleOp extends OpMode {
 //
 //        telemetry.addLine("Follower Initialized");
 
-        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
+        primaryArm.initPrimaryArm(hardwareMap, Bot.LinearOp);
         grabber.initGrabber(hardwareMap);
+
+        secondaryArm.initSecondaryArm(hardwareMap, Bot.LinearOp);
+        outgrabber.initOutgrabber(hardwareMap);
 
         telemetry.update();
     }
@@ -112,7 +122,7 @@ public class Bot_TeleOp extends OpMode {
     public void start() {
         grabber.grab();
         grabber.headStraight();
-        arm.setRetract();
+        primaryArm.setRetract();
     }
 
     public Pose getCurrentPose() {
@@ -132,13 +142,13 @@ public class Bot_TeleOp extends OpMode {
 //        pose.updatePose();
 //        follower.update();
         speedControl();
-        driverProfileSwitcher();
+        primaryDriverProfileSwitcher();
         drive();
-        shortcutChecker();
+        primaryShortcutChecker();
+        secondaryShortcutChecker();
         shortcuts();
-        grabberControl();
-        primaryArmControl();
-        arm.rotationChecker();
+        mechanismsControl();
+        primaryArm.rotationChecker();
         grabber.imuGyroCheck();
         grabber.tiltStateCheck();
         telemetryOutput();
@@ -164,7 +174,7 @@ public class Bot_TeleOp extends OpMode {
 
     private driverProfiles driverProfile = driverProfiles.CLASSIC;
 
-    public void driverProfileSwitcher() {
+    public void primaryDriverProfileSwitcher() {
         if (gamepad1.a) driverProfile = driverProfiles.CLASSIC;
         else if (gamepad1.b) driverProfile = driverProfiles.FIELD_CENTRIC;
     }
@@ -258,10 +268,26 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
-    private shortcutCases shortcutCase = shortcutCases.NONE;
+    private primaryShortcutCases primaryShortcutCase = primaryShortcutCases.NONE;
 
-    private enum shortcutCases {
+    private enum primaryShortcutCases {
         NONE, GRAB_SPECIMEN, HOOK_SPECIMEN, RETRACT_FROM_CHAMBER
+    }
+
+    private secondaryShortcutCases secondaryShortcutCase = secondaryShortcutCases.NONE;
+
+    private enum secondaryShortcutCases {
+        NONE, GRAB_SAMPLE
+    }
+
+    private grabSampleCases grabSampleCase = grabSampleCases.OPEN;
+
+    private enum grabSampleCases {
+        OPEN,
+        TIMEOUT1,
+        UP,
+        TIMEOUT2,
+        RETRACT
     }
 
     private grabSpecimenCases grabSpecimenCase = grabSpecimenCases.CLOSE;
@@ -294,8 +320,8 @@ public class Bot_TeleOp extends OpMode {
         TUCK
     }
 
-    public void shortcutChecker() {
-        switch (shortcutCase) {
+    public void primaryShortcutChecker() {
+        switch (primaryShortcutCase) {
             case GRAB_SPECIMEN:
                 grabSpecimen();
                 break;
@@ -308,25 +334,33 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
+    public void secondaryShortcutChecker() {
+        switch (secondaryShortcutCase) {
+            case GRAB_SAMPLE:
+                grabSample();
+                break;
+        }
+    }
+
     public void grabSpecimen() {
         switch (grabSpecimenCase) {
             case CLOSE:
                 grabber.grab();
-                timer.reset();
+                primaryTimer.reset();
                 grabSpecimenCase = grabSpecimenCases.TIMEOUT1;
                 break;
             case TIMEOUT1:
-                if (timer.time() > .5) {
+                if (primaryTimer.time() > .5) {
                     grabSpecimenCase = grabSpecimenCases.UP;
                 }
                 break;
             case UP:
-                arm.setRotation(PrimaryArm.rotationStates.UP, 2, true);
-                timer.reset();
+                primaryArm.setRotation(PrimaryArm.rotationStates.UP, 2, true);
+                primaryTimer.reset();
                 grabSpecimenCase = grabSpecimenCases.TIMEOUT2;
                 break;
             case TIMEOUT2:
-                if (timer.time() > .5) {
+                if (primaryTimer.time() > .5) {
                     grabSpecimenCase = grabSpecimenCases.TUCK;
                 }
                 break;
@@ -335,9 +369,39 @@ public class Bot_TeleOp extends OpMode {
                 grabSpecimenCase = grabSpecimenCases.RETRACT;
                 break;
             case RETRACT:
-                arm.setRetract();
-                shortcutCase = shortcutCases.NONE;
+                primaryArm.setRetract();
+                primaryShortcutCase = primaryShortcutCases.NONE;
                 grabSpecimenCase = grabSpecimenCases.CLOSE;
+                break;
+        }
+    }
+
+    public void grabSample() {
+        switch (grabSampleCase) {
+            case OPEN:
+                outgrabber.grab();
+                secondaryTimer.reset();
+                grabSampleCase = grabSampleCases.TIMEOUT1;
+                break;
+            case TIMEOUT1:
+                if (secondaryTimer.time() > .5) {
+                    grabSampleCase = grabSampleCases.UP;
+                }
+                break;
+            case UP:
+                outgrabber.upPosition();
+                secondaryTimer.reset();
+                grabSampleCase = grabSampleCases.TIMEOUT2;
+                break;
+            case TIMEOUT2:
+                if (secondaryTimer.time() > .5) {
+                    grabSampleCase = grabSampleCases.RETRACT;
+                }
+                break;
+            case RETRACT:
+                secondaryArm.setRetract();
+                secondaryShortcutCase = secondaryShortcutCases.NONE;
+                grabSampleCase = grabSampleCases.OPEN;
                 break;
         }
     }
@@ -346,17 +410,17 @@ public class Bot_TeleOp extends OpMode {
         switch (hookSpecimenCase) {
             case HOOK:
                 grabber.setGrabberState(Grabber.grabberStates.HOOK);
-                timer.reset();
+                primaryTimer.reset();
                 hookSpecimenCase = hookSpecimenCases.TIMEOUT1;
                 break;
             case TIMEOUT1:
-                if (timer.time() > .5) {
+                if (primaryTimer.time() > .5) {
                     hookSpecimenCase = hookSpecimenCases.DOWN;
                 }
                 break;
             case DOWN:
-                arm.setRotation(PrimaryArm.rotationStates.DOWN, .3, false);
-                shortcutCase = shortcutCases.NONE;
+                primaryArm.setRotation(PrimaryArm.rotationStates.DOWN, .3, false);
+                primaryShortcutCase = primaryShortcutCases.NONE;
                 hookSpecimenCase = hookSpecimenCases.HOOK;
                 break;
         }
@@ -366,67 +430,94 @@ public class Bot_TeleOp extends OpMode {
         switch (retractFromChamberCase) {
             case OPEN:
                 grabber.release();
-                timer.reset();
+                primaryTimer.reset();
                 retractFromChamberCase = retractFromChamberCases.TIMEOUT1;
                 break;
             case TIMEOUT1:
-                if (timer.time() > .5) {
+                if (primaryTimer.time() > .5) {
                     retractFromChamberCase = retractFromChamberCases.UP;
                 }
                 break;
             case UP:
-                arm.setRotation(PrimaryArm.rotationStates.UP, .5, false);
-                timer.reset();
+                primaryArm.setRotation(PrimaryArm.rotationStates.UP, .5, false);
+                primaryTimer.reset();
                 retractFromChamberCase = retractFromChamberCases.TIMEOUT2;
                 break;
             case TIMEOUT2:
-                if (timer.time() > .5) {
+                if (primaryTimer.time() > .5) {
                     retractFromChamberCase = retractFromChamberCases.RETRACT;
                 }
                 break;
             case RETRACT:
-                arm.setRetract();
+                primaryArm.setRetract();
                 retractFromChamberCase = retractFromChamberCases.TUCK;
                 break;
             case TUCK:
                 grabber.doTuck();
-                shortcutCase = shortcutCases.NONE;
+                primaryShortcutCase = primaryShortcutCases.NONE;
                 retractFromChamberCase = retractFromChamberCases.OPEN;
                 break;
         }
     }
 
-    private boolean clipped = false;
-    private boolean dPressed = false;
+
+
+    private boolean secondaryDriverTwo = false;
 
     public void shortcuts() {
+        if (secondaryDriverTwo) secondaryShortcuts();
+        else primaryShortcuts();
+    }
+
+    private boolean primaryClipped = false;
+    private boolean primaryDPressed = false;
+
+    public void primaryShortcuts() {
         //Press gp2.a when grabber is aligned with specimen on wall.
         //This will grab specimen, lift arm slightly, tuck grabber, and retract arm.
         if (gamepad2.dpad_up) {
-            shortcutCase = shortcutCases.GRAB_SPECIMEN;
+            primaryShortcutCase = primaryShortcutCases.GRAB_SPECIMEN;
         }
 
         //Press gp2.b when specimen is aligned with chamber, or after specimen has been hooked on chamber.
         else if (gamepad2.dpad_down) {
             //This will open the grabber, slightly raise the arm, retract the arm, and tuck grabber.
-            if (clipped && !dPressed) {
-                dPressed = true;
-                shortcutCase = shortcutCases.RETRACT_FROM_CHAMBER;
-                clipped = false;
+            if (primaryClipped && !primaryDPressed) {
+                primaryDPressed = true;
+                primaryShortcutCase = primaryShortcutCases.RETRACT_FROM_CHAMBER;
+                primaryClipped = false;
             }
 
             //This will set the grabber to the hook position and lower arm slightly.
-            else if (!dPressed) {
-                dPressed = true;
-                shortcutCase = shortcutCases.HOOK_SPECIMEN;
-                clipped = true;
+            else if (!primaryDPressed) {
+                primaryDPressed = true;
+                primaryShortcutCase = primaryShortcutCases.HOOK_SPECIMEN;
+                primaryClipped = true;
             }
         }
         else if (gamepad2.dpad_left) {
-            clipped = false;
+            primaryClipped = false;
         }
         else {
-            dPressed = false;
+            primaryDPressed = false;
+        }
+    }
+
+    public void secondaryShortcuts() {
+        //Press gp2.a when outgrabber is aligned with sample on floor.
+        //This will grab sample, lift arm, and retract arm.
+        if (gamepad2.dpad_up) {
+            secondaryShortcutCase = secondaryShortcutCases.GRAB_SAMPLE;
+        }
+    }
+
+    public void mechanismsControl() {
+        if (secondaryDriverTwo) {
+            outgrabberControl();
+            secondaryArmControl();
+        } else {
+            grabberControl();
+            primaryArmControl();
         }
     }
 
@@ -444,27 +535,48 @@ public class Bot_TeleOp extends OpMode {
             grabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
     }
 
+    public void outgrabberControl() {
+        if (gamepad2.b) outgrabber.grab();
+        else if (gamepad2.a) outgrabber.release();
+
+        if (gamepad2.x) grabber.setGrabberState(Grabber.grabberStates.DOWN);
+        else if (gamepad2.y) grabber.setGrabberState(Grabber.grabberStates.OUT);
+        else if (gamepad2.dpad_right) grabber.doTuck();
+        else if (gamepad2.right_stick_button) grabber.setGrabberState(Grabber.grabberStates.HOOK);
+
+        else if (gamepad2.back) grabber.headStraight();
+        else if (Math.abs(gamepad2.right_stick_x) > .35 || Math.abs(gamepad2.right_stick_y) > .35)
+            grabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
+    }
+
     public void primaryArmControl() {
-        if (gamepad2.right_bumper) arm.setExtend();
-        else if (gamepad2.right_trigger > 0.35) arm.extend(gamepad2.right_trigger);
-        else if (gamepad2.left_bumper) arm.setRetract();
-        else if (gamepad2.left_trigger > 0.35) arm.retract(gamepad2.left_trigger);
+        if (gamepad2.right_bumper) primaryArm.setExtend();
+        else if (gamepad2.right_trigger > 0.35) primaryArm.extend(gamepad2.right_trigger);
+        else if (gamepad2.left_bumper) primaryArm.setRetract();
+        else if (gamepad2.left_trigger > 0.35) primaryArm.retract(gamepad2.left_trigger);
 
         if (gamepad2.start) {
             grabber.setGrabberState(Grabber.grabberStates.MANUAL);
         }
 
-        if (gamepad2.left_stick_y < -.35 && !gamepad2.start) arm.up(armSpeedMultiplier);
-        else if (gamepad2.left_stick_y > .35 && !gamepad2.start) arm.down(armSpeedMultiplier);
+        if (gamepad2.left_stick_y < -.35 && !gamepad2.start) primaryArm.up(armSpeedMultiplier);
+        else if (gamepad2.left_stick_y > .35 && !gamepad2.start) primaryArm.down(armSpeedMultiplier);
         else if (gamepad2.left_stick_y < -.35 && gamepad2.start) {
             grabber.tiltUp(Math.abs(gamepad2.left_stick_y));
-            arm.stopRotation();
+            primaryArm.stopRotation();
         }
         else if (gamepad2.left_stick_y > -.35 && gamepad2.start) {
             grabber.tiltDown(Math.abs(gamepad2.left_stick_y));
-            arm.stopRotation();
+            primaryArm.stopRotation();
         }
-        else if (arm.isStopped()) arm.stopRotation();
+        else if (primaryArm.isStopped()) primaryArm.stopRotation();
+    }
+
+    public void secondaryArmControl() {
+        if (gamepad2.right_bumper) secondaryArm.setExtend();
+        else if (gamepad2.right_trigger > 0.35) secondaryArm.extend(gamepad2.right_trigger);
+        else if (gamepad2.left_bumper) secondaryArm.setRetract();
+        else if (gamepad2.left_trigger > 0.35) secondaryArm.retract(gamepad2.left_trigger);
     }
 
     public void telemetryOutput() {

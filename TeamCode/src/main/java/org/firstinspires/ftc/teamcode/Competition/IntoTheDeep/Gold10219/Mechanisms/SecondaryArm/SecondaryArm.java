@@ -22,7 +22,7 @@ public class SecondaryArm {
 
     public SecondaryArm() {}
 
-    public void initPrimaryArm(HardwareMap hwMap, OpMode OpMode) {
+    public void initSecondaryArm(HardwareMap hwMap, OpMode OpMode) {
         hwBot = hwMap;
         this.OpMode = OpMode;
 

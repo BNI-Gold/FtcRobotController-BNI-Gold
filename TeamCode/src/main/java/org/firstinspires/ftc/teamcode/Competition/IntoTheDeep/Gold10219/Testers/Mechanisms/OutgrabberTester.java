@@ -19,7 +19,7 @@ public class OutgrabberTester extends OpMode {
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
-        outgrabber.initGrabber(hardwareMap);
+        outgrabber.initOutgrabber(hardwareMap);
     }
 
     @Override

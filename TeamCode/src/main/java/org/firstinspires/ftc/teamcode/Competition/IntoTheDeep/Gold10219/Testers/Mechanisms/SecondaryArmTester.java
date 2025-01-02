@@ -15,7 +15,7 @@ public class SecondaryArmTester extends OpMode {
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
-        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
+        arm.initSecondaryArm(hardwareMap, Bot.LinearOp);
     }
 
     double speedMultiplier = 1;
