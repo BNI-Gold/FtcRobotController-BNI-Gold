@@ -143,6 +143,7 @@ public class Bot_TeleOp extends OpMode {
 //        follower.update();
         speedControl();
         primaryDriverProfileSwitcher();
+        secondaryDriverProfileSwitcher();
         drive();
         primaryShortcutChecker();
         secondaryShortcutChecker();
@@ -177,6 +178,11 @@ public class Bot_TeleOp extends OpMode {
     public void primaryDriverProfileSwitcher() {
         if (gamepad1.a) driverProfile = driverProfiles.CLASSIC;
         else if (gamepad1.b) driverProfile = driverProfiles.FIELD_CENTRIC;
+    }
+
+    public void secondaryDriverProfileSwitcher() {
+        if (gamepad2.right_bumper) secondaryDriverTwo = true;
+        else secondaryDriverTwo = false;
     }
 
     public void drive() {
@@ -539,21 +545,20 @@ public class Bot_TeleOp extends OpMode {
         if (gamepad2.b) outgrabber.grab();
         else if (gamepad2.a) outgrabber.release();
 
-        if (gamepad2.x) grabber.setGrabberState(Grabber.grabberStates.DOWN);
-        else if (gamepad2.y) grabber.setGrabberState(Grabber.grabberStates.OUT);
-        else if (gamepad2.dpad_right) grabber.doTuck();
-        else if (gamepad2.right_stick_button) grabber.setGrabberState(Grabber.grabberStates.HOOK);
+        if (gamepad2.y && gamepad2.left_bumper) outgrabber.midPosition();
+        else if (gamepad2.y) outgrabber.upPosition();
+        else if (gamepad2.x) outgrabber.downPosition();
 
-        else if (gamepad2.back) grabber.headStraight();
+        else if (gamepad2.back) outgrabber.headStraight();
         else if (Math.abs(gamepad2.right_stick_x) > .35 || Math.abs(gamepad2.right_stick_y) > .35)
-            grabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
+            outgrabber.rotate(gamepad2.right_stick_x, gamepad2.right_stick_y);
     }
 
     public void primaryArmControl() {
-        if (gamepad2.right_bumper) primaryArm.setExtend();
-        else if (gamepad2.right_trigger > 0.35) primaryArm.extend(gamepad2.right_trigger);
-        else if (gamepad2.left_bumper) primaryArm.setRetract();
-        else if (gamepad2.left_trigger > 0.35) primaryArm.retract(gamepad2.left_trigger);
+        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35) primaryArm.extend(gamepad2.right_trigger);
+        else if (gamepad2.right_trigger > 0.35) primaryArm.setExtend();
+        else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35) primaryArm.retract(gamepad2.left_trigger);
+        else if (gamepad2.left_trigger > 0.35) primaryArm.setRetract();
 
         if (gamepad2.start) {
             grabber.setGrabberState(Grabber.grabberStates.MANUAL);
@@ -573,10 +578,10 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void secondaryArmControl() {
-        if (gamepad2.right_bumper) secondaryArm.setExtend();
-        else if (gamepad2.right_trigger > 0.35) secondaryArm.extend(gamepad2.right_trigger);
-        else if (gamepad2.left_bumper) secondaryArm.setRetract();
-        else if (gamepad2.left_trigger > 0.35) secondaryArm.retract(gamepad2.left_trigger);
+        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35) secondaryArm.extend(gamepad2.right_trigger);
+        else if (gamepad2.right_trigger > 0.35) secondaryArm.setExtend();
+        else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35) secondaryArm.retract(gamepad2.left_trigger);
+        else if (gamepad2.left_trigger > 0.35) secondaryArm.setRetract();
     }
 
     public void telemetryOutput() {

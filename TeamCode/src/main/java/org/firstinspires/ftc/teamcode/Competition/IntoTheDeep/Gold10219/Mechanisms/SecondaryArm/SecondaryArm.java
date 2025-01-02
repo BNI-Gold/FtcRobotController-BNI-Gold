@@ -15,8 +15,8 @@ public class SecondaryArm {
     public double rotationDownPower = .5;
     public double rotationDownSuperPower = .75;
 
-    public double retractedPosition = .2989;
-    public double extendedPosition = .865;
+    public double retractedPosition = .185;
+    public double extendedPosition = .7439;
 
     public double extenderAdjust = .001;
 

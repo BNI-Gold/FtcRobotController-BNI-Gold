@@ -11,11 +11,12 @@ public class Outgrabber {
     public Servo tilt = null;
     public Servo rotate = null;
 
-    double grabberOpen = .13;
-    double grabberClosed = .3072;
+    double grabberOpen = .3072;
+    double grabberClosed = .13;
 
     //TODO: calibrate
-    double grabberUp = .275;
+    double grabberUp = .3433;
+    double grabberMid = .2472;
     double grabberDown = .2044;
 
     public double straight = .3756;
@@ -141,6 +142,10 @@ public class Outgrabber {
 
     public void upPosition() {
         tilt.setPosition(grabberUp);
+    }
+
+    public void midPosition() {
+        tilt.setPosition(grabberMid);
     }
 
     public void downPosition() {
