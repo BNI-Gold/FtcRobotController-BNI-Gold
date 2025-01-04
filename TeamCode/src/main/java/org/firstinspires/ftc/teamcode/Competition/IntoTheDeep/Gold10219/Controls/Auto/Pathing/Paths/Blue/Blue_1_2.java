@@ -1,16 +1,72 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue;
 
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.*;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.approachGrabSpecimen1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.approachGrabSpecimen1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.approachGrabSpecimen2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.approachGrabSpecimen2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers1Heading;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers1LowerArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers1LowerArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers1RaiseArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers1ReleaseAndBack;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers1ReleaseAndBackTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers2Heading;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers2LowerArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers2LowerArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers2RaiseArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers2ReleaseAndBack;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers2ReleaseAndBackTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers3Heading;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers3LowerArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers3LowerArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers3RaiseArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers3ReleaseAndBack;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers3ReleaseAndBackTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.chambers3Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabSpecimen1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabSpecimen1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabSpecimen2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabSpecimen2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabberOut1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabberOut1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabberOut2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.grabberOut2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdChambers1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdChambers2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdChambers3;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdObservation1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdObservation1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdObservation2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdObservation2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdSample1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.holdSample2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.liftSpecimen1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.liftSpecimen1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.liftSpecimen2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.liftSpecimen2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreat1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreat1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreat2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreat2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreatFromPush1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreatFromPush1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreatFromPush2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.observationRetreatFromPush2Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.toChambers1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.toChambers2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.toChambers3;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.toObservation1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.toObservation2;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.toSample1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_2_PathStates.toSample2;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars.FieldPoses;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPoint;
@@ -18,7 +74,6 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths.EasySafePath;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths.HeadingTypes;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars.FieldPoses;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
@@ -34,10 +89,7 @@ public class Blue_1_2 extends OpMode {
     private final CompBot Bot = new CompBot();
     private final CompBotVars vars = new CompBotVars();
 
-    private final Vision vision = new Vision();
     private final Pinpoint pinpoint = new Pinpoint();
-    private final PoseHelper pose = new PoseHelper();
-
     private final FieldPoses poses = new FieldPoses();
 
     Grabber grabber = new Grabber();
@@ -52,8 +104,6 @@ public class Blue_1_2 extends OpMode {
 
     private final Map<Blue_1_2_PathStates, Path> paths = new HashMap<>();
     private Blue_1_2_PathStates pathState;
-
-    private final Map<Blue_1_2_PathStates, Double> specimenOffsets = new HashMap<>();
 
     double pushSampleOffset = 2;
 
@@ -70,22 +120,7 @@ public class Blue_1_2 extends OpMode {
         pinpoint.setOp(this);
         pinpoint.initPinpoint(hardwareMap);
 
-        vision.setOp(this);
-        vision.initVision(hardwareMap, pinpoint);
-
-        pose.setOp(this);
-        pose.setDevices(vision, pinpoint);
-
         pathTimer = new Timer();
-
-        vision.start();
-
-        pose.updateLLUsage(false);
-
-        Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
-        telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
-        telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
-        telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
 
         startPose = new Pose(
                 48,
@@ -118,7 +153,6 @@ public class Blue_1_2 extends OpMode {
     }
 
     public void loop() {
-        pose.updatePose();
         follower.update();
         grabber.tiltStateCheck();
         arm.rotationChecker();
@@ -129,11 +163,6 @@ public class Blue_1_2 extends OpMode {
     Pose l = null;
 
     public void tel() {
-        Pose2D current = pose.getPose();
-        telemetry.addData("PX: ", current.getX(DistanceUnit.INCH));
-        telemetry.addData("PY: ", current.getY(DistanceUnit.INCH));
-        telemetry.addData("PO: ", current.getHeading(AngleUnit.DEGREES));
-        telemetry.addLine();
         telemetry.addData("pathState: ", pathState);
         if (l != null) {
             telemetry.addLine();
@@ -288,52 +317,11 @@ public class Blue_1_2 extends OpMode {
                         new EasyPoint(poses.Observations.Approaches.Blue),
                         poses.Observations.Approaches.Blue.getHeading());
 
-                pose.updateLLUsage(true);
-                vision.setPipeline(0);
-
                 setPathState(observationRetreatFromPush1Timeout);
                 break;
             case observationRetreatFromPush1Timeout:
                 if (pathTimer.getElapsedTime() > 500 & !follower.isBusy()) {
-                    setPathState(alignObservation1);
-                }
-                break;
-            case alignObservation1:
-                vision.getResult();
-
-                if (!vision.lastResultValid()) return;
-
-                double[] offsets = vision.getOffsets();
-                double currentXOffset = offsets[0];
-
-                if (Math.abs(currentXOffset - targetXOffset) < permissibleOffset) {
-                    Pose originalPose = poses.Observations.Approaches.Blue;
-                    Pose currentPose = follower.getPose();
-                    double xDiff = originalPose.getX() - currentPose.getX();
-                    specimenOffsets.put(grabSpecimen1, xDiff);
-                    pose.updateLLUsage(false);
                     setPathState(grabberOut1);
-                } else {
-                    double error = targetXOffset - currentXOffset;
-
-                    double adjustment;
-
-                    if (Math.abs(currentXOffset - targetXOffset) > majorMinorBreakpoint) {
-                        adjustment = error * majorCorrectionFactor;
-                    } else {
-                        adjustment = error * minorCorrectionFactor;
-                    }
-
-                    Pose updatedPose = follower.getPose();
-                    updatedPose.setX(updatedPose.getX() - adjustment);
-                    follower.holdPoint(new EasyPoint(updatedPose), poses.Observations.Approaches.Blue.getHeading());
-
-                    setPathState(alignObservation1Timeout);
-                }
-                break;
-            case alignObservation1Timeout:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(alignObservation1);
                 }
                 break;
             case grabberOut1:
@@ -348,10 +336,9 @@ public class Blue_1_2 extends OpMode {
                 }
                 break;
             case approachGrabSpecimen1:
-                double a = specimenOffsets.get(grabSpecimen1);
                 follower.holdPoint(
                         new EasyPoint(poses.Observations.Grabs.Blue,
-                                new Offsets().remX(a).remY(vars.Mechanisms.Grabber.AtObservation.OUT)),
+                                new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT)),
                         poses.Observations.Grabs.Blue.getHeading());
                 setPathState(approachGrabSpecimen1Timeout);
                 break;
@@ -485,52 +472,11 @@ public class Blue_1_2 extends OpMode {
                         new EasyPoint(poses.Observations.Approaches.Blue),
                         poses.Observations.Approaches.Blue.getHeading());
 
-                pose.updateLLUsage(true);
-                vision.setPipeline(0);
-
                 setPathState(observationRetreatFromPush2Timeout);
                 break;
             case observationRetreatFromPush2Timeout:
                 if (pathTimer.getElapsedTime() > 500 & !follower.isBusy()) {
-                    setPathState(alignObservation2);
-                }
-                break;
-            case alignObservation2:
-                vision.getResult();
-
-                if (!vision.lastResultValid()) return;
-
-                double[] offsets2 = vision.getOffsets();
-                double currentXOffset2 = offsets2[0];
-
-                if (Math.abs(currentXOffset2 - targetXOffset) < permissibleOffset) {
-                    Pose originalPose = poses.Observations.Approaches.Blue;
-                    Pose currentPose = follower.getPose();
-                    double xDiff = originalPose.getX() - currentPose.getX();
-                    specimenOffsets.put(grabSpecimen2, xDiff);
-                    pose.updateLLUsage(false);
                     setPathState(grabberOut2);
-                } else {
-                    double error2 = targetXOffset - currentXOffset2;
-
-                    double adjustment2;
-
-                    if (Math.abs(currentXOffset2 - targetXOffset) > majorMinorBreakpoint) {
-                        adjustment2 = error2 * majorCorrectionFactor;
-                    } else {
-                        adjustment2 = error2 * minorCorrectionFactor;
-                    }
-
-                    Pose updatedPose2 = follower.getPose();
-                    updatedPose2.setX(updatedPose2.getX() - adjustment2);
-                    follower.holdPoint(new EasyPoint(updatedPose2), poses.Observations.Approaches.Blue.getHeading());
-
-                    setPathState(alignObservation2Timeout);
-                }
-                break;
-            case alignObservation2Timeout:
-                if (pathTimer.getElapsedTime() > 500) {
-                    setPathState(alignObservation2);
                 }
                 break;
             case grabberOut2:
@@ -545,10 +491,9 @@ public class Blue_1_2 extends OpMode {
                 }
                 break;
             case approachGrabSpecimen2:
-                double a2 = specimenOffsets.get(grabSpecimen2);
                 follower.holdPoint(
                         new EasyPoint(poses.Observations.Grabs.Blue,
-                                new Offsets().remX(a2).remY(vars.Mechanisms.Grabber.AtObservation.OUT)),
+                                new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT)),
                         poses.Observations.Grabs.Blue.getHeading());
                 setPathState(approachGrabSpecimen2Timeout);
                 break;
