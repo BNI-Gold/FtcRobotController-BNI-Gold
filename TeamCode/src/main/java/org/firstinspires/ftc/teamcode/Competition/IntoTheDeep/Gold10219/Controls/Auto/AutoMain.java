@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.Intake;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Intake.IntakeDirections;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 
@@ -15,9 +13,7 @@ public abstract class AutoMain extends LinearOpMode {
     // Constructor for the Competition Robot Class
     public CompBot Bot = new CompBot();
 
-//    public PrimaryArm arm = new PrimaryArm();
-//
-//    public Intake intake = new Intake();
+    public PrimaryArm arm = new PrimaryArm();
 
     public Vision vision = new Vision();
     public Pinpoint pinpoint = new Pinpoint();
@@ -27,9 +23,7 @@ public abstract class AutoMain extends LinearOpMode {
     public void autoStart(){
         Bot.initRobot(hardwareMap);
         Bot.setLinearOp(this);
-//        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
-//        intake.initIntake(hardwareMap);
-//        intake.center();
+        arm.initPrimaryArm(hardwareMap, Bot.LinearOp);
 
         pinpoint.setLinearOp(this);
         pinpoint.initPinpoint(hardwareMap);
