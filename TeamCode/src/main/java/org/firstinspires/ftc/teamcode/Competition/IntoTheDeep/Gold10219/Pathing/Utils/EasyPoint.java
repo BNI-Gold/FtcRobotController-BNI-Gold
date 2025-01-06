@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils;
 
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.BezierPoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
+import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.BezierPoint;
+import com.pedropathing.pathgen.Point;
 
 public class EasyPoint extends BezierPoint {
     public EasyPoint(Pose pose, Offsets offsets) {

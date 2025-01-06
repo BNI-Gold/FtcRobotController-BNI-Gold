@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils;
 
+import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.MathFunctions;
+import com.pedropathing.pathgen.Point;
+
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.MathFunctions;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Point;
 
 public class SafePoint extends Point{
     public SafePoint(Point Previous, Point Final) {

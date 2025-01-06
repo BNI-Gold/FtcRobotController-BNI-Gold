@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanis
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.SecondaryArm.SecondaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.follower.Follower;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
 
 @TeleOp(name = "A - Into the Deep", group = "competition")
 public class Bot_TeleOp extends OpMode {

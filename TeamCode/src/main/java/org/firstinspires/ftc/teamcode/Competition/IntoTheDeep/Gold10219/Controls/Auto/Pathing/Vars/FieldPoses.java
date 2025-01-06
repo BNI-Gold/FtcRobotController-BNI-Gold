@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars;
 
+import com.pedropathing.localization.Pose;
+
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
 
 public class FieldPoses {
     public SampleLines SampleLines = new SampleLines();

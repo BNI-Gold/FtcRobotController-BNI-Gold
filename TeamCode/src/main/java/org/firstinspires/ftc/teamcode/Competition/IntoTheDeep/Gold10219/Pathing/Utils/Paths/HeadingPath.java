@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths;
 
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.localization.Pose;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPathing.pathGeneration.Path;
+import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.Path;
 
 public interface HeadingPath {
     HeadingPath setHeading(HeadingTypes type, Pose pose);
