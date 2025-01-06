@@ -8,11 +8,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Outgrabber.Outgrabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
@@ -36,10 +31,6 @@ public class Bot_TeleOp extends OpMode {
     double powerThreshold = 0;
     double speedMultiply = 1;
     boolean armSpeedMultiplier = false;
-
-    private final Vision vision = new Vision();
-    private final Pinpoint pinpoint = new Pinpoint();
-    private final PoseHelper pose = new PoseHelper();
 
     public CompBot Bot = new CompBot();
 
@@ -123,24 +114,10 @@ public class Bot_TeleOp extends OpMode {
         grabber.grab();
         grabber.headStraight();
         primaryArm.setRetract();
-    }
-
-    public Pose getCurrentPose() {
-        pose.updateHeading();
-        pose.syncPose();
-        pose.updatePose();
-        Pose2D currentPose = pose.getPose();
-
-        return new Pose(
-                currentPose.getX(DistanceUnit.INCH),
-                currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.RADIANS)
-        );
+        secondaryArm.setRetract();
     }
 
     public void loop() {
-//        pose.updatePose();
-//        follower.update();
         speedControl();
         primaryDriverProfileSwitcher();
         secondaryDriverProfileSwitcher();
