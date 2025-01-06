@@ -19,6 +19,9 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.pedroPat
 @TeleOp(name = "A - Into the Deep", group = "competition")
 public class Bot_TeleOp extends OpMode {
 
+    boolean usePowers = true;
+    double d1Power = 4;
+
     double leftStickXVal;
     double leftStickYVal;
     double rightStickXVal;
@@ -215,14 +218,24 @@ public class Bot_TeleOp extends OpMode {
                 }
                 break;
             case FIELD_CENTRIC:
-                double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-                double x = gamepad1.left_stick_x;
-                double rx = gamepad1.right_stick_x;
+                double y, x, rx;
+                if (usePowers) {
+                    y = Math.abs(Math.pow(gamepad1.left_stick_y, d1Power)); // Remember, Y stick value is reversed
+                    if (gamepad1.left_stick_y > 0) y *= -1;
+                    x = Math.abs(Math.pow(gamepad1.left_stick_x, d1Power));
+                    if (gamepad1.left_stick_x < 0) x *= -1;
+                    rx = Math.abs(Math.pow(gamepad1.right_stick_x, d1Power));
+                    if (gamepad1.right_stick_x < 0) rx *= -1;
+                } else {
+                    y = -gamepad1.left_stick_y;
+                    x = gamepad1.left_stick_x;
+                    rx = gamepad1.right_stick_x;
+                }
 
                 // This button choice was made so that it is hard to hit on accident,
                 // it can be freely changed based on preference.
                 // The equivalent button is start on Xbox-style controllers.
-                if (gamepad1.options) {
+                if (gamepad1.start) {
                     imu.resetYaw();
                 }
 
@@ -243,10 +256,18 @@ public class Bot_TeleOp extends OpMode {
                 double frontRightPower = (rotY - rotX - rx) / denominator;
                 double backRightPower = (rotY + rotX - rx) / denominator;
 
-                Bot.frontLeftMotor.setPower(frontLeftPower * speedMultiply);
-                Bot.rearLeftMotor.setPower(backLeftPower * speedMultiply);
-                Bot.frontRightMotor.setPower(frontRightPower * speedMultiply);
-                Bot.rearRightMotor.setPower(backRightPower * speedMultiply);
+                if (usePowers) {
+                    Bot.frontLeftMotor.setPower(frontLeftPower);
+                    Bot.rearLeftMotor.setPower(backLeftPower);
+                    Bot.frontRightMotor.setPower(frontRightPower);
+                    Bot.rearRightMotor.setPower(backRightPower);
+                } else {
+                    Bot.frontLeftMotor.setPower(frontLeftPower * speedMultiply);
+                    Bot.rearLeftMotor.setPower(backLeftPower * speedMultiply);
+                    Bot.frontRightMotor.setPower(frontRightPower * speedMultiply);
+                    Bot.rearRightMotor.setPower(backRightPower * speedMultiply);
+                }
+
                 break;
         }
     }
@@ -444,7 +465,6 @@ public class Bot_TeleOp extends OpMode {
     }
 
 
-
     private boolean secondaryDriverTwo = false;
 
     public void shortcuts() {
@@ -477,11 +497,9 @@ public class Bot_TeleOp extends OpMode {
                 primaryShortcutCase = primaryShortcutCases.HOOK_SPECIMEN;
                 primaryClipped = true;
             }
-        }
-        else if (gamepad2.dpad_left) {
+        } else if (gamepad2.dpad_left) {
             primaryClipped = false;
-        }
-        else {
+        } else {
             primaryDPressed = false;
         }
     }
@@ -532,9 +550,11 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void primaryArmControl() {
-        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35) primaryArm.extend(gamepad2.right_trigger);
+        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35)
+            primaryArm.extend(gamepad2.right_trigger);
         else if (gamepad2.right_trigger > 0.35) primaryArm.setExtend();
-        else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35) primaryArm.retract(gamepad2.left_trigger);
+        else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35)
+            primaryArm.retract(gamepad2.left_trigger);
         else if (gamepad2.left_trigger > 0.35) primaryArm.setRetract();
 
         if (gamepad2.start) {
@@ -542,22 +562,23 @@ public class Bot_TeleOp extends OpMode {
         }
 
         if (gamepad2.left_stick_y < -.35 && !gamepad2.start) primaryArm.up(armSpeedMultiplier);
-        else if (gamepad2.left_stick_y > .35 && !gamepad2.start) primaryArm.down(armSpeedMultiplier);
+        else if (gamepad2.left_stick_y > .35 && !gamepad2.start)
+            primaryArm.down(armSpeedMultiplier);
         else if (gamepad2.left_stick_y < -.35 && gamepad2.start) {
             grabber.tiltUp(Math.abs(gamepad2.left_stick_y));
             primaryArm.stopRotation();
-        }
-        else if (gamepad2.left_stick_y > -.35 && gamepad2.start) {
+        } else if (gamepad2.left_stick_y > -.35 && gamepad2.start) {
             grabber.tiltDown(Math.abs(gamepad2.left_stick_y));
             primaryArm.stopRotation();
-        }
-        else if (primaryArm.isStopped()) primaryArm.stopRotation();
+        } else if (primaryArm.isStopped()) primaryArm.stopRotation();
     }
 
     public void secondaryArmControl() {
-        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35) secondaryArm.extend(gamepad2.right_trigger);
+        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35)
+            secondaryArm.extend(gamepad2.right_trigger);
         else if (gamepad2.right_trigger > 0.35) secondaryArm.setExtend();
-        else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35) secondaryArm.retract(gamepad2.left_trigger);
+        else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35)
+            secondaryArm.retract(gamepad2.left_trigger);
         else if (gamepad2.left_trigger > 0.35) secondaryArm.setRetract();
     }
 
