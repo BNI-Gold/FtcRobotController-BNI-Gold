@@ -289,8 +289,7 @@ public class Bot_TeleOp extends OpMode {
     private enum grabSampleCases {
         OPEN,
         TIMEOUT1,
-        UP,
-        TIMEOUT2,
+        UPANDCENTER,
         RETRACT
     }
 
@@ -388,19 +387,15 @@ public class Bot_TeleOp extends OpMode {
                 grabSampleCase = grabSampleCases.TIMEOUT1;
                 break;
             case TIMEOUT1:
-                if (secondaryTimer.time() > .5) {
-                    grabSampleCase = grabSampleCases.UP;
+                if (secondaryTimer.time() > .25) {
+                    grabSampleCase = grabSampleCases.UPANDCENTER;
                 }
                 break;
-            case UP:
+            case UPANDCENTER:
                 outgrabber.upPosition();
+                outgrabber.headStraight();
                 secondaryTimer.reset();
-                grabSampleCase = grabSampleCases.TIMEOUT2;
-                break;
-            case TIMEOUT2:
-                if (secondaryTimer.time() > .5) {
-                    grabSampleCase = grabSampleCases.RETRACT;
-                }
+                grabSampleCase = grabSampleCases.RETRACT;
                 break;
             case RETRACT:
                 secondaryArm.setRetract();
@@ -537,8 +532,8 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void outgrabberControl() {
-        if (gamepad2.b) outgrabber.grab();
-        else if (gamepad2.a) outgrabber.release();
+        if (gamepad2.b) outgrabber.release();
+        else if (gamepad2.a) outgrabber.grab();
 
         if (gamepad2.y && gamepad2.left_bumper) outgrabber.midPosition();
         else if (gamepad2.y) outgrabber.upPosition();

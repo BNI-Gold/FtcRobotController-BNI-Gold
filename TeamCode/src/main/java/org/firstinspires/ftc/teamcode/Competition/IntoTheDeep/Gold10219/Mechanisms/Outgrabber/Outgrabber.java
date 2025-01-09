@@ -50,11 +50,11 @@ public class Outgrabber {
     }
 
     public void release() {
-        outgrabber.setPosition(grabberClosed);
+        outgrabber.setPosition(grabberOpen);
     }
 
     public void grab() {
-        outgrabber.setPosition(grabberOpen);
+        outgrabber.setPosition(grabberClosed);
     }
 
     public void goOpen() {
