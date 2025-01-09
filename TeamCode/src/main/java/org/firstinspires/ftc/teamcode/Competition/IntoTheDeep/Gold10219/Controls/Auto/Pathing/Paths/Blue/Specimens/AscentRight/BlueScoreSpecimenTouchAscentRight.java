@@ -20,29 +20,23 @@ import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.C
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentRight.PathStates.toAscentR;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Specimens.AscentRight.PathStates.toChambers1;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars.FieldPoses;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.EasyPoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.O;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Offsets;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths.EasySafePath;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths.HeadingTypes;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.Path;
 import com.pedropathing.util.Timer;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars.FieldPoses;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.EasyPoint;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.O;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.Offsets;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.Paths.EasySafePath;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.Paths.HeadingTypes;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBotVars;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,9 +46,7 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
     private final CompBot Bot = new CompBot();
     private final CompBotVars vars = new CompBotVars();
 
-    private final Vision vision = new Vision();
-    private final Pinpoint pinpoint = new Pinpoint();
-    private final PoseHelper pose = new PoseHelper();
+
 
     private final FieldPoses poses = new FieldPoses();
 
@@ -75,31 +67,13 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
     public void init() {
         Bot.initRobot(hardwareMap);
 
-        pinpoint.setOp(this);
-        pinpoint.initPinpoint(hardwareMap);
 
-        vision.setOp(this);
-        vision.initVision(hardwareMap, pinpoint);
-
-        pose.setOp(this);
-        pose.setDevices(vision, pinpoint);
 
         pathTimer = new Timer();
 
-        vision.start();
 
-        pose.updateLLUsage(false);
 
-        Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.BLUE);
-        telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
-        telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
-        telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
-
-        startPose = new Pose(
-                currentPose.getX(DistanceUnit.INCH),
-                currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.RADIANS)
-        );
+        startPose = new Pose(96, 136, 0);
 
         telemetry.addData("Start Pose: ", startPose);
         telemetry.update();
@@ -126,7 +100,7 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
     }
 
     public void loop() {
-        pose.updatePose();
+        
         follower.update();
         grabber.tiltStateCheck();
         arm.rotationChecker();
@@ -137,11 +111,8 @@ public class BlueScoreSpecimenTouchAscentRight extends OpMode {
     Pose l = null;
 
     public void tel() {
-        Pose2D current = pose.getPose();
-        telemetry.addData("PX: ", current.getX(DistanceUnit.INCH));
-        telemetry.addData("PY: ", current.getY(DistanceUnit.INCH));
-        telemetry.addData("PO: ", current.getHeading(AngleUnit.DEGREES));
-        telemetry.addLine();
+        
+
         telemetry.addData("pathState: ", pathState);
         if (l != null) {
             telemetry.addLine();

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.TeleOp;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,14 +15,12 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanis
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.SecondaryArm.SecondaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.localization.Pose;
 
 @TeleOp(name = "A - Into the Deep", group = "competition")
 public class Bot_TeleOp extends OpMode {
 
     boolean usePowers = true;
-    double d1Power = 4;
+    double d1Power = 3;
 
     double leftStickXVal;
     double leftStickYVal;
@@ -59,8 +59,8 @@ public class Bot_TeleOp extends OpMode {
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+                RevHubOrientationOnRobot.LogoFacingDirection.DOWN,
+                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
         imu.initialize(parameters);
 
         telemetry.addLine("IMU Initialized");
@@ -235,7 +235,7 @@ public class Bot_TeleOp extends OpMode {
                 // This button choice was made so that it is hard to hit on accident,
                 // it can be freely changed based on preference.
                 // The equivalent button is start on Xbox-style controllers.
-                if (gamepad1.start) {
+                if (gamepad1.options) {
                     imu.resetYaw();
                 }
 

@@ -18,6 +18,9 @@ public class FieldCentricTeleOp extends LinearOpMode {
 
     public CompBotVars vars = new CompBotVars();
 
+    boolean usePowers = true;
+    double d1Power = 3;
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -50,9 +53,19 @@ public class FieldCentricTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x;
-            double rx = gamepad1.right_stick_x;
+            double y, x, rx;
+            if (usePowers) {
+                y = Math.abs(Math.pow(gamepad1.left_stick_y, d1Power)); // Remember, Y stick value is reversed
+                if (gamepad1.left_stick_y > 0) y *= -1;
+                x = Math.abs(Math.pow(gamepad1.left_stick_x, d1Power));
+                if (gamepad1.left_stick_x < 0) x *= -1;
+                rx = Math.abs(Math.pow(gamepad1.right_stick_x, d1Power));
+                if (gamepad1.right_stick_x < 0) rx *= -1;
+            } else {
+                y = -gamepad1.left_stick_y;
+                x = gamepad1.left_stick_x;
+                rx = gamepad1.right_stick_x;
+            }
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.

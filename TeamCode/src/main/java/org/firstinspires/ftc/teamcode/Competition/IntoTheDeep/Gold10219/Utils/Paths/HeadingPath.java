@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils.Paths;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.Paths;
 
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.Path;

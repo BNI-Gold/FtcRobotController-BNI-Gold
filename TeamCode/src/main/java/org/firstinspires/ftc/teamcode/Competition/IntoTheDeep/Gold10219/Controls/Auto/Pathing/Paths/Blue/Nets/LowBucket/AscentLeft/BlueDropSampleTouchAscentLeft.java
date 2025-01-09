@@ -1,27 +1,27 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft;
 
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.ascentLExtendArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.ascentLExtendArmTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.ascentLGrabberOut;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.ascentLLowerArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.ascentLTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.chambers1RaiseArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.chambers1RaiseArmTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.holdAscentL;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.holdNets1;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1DropSample;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1DropSampleTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1ExtendArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1ExtendArmTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1Heading;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1LowerArm;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1LowerArmTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1ResetMechanisms;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1ResetMechanismsTimeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.nets1Timeout;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.opModeStop;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.toAscentL;
-import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red.Nets.AscentLeft.PathStates.toNets1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.ascentLExtendArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.ascentLExtendArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.ascentLGrabberOut;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.ascentLLowerArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.ascentLTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.chambers1RaiseArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.chambers1RaiseArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.holdAscentL;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.holdNets1;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1DropSample;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1DropSampleTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1ExtendArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1ExtendArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1Heading;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1LowerArm;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1LowerArmTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1ResetMechanisms;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1ResetMechanismsTimeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.nets1Timeout;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.opModeStop;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.toAscentL;
+import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Nets.LowBucket.AscentLeft.PathStates.toNets1;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
@@ -30,12 +30,6 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Pinpoint;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.PoseHelper;
-import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BotPose.Vision;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Vars.FieldPoses;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
@@ -50,14 +44,11 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.Pa
 import java.util.HashMap;
 import java.util.Map;
 
-@Autonomous(name = "Red Drop Sample Touch Ascent Left", group = "Auto - Red - Sample")
-public class RedDropSampleTouchAscentLeft extends OpMode {
+@Autonomous(name = "Blue Drop Sample Low Bucket Touch Ascent Left", group = "Auto - Blue - LowBucket - Sample")
+public class BlueDropSampleTouchAscentLeft extends OpMode {
     private final CompBot Bot = new CompBot();
     private final CompBotVars vars = new CompBotVars();
 
-    private final Vision vision = new Vision();
-    private final Pinpoint pinpoint = new Pinpoint();
-    private final PoseHelper pose = new PoseHelper();
 
     private final FieldPoses poses = new FieldPoses();
 
@@ -73,36 +64,16 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
 
     private final Map<PathStates, Path> paths = new HashMap<>();
     private PathStates pathState;
-    
+
     @Override
     public void init() {
         Bot.initRobot(hardwareMap);
 
-        pinpoint.setOp(this);
-        pinpoint.initPinpoint(hardwareMap);
-
-        vision.setOp(this);
-        vision.initVision(hardwareMap, pinpoint);
-
-        pose.setOp(this);
-        pose.setDevices(vision, pinpoint);
 
         pathTimer = new Timer();
 
-        vision.start();
 
-        pose.updateLLUsage(false);
-
-        Pose2D currentPose = pose.getSmartPose(PoseHelper.Alliances.RED);
-        telemetry.addData("Pose X: ", currentPose.getX(DistanceUnit.INCH));
-        telemetry.addData("Pose Y: ", currentPose.getY(DistanceUnit.INCH));
-        telemetry.addData("Pose H: ", currentPose.getHeading(AngleUnit.DEGREES));
-
-        startPose = new Pose(
-                currentPose.getX(DistanceUnit.INCH),
-                currentPose.getY(DistanceUnit.INCH),
-                currentPose.getHeading(AngleUnit.RADIANS)
-        );
+        startPose = new Pose(96, 136, 0);
 
         telemetry.addData("Start Pose: ", startPose);
         telemetry.update();
@@ -129,7 +100,7 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
     }
 
     public void loop() {
-        pose.updatePose();
+        
         follower.update();
         grabber.tiltStateCheck();
         arm.rotationChecker();
@@ -140,11 +111,7 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
     Pose l = null;
 
     public void tel() {
-        Pose2D current = pose.getPose();
-        telemetry.addData("PX: ", current.getX(DistanceUnit.INCH));
-        telemetry.addData("PY: ", current.getY(DistanceUnit.INCH));
-        telemetry.addData("PO: ", current.getHeading(AngleUnit.DEGREES));
-        telemetry.addLine();
+
         telemetry.addData("pathState: ", pathState);
         if (l != null) {
             telemetry.addLine();
@@ -161,14 +128,14 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
 
     public void buildPaths() {
         paths.put(toNets1,
-                new EasySafePath(startPose, poses.Nets.Red,
-                        new Offsets().addY(vars.Chassis.FRONT_LENGTH).addX(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT).addX(vars.Mechanisms.Grabber.AtChambers.OUT))
+                new EasySafePath(startPose, poses.Nets.Blue,
+                        new Offsets().remY(vars.Chassis.FRONT_LENGTH).remX(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT).remX(vars.Mechanisms.Grabber.AtChambers.OUT))
                         .setHeading(HeadingTypes.CONSTANT, startPose));
 
         paths.put(toAscentL,
-                new EasySafePath(getPath(toNets1).getLastControlPoint(), poses.Ascents.Pre.Red, poses.Ascents.Post.Red, poses.Ascents.Red.Left,
-                        new Offsets().remX(vars.Chassis.FRONT_LENGTH))
-                        .setHeading(HeadingTypes.LINEAR, getPath(toNets1), poses.Ascents.Red.Left, .35));
+                new EasySafePath(getPath(toNets1).getLastControlPoint(), poses.Ascents.Pre.Blue, poses.Ascents.Post.Blue, poses.Ascents.Blue.Left,
+                        new Offsets().addX(vars.Chassis.FRONT_LENGTH))
+                        .setHeading(HeadingTypes.LINEAR, getPath(toNets1), poses.Ascents.Blue.Left, .35));
     }
 
     public void autonomousPathUpdate() {
@@ -189,16 +156,16 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
                 break;
             case nets1Heading:
                 if (follower.getCurrentTValue() > 0.1) {
-                    ((EasySafePath) getPath(toNets1)).setHeading(HeadingTypes.LINEAR, startPose, poses.Nets.Red);
+                    ((EasySafePath) getPath(toNets1)).setHeading(HeadingTypes.LINEAR, startPose, poses.Nets.Blue);
                     setPathState(holdNets1);
                 }
                 break;
             case holdNets1:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.Nets.Red,
-                                    new Offsets().addY(vars.Chassis.FRONT_LENGTH).addX(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT).addX(vars.Mechanisms.Grabber.AtChambers.OUT)),
-                            poses.Nets.Red.getHeading()
+                            new EasyPoint(poses.Nets.Blue,
+                                    new Offsets().remY(vars.Chassis.FRONT_LENGTH).remX(vars.Chassis.FRONT_LENGTH).remY(vars.Mechanisms.Grabber.AtChambers.OUT).remX(vars.Mechanisms.Grabber.AtChambers.OUT)),
+                            poses.Nets.Blue.getHeading()
                     );
                     setPathState(nets1Timeout);
                 }
@@ -252,9 +219,9 @@ public class RedDropSampleTouchAscentLeft extends OpMode {
             case holdAscentL:
                 if (!follower.isBusy()) {
                     follower.holdPoint(
-                            new EasyPoint(poses.Ascents.Red.Left,
-                                    new Offsets().remX(vars.Chassis.FRONT_LENGTH)),
-                            poses.Ascents.Red.Left.getHeading()
+                            new EasyPoint(poses.Ascents.Blue.Left,
+                                    new Offsets().addX(vars.Chassis.FRONT_LENGTH)),
+                            poses.Ascents.Blue.Left.getHeading()
                     );
                     setPathState(ascentLGrabberOut);
                 }

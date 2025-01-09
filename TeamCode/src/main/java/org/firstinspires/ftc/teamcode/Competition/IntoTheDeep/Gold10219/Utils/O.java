@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils;
 
 public class O{
     public static <T> T req(T obj) {

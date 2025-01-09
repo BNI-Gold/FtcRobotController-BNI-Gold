@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Pathing.Utils;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils;
 
 import java.util.ArrayList;
 
@@ -40,6 +40,23 @@ public class Offsets {
 
     public Offsets remY(double yValue) {
         this.y.add(-yValue);
+        return this;
+    }
+
+    public Offsets addOffsetAtAngle(int angleDegrees, double offset) {
+        double angleRadians = Math.toRadians(angleDegrees);
+        double xOffset = offset * Math.cos(angleRadians);
+        double yOffset = offset * Math.sin(angleRadians);
+        this.x.add(xOffset);
+        this.y.add(yOffset);
+        return this;
+    }
+
+    public Offsets addOffsetAtAngle(double angleRadians, double offset) {
+        double xOffset = offset * Math.cos(angleRadians);
+        double yOffset = offset * Math.sin(angleRadians);
+        this.x.add(xOffset);
+        this.y.add(yOffset);
         return this;
     }
 
