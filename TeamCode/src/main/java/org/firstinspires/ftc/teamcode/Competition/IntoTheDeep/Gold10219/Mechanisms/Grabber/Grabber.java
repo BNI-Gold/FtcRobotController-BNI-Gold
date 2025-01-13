@@ -18,15 +18,15 @@ public class Grabber {
     public Servo rotate = null;
     public BNO055IMU imu = null;
 
-    double grabberOpen = .4472;
-    double grabberClosed = .7333;
+    double grabberOpen = .6644;
+    double grabberClosed = .9972;
 
     private Orientation angles;
     public float heading = 0;
 
-    public double straight = .4911;
-    public double right = .82;
-    public double left = .1583;
+    public double straight = .4683;
+    public double right = .7528;
+    public double left = .2144;
 
     public double grabberAdjust = .001;
     public double rotationAdjust = .001;
