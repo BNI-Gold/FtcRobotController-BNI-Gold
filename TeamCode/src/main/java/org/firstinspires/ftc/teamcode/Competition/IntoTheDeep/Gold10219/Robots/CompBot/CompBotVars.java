@@ -59,7 +59,7 @@ public class CompBotVars {
             }
 
             public static final class AtObservation {
-                public double OUT = 7.5;
+                public double OUT = 8;
             }
         }
     }
