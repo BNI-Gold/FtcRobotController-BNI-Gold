@@ -564,12 +564,22 @@ public class Bot_TeleOp extends OpMode {
     }
 
     public void secondaryArmControl() {
-        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35)
+        if (gamepad2.left_bumper && gamepad2.right_trigger > 0.35) {
             secondaryArm.extend(gamepad2.right_trigger);
-        else if (gamepad2.right_trigger > 0.35) secondaryArm.setExtend();
-        else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35)
+        } else if (gamepad2.right_trigger > 0.35) {
+            if (secondaryArm.extender.getPosition() < .3) {
+                outgrabber.upPosition();
+            }
+            secondaryArm.setExtend();
+        } else if (gamepad2.left_bumper && gamepad2.left_trigger > 0.35) {
             secondaryArm.retract(gamepad2.left_trigger);
-        else if (gamepad2.left_trigger > 0.35) secondaryArm.setRetract();
+        } else if (gamepad2.left_trigger > 0.35) {
+            if (secondaryArm.extender.getPosition() > .3) {
+                outgrabber.headStraight();
+                outgrabber.upPosition();
+            }
+            secondaryArm.setRetract();
+        }
     }
 
     public void telemetryOutput() {
