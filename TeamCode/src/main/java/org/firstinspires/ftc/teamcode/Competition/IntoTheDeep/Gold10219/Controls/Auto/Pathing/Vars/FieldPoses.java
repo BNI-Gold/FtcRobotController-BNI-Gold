@@ -17,8 +17,8 @@ public class FieldPoses {
     private static final int f = 144;
 
     public static final class SampleLines {
-        private static final double x1 = 23.5;
-        private static final double x2 = 13.5;
+        private static final double x1 = 21.5;
+        private static final double x2 = 12.5;
         private static final double x3 = 3.5;
         private static final double y = 46.25;
 
@@ -30,6 +30,7 @@ public class FieldPoses {
 
             public B1 B1 = new B1();
             public B2 B2 = new B2();
+            public B3 B3 = new B3();
 
             public static final class B1 {
                 public Pose Sample = new Pose(x1, f - y);
@@ -41,6 +42,14 @@ public class FieldPoses {
 
             public static final class B2 {
                 public Pose Sample = new Pose(x2, f - y);
+
+                public Pose Slip = new Pose(23, f - 18);
+                public Pose Pre = new Pose(23, f - 24);
+                public Pose Post = new Pose(29, f - 60);
+            }
+
+            public static final class B3 {
+                public Pose Sample = new Pose(x3, f - y);
 
                 public Pose Slip = new Pose(20, f - 18);
                 public Pose Pre = new Pose(23, f - 24);

@@ -300,7 +300,6 @@ public class Bot_TeleOp extends OpMode {
         TIMEOUT1,
         UP,
         TIMEOUT2,
-        TUCK,
         RETRACT
     }
 
@@ -364,12 +363,8 @@ public class Bot_TeleOp extends OpMode {
                 break;
             case TIMEOUT2:
                 if (primaryTimer.time() > .5) {
-                    grabSpecimenCase = grabSpecimenCases.TUCK;
+                    grabSpecimenCase = grabSpecimenCases.RETRACT;
                 }
-                break;
-            case TUCK:
-                grabber.doTuck();
-                grabSpecimenCase = grabSpecimenCases.RETRACT;
                 break;
             case RETRACT:
                 primaryArm.setRetract();

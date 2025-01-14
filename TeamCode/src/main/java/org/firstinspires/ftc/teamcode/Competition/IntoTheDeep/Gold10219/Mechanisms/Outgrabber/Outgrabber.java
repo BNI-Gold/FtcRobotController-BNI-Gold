@@ -17,7 +17,7 @@ public class Outgrabber {
     //TODO: calibrate
     double grabberUp = .3433;
     double grabberMid = .2472;
-    double grabberDown = .2044;
+    double grabberDown = .1889;
 
     public double straight = .3756;
     public double right = .7206;

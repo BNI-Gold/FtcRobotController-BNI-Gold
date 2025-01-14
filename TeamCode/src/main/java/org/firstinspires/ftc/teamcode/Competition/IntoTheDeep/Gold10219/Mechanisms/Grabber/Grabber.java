@@ -238,7 +238,7 @@ public class Grabber {
 
             case CALL_TILT:
                 double desiredAngle = 0;
-                double dampingFactor = .15;
+                double dampingFactor = .2;
 
                 switch (grabberState) {
                     case OUT:
