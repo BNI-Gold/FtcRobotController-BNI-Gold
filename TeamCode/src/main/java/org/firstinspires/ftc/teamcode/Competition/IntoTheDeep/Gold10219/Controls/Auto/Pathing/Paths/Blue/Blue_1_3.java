@@ -269,7 +269,7 @@ public class Blue_1_3 extends OpMode {
                 }
                 break;
             case chambers1LowerArmTimeout:
-                if (pathTimer.getElapsedTime() > 250 && primaryArm.isStopped()) {
+                if (primaryArm.isStopped()) {
                     setPathState(chambers1ReleaseAndBack);
                 }
                 break;
@@ -344,7 +344,7 @@ public class Blue_1_3 extends OpMode {
                 setPathState(approachGrabSpecimen1Timeout);
                 break;
             case approachGrabSpecimen1Timeout:
-                if (pathTimer.getElapsedTime() > 500 && !follower.isBusy())
+                if (pathTimer.getElapsedTime() > 250 && !follower.isBusy())
                     setPathState(grabSpecimen1);
                 break;
             case grabSpecimen1:
@@ -408,7 +408,7 @@ public class Blue_1_3 extends OpMode {
                 }
                 break;
             case chambers2LowerArmTimeout:
-                if (pathTimer.getElapsedTime() > 250 && primaryArm.isStopped()) {
+                if (primaryArm.isStopped()) {
                     setPathState(chambers2ReleaseAndBack);
                 }
                 break;
@@ -446,7 +446,7 @@ public class Blue_1_3 extends OpMode {
                 setPathState(approachGrabSpecimen2Timeout);
                 break;
             case approachGrabSpecimen2Timeout:
-                if (pathTimer.getElapsedTime() > 500 && !follower.isBusy())
+                if (pathTimer.getElapsedTime() > 250 && !follower.isBusy())
                     setPathState(grabSpecimen2);
                 break;
             case grabSpecimen2:
@@ -511,7 +511,7 @@ public class Blue_1_3 extends OpMode {
                 }
                 break;
             case chambers3LowerArmTimeout:
-                if (pathTimer.getElapsedTime() > 250 && primaryArm.isStopped()) {
+                if (primaryArm.isStopped()) {
                     setPathState(chambers3ReleaseAndBack);
                 }
                 break;
@@ -549,7 +549,7 @@ public class Blue_1_3 extends OpMode {
                 setPathState(approachGrabSpecimen3Timeout);
                 break;
             case approachGrabSpecimen3Timeout:
-                if (pathTimer.getElapsedTime() > 500 && !follower.isBusy())
+                if (pathTimer.getElapsedTime() > 250 && !follower.isBusy())
                     setPathState(grabSpecimen3);
                 break;
             case grabSpecimen3:

@@ -47,6 +47,7 @@ public class PrimaryArm {
     }
 
     public void up(boolean s) {
+        setState(rotationStates.STOPPED);
         if (s) {
             rotator.setPower(rotationUpSuperPower);
         } else {
@@ -54,6 +55,7 @@ public class PrimaryArm {
         }
     }
     public void down(boolean s) {
+        setState(rotationStates.STOPPED);
         if (s) {
             rotator.setPower(-rotationDownSuperPower);
         } else {
