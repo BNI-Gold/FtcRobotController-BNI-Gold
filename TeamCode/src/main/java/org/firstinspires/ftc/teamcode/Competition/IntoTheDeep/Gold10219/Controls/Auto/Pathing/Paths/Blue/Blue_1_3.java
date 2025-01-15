@@ -103,7 +103,7 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.Pa
 import java.util.HashMap;
 import java.util.Map;
 
-@Autonomous(name = "A - Blue 1 + 4", group = "Auto - Blue")
+@Autonomous(name = "A - Blue 1 + 3", group = "Auto - Blue")
 public class Blue_1_3 extends OpMode {
     private final CompBot Bot = new CompBot();
     private final CompBotVars vars = new CompBotVars();
