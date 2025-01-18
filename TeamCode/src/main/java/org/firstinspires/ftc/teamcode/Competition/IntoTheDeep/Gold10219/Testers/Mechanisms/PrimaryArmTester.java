@@ -53,6 +53,9 @@ public class PrimaryArmTester extends OpMode {
         else if (primaryArmRotatorPower < 0) telemetry.addData("Primary Arm Going Down: ", primaryArmRotatorPower);
         else telemetry.addLine("Primary Arm Not Rotating");
 
+        double rotatorPos = arm.rotator.getCurrentPosition();
+        telemetry.addData("Primary Arm Position", rotatorPos);
+
         telemetry.update();
     }
 

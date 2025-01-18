@@ -101,7 +101,7 @@ public class FieldPoses {
 
         public static final class Midpoints {
             private static final double x = 36;
-            private static final double y = 30;
+            private static final double y = 24;
 
             public Pose Blue = new Pose(x, f - y);
             public Pose Red = new Pose(x, y);

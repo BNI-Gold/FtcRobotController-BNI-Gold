@@ -28,6 +28,9 @@ public class Grabber {
     public double right = .7528;
     public double left = .2144;
 
+    public double down = 0;
+    public double up = 0.55;
+
     public double grabberAdjust = .001;
     public double rotationAdjust = .001;
     public double tiltAdjust = .001;
@@ -53,16 +56,8 @@ public class Grabber {
         tilt.setDirection(Servo.Direction.FORWARD);
         rotate.setDirection(Servo.Direction.REVERSE);
 
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample OpMode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-
         imu = hwBot.get(BNO055IMU.class, "bnoimu");
-        imu.initialize(parameters);
+        initializeIMU();
     }
 
     private enum imuCheckStates {
@@ -77,22 +72,26 @@ public class Grabber {
         return imu.getSystemStatus() == BNO055IMU.SystemStatus.RUNNING_FUSION;
     }
 
+    public void initializeIMU() {
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample OpMode
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        imu.initialize(parameters);
+    }
+
     public void imuGyroCheck() {
         switch (imuCheckState) {
             case RUNNING:
-                if (imu.getSystemStatus() != BNO055IMU.SystemStatus.RUNNING_FUSION && imu.getSystemStatus() != BNO055IMU.SystemStatus.IDLE) {
+                if (imu.getSystemStatus() != BNO055IMU.SystemStatus.RUNNING_FUSION) {
                     imuCheckState = imuCheckStates.INITIALIZE;
                 }
                 break;
             case INITIALIZE:
-                BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-                parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-                parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-                parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample OpMode
-                parameters.loggingEnabled      = true;
-                parameters.loggingTag          = "IMU";
-                parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-                imu.initialize(parameters);
+                initializeIMU();
                 imuCheckState = imuCheckStates.INITIALIZING;
                 break;
             case INITIALIZING:
@@ -176,22 +175,22 @@ public class Grabber {
 
     public void tiltUp() {
         double position = tilt.getPosition();
-        tilt.setPosition(Math.min(position + tiltAdjust, 1.0)); // Ensure position does not exceed 1.0
+        tilt.setPosition(Math.min(position + tiltAdjust, up)); // Ensure position does not exceed 1.0
     }
 
     public void tiltDown() {
         double position = tilt.getPosition();
-        tilt.setPosition(Math.max(position - tiltAdjust, 0.0)); // Ensure position does not go below 0.0
+        tilt.setPosition(Math.max(position - tiltAdjust, down)); // Ensure position does not go below 0.0
     }
 
     public void tiltUp(double mult) {
         double position = tilt.getPosition();
-        tilt.setPosition(Math.min(position + (tiltAdjust * 7 * mult), 1.0)); // Ensure position does not exceed 1.0
+        tilt.setPosition(Math.min(position + (tiltAdjust * 7 * mult), up)); // Ensure position does not exceed 1.0
     }
 
     public void tiltDown(double mult) {
         double position = tilt.getPosition();
-        tilt.setPosition(Math.max(position - (tiltAdjust * 7 * mult), 0.0)); // Ensure position does not go below 0.0
+        tilt.setPosition(Math.max(position - (tiltAdjust * 7 * mult), down)); // Ensure position does not go below 0.0
     }
 
     public double ang = 0;
@@ -255,6 +254,8 @@ public class Grabber {
                         break;
                 }
 
+                if (!isImuRunning()) break;
+
                 double currentAngle = getTilt();
                 ang = currentAngle;
 
@@ -286,7 +287,7 @@ public class Grabber {
                 nsp = newServoPosition;
 
                 // Clamp the servo position to the valid range [0.4, 1]
-                newServoPosition = Range.clip(newServoPosition, .34, 0.85);
+                newServoPosition = Range.clip(newServoPosition, down, up);
                 desiredPos = newServoPosition;
                 nsp2 = newServoPosition;
 

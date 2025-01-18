@@ -7,6 +7,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Drivetrains.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Utils.O;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PrimaryArm {
     public HardwareMap hwBot = null;
@@ -26,6 +30,14 @@ public class PrimaryArm {
     
     public PrimaryArm() {}
 
+    private void initializePositions() {
+        positions.put(positionStates.TUCK, 0);
+        positions.put(positionStates.GRAB_SPECIMEN, 425);
+        positions.put(positionStates.RAISE_SPECIMEN, 650);
+        positions.put(positionStates.ALIGN_SPECIMEN, 2250);
+        positions.put(positionStates.HOOK_SPECIMEN, 1800);
+    }
+
     public void initPrimaryArm(HardwareMap hwMap, OpMode OpMode) {
         hwBot = hwMap;
         this.OpMode = OpMode;
@@ -36,7 +48,11 @@ public class PrimaryArm {
         rotator.setDirection(DcMotor.Direction.REVERSE);
         extender.setDirection(Servo.Direction.FORWARD);
 
+        rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         rotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        initializePositions();
     }
 
     private boolean isOpModeActive() {
@@ -47,7 +63,7 @@ public class PrimaryArm {
     }
 
     public void up(boolean s) {
-        setState(rotationStates.STOPPED);
+        setRotationState(rotationStates.STOPPED);
         if (s) {
             rotator.setPower(rotationUpSuperPower);
         } else {
@@ -55,7 +71,7 @@ public class PrimaryArm {
         }
     }
     public void down(boolean s) {
-        setState(rotationStates.STOPPED);
+        setRotationState(rotationStates.STOPPED);
         if (s) {
             rotator.setPower(-rotationDownSuperPower);
         } else {
@@ -70,7 +86,19 @@ public class PrimaryArm {
         STOPPED, UP, GOING_UP, DOWN, GOING_DOWN
     }
 
+    public enum positionStates {
+        STAY, TUCK, GRAB_SPECIMEN, RAISE_SPECIMEN, ALIGN_SPECIMEN, HOOK_SPECIMEN
+    }
+
     private rotationStates rotationState = rotationStates.STOPPED;
+
+    private positionStates positionState = positionStates.TUCK;
+    private final Map<positionStates, Integer> positions = new HashMap<>();
+
+    private int getPosition(positionStates state) {
+        return O.req(positions.get(state));
+    }
+
     public double rotations = 0;
     public boolean s = false;
 
@@ -82,6 +110,15 @@ public class PrimaryArm {
         return rotationState == rotationStates.STOPPED;
     }
 
+    public boolean isAtPosition() {
+        double tolerance = 10;
+        return Math.abs(rotator.getCurrentPosition() - rotator.getTargetPosition()) <= tolerance;
+    }
+
+    public boolean isAtPosition(double tolerance) {
+        return Math.abs(rotator.getCurrentPosition() - rotator.getTargetPosition()) <= tolerance;
+    }
+
     public void setRotation(rotationStates state, double rotations, boolean s) {
         if (state == rotationStates.GOING_UP || state == rotationStates.GOING_DOWN) return;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -91,7 +128,16 @@ public class PrimaryArm {
         this.s = s;
     }
 
-    private void setState(rotationStates state) {
+    public void setPosition(positionStates state) {
+        positionState = state;
+    }
+
+    public void setPosition(positionStates state, boolean s) {
+        positionState = state;
+        this.s = s;
+    }
+
+    private void setRotationState(rotationStates state) {
         rotationState = state;
     }
 
@@ -105,26 +151,35 @@ public class PrimaryArm {
                 break;
             case UP:
                 up(s);
-                setState(rotationStates.GOING_UP);
+                setRotationState(rotationStates.GOING_UP);
                 break;
             case GOING_UP:
                 double currentRotations = getCurrentRotations();
                 if (currentRotations > rotations) {
                     stopRotation();
-                    setState(rotationStates.STOPPED);
+                    setRotationState(rotationStates.STOPPED);
                 }
                 break;
             case DOWN:
                 down(s);
-                setState(rotationStates.GOING_DOWN);
+                setRotationState(rotationStates.GOING_DOWN);
                 break;
             case GOING_DOWN:
                 double currentRotations2 = getCurrentRotations();
                 if (currentRotations2 > rotations) {
                     stopRotation();
-                    setState(rotationStates.STOPPED);
+                    setRotationState(rotationStates.STOPPED);
                 }
                 break;
+        }
+    }
+
+    public void positionChecker() {
+        if (positionState != positionStates.STAY) {
+            rotator.setTargetPosition(getPosition(positionState));
+            rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rotator.setPower(s ? rotationUpSuperPower : rotationUpPower);
+            setPosition(positionStates.STAY);
         }
     }
 
