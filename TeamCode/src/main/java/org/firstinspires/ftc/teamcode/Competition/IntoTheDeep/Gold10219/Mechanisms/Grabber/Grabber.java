@@ -361,6 +361,8 @@ public class Grabber {
                         break;
                 }
 
+                targ = desiredAngle;
+
                 if (!isImuRunning()) break;
 
                 double currentAngle = getTilt();

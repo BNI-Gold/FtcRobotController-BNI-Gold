@@ -39,8 +39,8 @@ public class GrabberPIDFTiltTester extends OpMode {
 
     public void sendTelemetry() {
         telemetry.addData("Target Angle", grabber.targ);
-        telemetry.addData("Current Angle", grabber.getTilt());
-        telemetry.addData("Error", grabber.targ - grabber.getTilt());
+        telemetry.addData("Current Angle", grabber.ang);
+        telemetry.addData("Error", grabber.diff);
         telemetry.addData("Servo Position", grabber.grabber.getPosition());
         telemetry.addLine();
         telemetry.addLine("PIDF Output");
