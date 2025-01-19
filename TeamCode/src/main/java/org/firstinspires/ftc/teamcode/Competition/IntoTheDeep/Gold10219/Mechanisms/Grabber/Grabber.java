@@ -28,8 +28,8 @@ public class Grabber {
     public double right = .7528;
     public double left = .2144;
 
-    public double down = 0;
-    public double up = 0.55;
+    public double down = 0.25;
+    public double up = 0.625;
 
     public double grabberAdjust = .001;
     public double rotationAdjust = .001;
@@ -53,7 +53,7 @@ public class Grabber {
         rotate = hwBot.servo.get("grabber_rotate");
 
         grabber.setDirection(Servo.Direction.FORWARD);
-        tilt.setDirection(Servo.Direction.FORWARD);
+        tilt.setDirection(Servo.Direction.REVERSE);
         rotate.setDirection(Servo.Direction.REVERSE);
 
         imu = hwBot.get(BNO055IMU.class, "bnoimu");
@@ -237,7 +237,7 @@ public class Grabber {
 
             case CALL_TILT:
                 double desiredAngle = 0;
-                double dampingFactor = .2;
+                double dampingFactor = .25;
 
                 switch (grabberState) {
                     case OUT:
@@ -277,7 +277,7 @@ public class Grabber {
                 }
 
                 // Apply a damping factor to reduce overshooting
-                double positionChange = (angleDifference / 300.0) * dampingFactor;
+                double positionChange = (angleDifference / 255.0) * dampingFactor;
                 pch = positionChange;
 
                 double currentServoPosition = tilt.getPosition();

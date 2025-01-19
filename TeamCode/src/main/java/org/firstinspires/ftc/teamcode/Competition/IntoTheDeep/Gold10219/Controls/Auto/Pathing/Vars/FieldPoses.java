@@ -74,9 +74,9 @@ public class FieldPoses {
             public static final class R2 {
                 public Pose Sample = new Pose(f - x2, y);
 
-                public Pose Slip = new Pose(f - 20, 18);
+                public Pose Slip = new Pose(f - 26, 18);
                 public Pose Pre = new Pose(f - 23, 24);
-                public Pose Post = new Pose(f - 26, 60);
+                public Pose Post = new Pose(f - 32, 60);
             }
         }
     }
@@ -104,7 +104,7 @@ public class FieldPoses {
             private static final double y = 24;
 
             public Pose Blue = new Pose(x, f - y);
-            public Pose Red = new Pose(x, y);
+            public Pose Red = new Pose(f - x, y);
         }
     }
 
@@ -117,7 +117,7 @@ public class FieldPoses {
     }
 
     public static final class Observations {
-        private static final double x = 12;
+        private static final double x = 24;
         private static final double y = 14;
 
         public Approaches Approaches = new Approaches();

@@ -27,6 +27,8 @@ public class PrimaryArm {
     public double extendedPosition = .865;
 
     public double extenderAdjust = .001;
+
+    double positionTolerance = 10;
     
     public PrimaryArm() {}
 
@@ -87,7 +89,7 @@ public class PrimaryArm {
     }
 
     public enum positionStates {
-        STAY, TUCK, GRAB_SPECIMEN, RAISE_SPECIMEN, ALIGN_SPECIMEN, HOOK_SPECIMEN
+        STAY, TUCK, GRAB_SPECIMEN, RAISE_SPECIMEN, ALIGN_SPECIMEN, HOOK_SPECIMEN, GOING_UP, GOING_DOWN
     }
 
     private rotationStates rotationState = rotationStates.STOPPED;
@@ -109,15 +111,11 @@ public class PrimaryArm {
     public boolean isStopped() {
         return rotationState == rotationStates.STOPPED;
     }
-
     public boolean isAtPosition() {
-        double tolerance = 10;
-        return Math.abs(rotator.getCurrentPosition() - rotator.getTargetPosition()) <= tolerance;
+        return positionState == positionStates.STAY;
     }
 
-    public boolean isAtPosition(double tolerance) {
-        return Math.abs(rotator.getCurrentPosition() - rotator.getTargetPosition()) <= tolerance;
-    }
+    private double targetPosition = 0;
 
     public void setRotation(rotationStates state, double rotations, boolean s) {
         if (state == rotationStates.GOING_UP || state == rotationStates.GOING_DOWN) return;
@@ -128,12 +126,21 @@ public class PrimaryArm {
         this.s = s;
     }
 
-    public void setPosition(positionStates state) {
+    private void setPositionState(positionStates state) {
         positionState = state;
     }
 
-    public void setPosition(positionStates state, boolean s) {
+    public void setPosition(positionStates state) {
+        if (state == positionStates.GOING_DOWN || state == positionStates.GOING_UP) return;
         positionState = state;
+        targetPosition = getPosition(state);
+        this.s = false;
+    }
+
+    public void setPosition(positionStates state, boolean s) {
+        if (state == positionStates.GOING_DOWN || state == positionStates.GOING_UP) return;
+        positionState = state;
+        targetPosition = getPosition(state);
         this.s = s;
     }
 
@@ -175,11 +182,27 @@ public class PrimaryArm {
     }
 
     public void positionChecker() {
-        if (positionState != positionStates.STAY) {
-            rotator.setTargetPosition(getPosition(positionState));
-            rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rotator.setPower(s ? rotationUpSuperPower : rotationUpPower);
-            setPosition(positionStates.STAY);
+        if (positionState != positionStates.STAY && positionState != positionStates.GOING_DOWN && positionState != positionStates.GOING_UP) {
+            double currentPosition = rotator.getCurrentPosition();
+            if (currentPosition > targetPosition) {
+                down(s);
+                setPositionState(positionStates.GOING_DOWN);
+            } else {
+                up(s);
+                setPositionState(positionStates.GOING_UP);
+            }
+        } else if (positionState == positionStates.GOING_UP) {
+            double currentPosition = rotator.getCurrentPosition();
+            if (currentPosition + 10 > targetPosition) {
+                stopRotation();
+                setPositionState(positionStates.STAY);
+            }
+        } else if (positionState == positionStates.GOING_DOWN) {
+            double currentPosition = rotator.getCurrentPosition();
+            if (currentPosition - 10 < targetPosition) {
+                stopRotation();
+                setPositionState(positionStates.STAY);
+            }
         }
     }
 

@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue;
+package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red;
 
-public enum Blue_1_3_C_PathStates {
+public enum Red_1_3_PathStates {
+    STOP_FOR_IMU_RESET,
     toChambers1,
     chambers1Heading,
     chambers1RaiseArm,
@@ -42,8 +43,6 @@ public enum Blue_1_3_C_PathStates {
     toObservation3,
     holdObservation3,
     holdObservation3Timeout,
-    approachGrabSpecimen2,
-    approachGrabSpecimen2Timeout,
     grabSpecimen2,
     grabSpecimen2Timeout,
     liftSpecimen2,
@@ -62,8 +61,6 @@ public enum Blue_1_3_C_PathStates {
     toObservation4,
     holdObservation4,
     holdObservation4Timeout,
-    approachGrabSpecimen3,
-    approachGrabSpecimen3Timeout,
     grabSpecimen3,
     grabSpecimen3Timeout,
     liftSpecimen3,
@@ -79,4 +76,7 @@ public enum Blue_1_3_C_PathStates {
     chambers4LowerArmTimeout,
     chambers4ReleaseAndBack,
     chambers4ReleaseAndBackTimeout,
+    toObservation5,
+    holdObservation5,
+    holdObservation5Timeout
 }

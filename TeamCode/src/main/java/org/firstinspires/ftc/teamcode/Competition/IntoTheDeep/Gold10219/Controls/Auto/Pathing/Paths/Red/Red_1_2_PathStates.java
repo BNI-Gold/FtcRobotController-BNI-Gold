@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Red;
 
 public enum Red_1_2_PathStates {
+    STOP_FOR_IMU_RESET,
     toChambers1,
     chambers1Heading,
     chambers1RaiseArm,
@@ -17,8 +18,6 @@ public enum Red_1_2_PathStates {
     holdObservation1Timeout,
     observationRetreatFromPush1,
     observationRetreatFromPush1Timeout,
-    alignObservation1,
-    alignObservation1Timeout,
     grabberOut1,
     grabberOut1Timeout,
     approachGrabSpecimen1,
@@ -45,8 +44,6 @@ public enum Red_1_2_PathStates {
     holdObservation2Timeout,
     observationRetreatFromPush2,
     observationRetreatFromPush2Timeout,
-    alignObservation2,
-    alignObservation2Timeout,
     grabberOut2,
     grabberOut2Timeout,
     approachGrabSpecimen2,

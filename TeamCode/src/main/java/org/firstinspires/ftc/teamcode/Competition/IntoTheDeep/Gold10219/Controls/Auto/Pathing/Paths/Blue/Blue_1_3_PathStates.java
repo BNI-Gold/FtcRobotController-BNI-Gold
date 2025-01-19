@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue;
 
-public enum Blue_1_3_A_PathStates {
+public enum Blue_1_3_PathStates {
+    STOP_FOR_IMU_RESET,
     toChambers1,
     chambers1Heading,
     chambers1RaiseArm,
@@ -79,4 +80,7 @@ public enum Blue_1_3_A_PathStates {
     chambers4LowerArmTimeout,
     chambers4ReleaseAndBack,
     chambers4ReleaseAndBackTimeout,
+    toObservation5,
+    holdObservation5,
+    holdObservation5Timeout
 }
