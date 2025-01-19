@@ -17,7 +17,7 @@ apply from: '../build.dependencies.gradle'
 apply plugin: 'org.team11260.fast-load-plugin'
 
 android {
-    namespace = 'org.firstinspires.ftc.teamcode'desaxzeddesrafesdawsaeswdzdesderfgsaesaedzwsa
+    namespace = 'org.firstinspires.ftc.teamcode'
 
     packagingOptions {
         jniLibs.useLegacyPackaging true
