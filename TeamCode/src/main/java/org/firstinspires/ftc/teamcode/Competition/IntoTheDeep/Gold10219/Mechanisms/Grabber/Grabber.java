@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+@Config
 public class Grabber {
     public HardwareMap hwBot = null;
     public Servo grabber = null;
@@ -42,6 +44,27 @@ public class Grabber {
 
     public double angleDeadband = 2;
     public double servoDeadband = .005;
+
+
+    //PIDF
+    // PIDF Constants - Tune these values
+    private static double Kp = 0.02;  // Proportional Gain
+    private static double Ki = 0.0001; // Integral Gain
+    private static double Kd = 0.01;  // Derivative Gain
+    private static double Kf = 0.001;  // Feedforward Gain
+
+    // Error tracking for PID
+    private double previousError = 0;
+    private double integralSum = 0;
+
+    // Time tracking
+    private long lastTime = System.nanoTime();
+
+
+    public String getPIDFValues() {
+        return "P: " + Kp + "; I: " + Ki + "; D: " + Kd + "; F: " + Kf;
+    }
+
 
     public Grabber() {}
 
@@ -193,6 +216,7 @@ public class Grabber {
         tilt.setPosition(Math.max(position - (tiltAdjust * 7 * mult), down)); // Ensure position does not go below 0.0
     }
 
+    public double targ = 0;
     public double ang = 0;
     public double diff = 0;
     public double diff1 = 0;
@@ -254,6 +278,8 @@ public class Grabber {
                         break;
                 }
 
+                targ = desiredAngle;
+
                 if (!isImuRunning()) break;
 
                 double currentAngle = getTilt();
@@ -301,6 +327,100 @@ public class Grabber {
                 double posDiff = servoPosition - desiredPos;
 
                 // If the servo position is within the deadband, consider the movement complete
+                if (Math.abs(posDiff) < servoDeadband) {
+                    tiltState = tiltStates.SETTLED;
+                }
+                break;
+        }
+    }
+
+    public void newTiltStateCheck() {
+        switch (tiltState) {
+            case SETTLED:
+                if (grabberState != grabberStates.MANUAL) {
+                    tiltState = tiltStates.CALL_TILT;
+                }
+                break;
+
+            case CALL_TILT:
+                double desiredAngle = 0;
+
+                // Determine the target tilt angle based on the grabber state
+                switch (grabberState) {
+                    case OUT:
+                        desiredAngle = outAngle;
+                        break;
+                    case DOWN:
+                        desiredAngle = downAngle;
+                        break;
+                    case HOOK:
+                        desiredAngle = finishHookAngle;
+                        break;
+                    case TUCK:
+                        desiredAngle = tuckAngle;
+                        break;
+                }
+
+                if (!isImuRunning()) break;
+
+                double currentAngle = getTilt();
+                ang = currentAngle;
+
+                double error = desiredAngle - currentAngle;
+
+                // Normalize angle difference to avoid wrapping issues
+                if (error > 150) {
+                    error -= 300;
+                } else if (error < -150) {
+                    error += 300;
+                }
+                diff = error;
+
+                // If within deadband, consider movement complete
+                if (Math.abs(error) < angleDeadband) {
+                    tiltState = tiltStates.SETTLED;
+                    return;
+                }
+
+                // PIDF Control
+                long currentTime = System.nanoTime();
+                double deltaTime = (currentTime - lastTime) / 1e9; // Convert nanoseconds to seconds
+                lastTime = currentTime;
+
+                // Proportional Term
+                double P = Kp * error;
+
+                // Integral Term (Accumulate error over time)
+                integralSum += error * deltaTime;
+                double I = Ki * integralSum;
+
+                // Derivative Term (Rate of change of error)
+                double derivative = (error - previousError) / deltaTime;
+                double D = Kd * derivative;
+
+                // Feedforward Term (Optional, accounts for expected movement)
+                double F = Kf * Math.signum(error); // Adjust as needed
+
+                // Calculate final PIDF output
+                double output = P + I + D + F;
+                previousError = error;
+
+                // Clamp servo movement to avoid exceeding limits
+                double currentServoPosition = tilt.getPosition();
+                double newServoPosition = Range.clip(currentServoPosition + output, down, up);
+
+                // Apply new position
+                tilt.setPosition(newServoPosition);
+                desiredPos = newServoPosition;
+
+                tiltState = tiltStates.TILTING;
+                break;
+
+            case TILTING:
+                double servoPosition = tilt.getPosition();
+                double posDiff = servoPosition - desiredPos;
+
+                // If servo position is within deadband, mark as settled
                 if (Math.abs(posDiff) < servoDeadband) {
                     tiltState = tiltStates.SETTLED;
                 }
