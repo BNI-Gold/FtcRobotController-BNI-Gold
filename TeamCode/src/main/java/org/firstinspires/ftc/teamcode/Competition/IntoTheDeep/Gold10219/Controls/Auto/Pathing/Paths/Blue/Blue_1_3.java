@@ -80,6 +80,8 @@ import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.C
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_3_PathStates.toSample1;
 import static org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Controls.Auto.Pathing.Paths.Blue.Blue_1_3_PathStates.toSample2;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.Path;
@@ -142,6 +144,8 @@ public class Blue_1_3 extends OpMode {
         overallTimer = new Timer();
 
         startPose = new Pose(48, 136, 0);
+
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         telemetry.addData("Start Pose: ", startPose);
         telemetry.update();
