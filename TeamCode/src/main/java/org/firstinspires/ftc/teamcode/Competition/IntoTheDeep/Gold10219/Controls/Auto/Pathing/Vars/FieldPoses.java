@@ -18,7 +18,7 @@ public class FieldPoses {
 
     public static final class SampleLines {
         private static final double x1 = 21.5;
-        private static final double x2 = 12.5;
+        private static final double x2 = 11.5;
         private static final double x3 = 3.5;
         private static final double y = 46.25;
 
@@ -83,7 +83,7 @@ public class FieldPoses {
 
     public static final class Chambers {
         private static final double x = 72;
-        private static final double y = 48;
+        private static final double y = 47.5;
 
         public Pose Blue = new Pose(x, f - y, Math.toRadians(-90));
         public Pose Red = new Pose(x, y, Math.toRadians(90));

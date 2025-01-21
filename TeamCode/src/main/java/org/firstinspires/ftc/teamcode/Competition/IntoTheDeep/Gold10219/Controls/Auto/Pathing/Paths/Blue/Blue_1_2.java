@@ -263,20 +263,20 @@ public class Blue_1_2 extends OpMode {
                 setPathState(holdChambers1);
                 break;
             case holdChambers1:
-                if (!follower.isBusy() && primaryArm.isStopped() && grabber.isSettled()) {
+                if (!follower.isBusy() && primaryArm.isStopped() && grabber.isAtTargetAngle()) {
                     follower.holdPoint(new EasyPoint(poses.Chambers.Blue, new Offsets().addY(vars.Chassis.FRONT_LENGTH).addY(vars.Mechanisms.Grabber.AtChambers.OUT).addX(vars.sample)), poses.Chambers.Blue.getHeading());
                     setPathState(chambers1Timeout);
                 }
                 break;
             case chambers1Timeout:
-                if (!follower.isBusy() && pathTimer.getElapsedTime() > 500 && grabber.isSettled()) {
+                if (!follower.isBusy() && pathTimer.getElapsedTime() > 500 && grabber.isAtTargetAngle()) {
                     setPathState(chambers1LowerArm);
                 }
                 break;
 
             case chambers1LowerArm:
                 grabber.setGrabberState(Grabber.grabberStates.HOOK);
-                if (pathTimer.getElapsedTime() > 500 && grabber.isSettled()) {
+                if (pathTimer.getElapsedTime() > 500 && grabber.isAtTargetAngle()) {
                     primaryArm.setPosition(PrimaryArm.positionStates.HOOK_SPECIMEN, true);
                     setPathState(chambers1LowerArmTimeout);
                 }
@@ -338,12 +338,12 @@ public class Blue_1_2 extends OpMode {
                 break;
             case grabberOut1:
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
-                if (grabber.isSettled()) {
+                if (grabber.isAtTargetAngle()) {
                     setPathState(grabberOut1Timeout);
                 }
                 break;
             case grabberOut1Timeout:
-                if (pathTimer.getElapsedTime() > 250 && grabber.isSettled()) {
+                if (pathTimer.getElapsedTime() > 250 && grabber.isAtTargetAngle()) {
                     setPathState(approachGrabSpecimen1);
                 }
                 break;
@@ -411,7 +411,7 @@ public class Blue_1_2 extends OpMode {
 
             case chambers2LowerArm:
                 grabber.setGrabberState(Grabber.grabberStates.HOOK);
-                if (pathTimer.getElapsedTime() > 500 && grabber.isSettled()) {
+                if (pathTimer.getElapsedTime() > 500 && grabber.isAtTargetAngle()) {
                     primaryArm.setPosition(PrimaryArm.positionStates.HOOK_SPECIMEN, true);
                     setPathState(chambers2LowerArmTimeout);
                 }
@@ -472,12 +472,12 @@ public class Blue_1_2 extends OpMode {
                 break;
             case grabberOut2:
                 grabber.setGrabberState(Grabber.grabberStates.OUT);
-                if (grabber.isSettled()) {
+                if (grabber.isAtTargetAngle()) {
                     setPathState(grabberOut2Timeout);
                 }
                 break;
             case grabberOut2Timeout:
-                if (pathTimer.getElapsedTime() > 250 && grabber.isSettled()) {
+                if (pathTimer.getElapsedTime() > 250 && grabber.isAtTargetAngle()) {
                     setPathState(approachGrabSpecimen2);
                 }
                 break;
@@ -545,7 +545,7 @@ public class Blue_1_2 extends OpMode {
 
             case chambers3LowerArm:
                 grabber.setGrabberState(Grabber.grabberStates.HOOK);
-                if (pathTimer.getElapsedTime() > 500 && grabber.isSettled()) {
+                if (pathTimer.getElapsedTime() > 500 && grabber.isAtTargetAngle()) {
                     primaryArm.setPosition(PrimaryArm.positionStates.HOOK_SPECIMEN, true);
                     setPathState(chambers3LowerArmTimeout);
                 }
@@ -571,8 +571,10 @@ public class Blue_1_2 extends OpMode {
     }
 
     public void setPathState(Blue_1_2_PathStates state) {
-        pathState = state;
-        pathTimer.resetTimer();
-        autonomousPathUpdate();
+        if (pathState != state) {
+            pathState = state;
+            pathTimer.resetTimer();
+            autonomousPathUpdate();
+        }
     }
 }

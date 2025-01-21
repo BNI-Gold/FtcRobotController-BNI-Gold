@@ -20,7 +20,7 @@ public class GrabberPIDFTiltTester extends OpMode {
 
     @Override
     public void loop() {
-        grabber.newTiltStateCheck();
+        grabber.tiltStateCheck();
         tester();
         sendTelemetry();
     }

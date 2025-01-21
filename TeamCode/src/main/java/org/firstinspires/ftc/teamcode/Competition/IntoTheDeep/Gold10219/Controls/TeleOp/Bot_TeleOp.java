@@ -10,11 +10,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BrightLights.RGBIndicator;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Grabber.Grabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.Outgrabber.Outgrabber;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.PrimaryArm.PrimaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Mechanisms.SecondaryArm.SecondaryArm;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
+
+import java.util.concurrent.TimeUnit;
 
 @TeleOp(name = "A - Into the Deep", group = "competition")
 public class Bot_TeleOp extends OpMode {
@@ -46,6 +49,7 @@ public class Bot_TeleOp extends OpMode {
     Outgrabber outgrabber = new Outgrabber();
 
     SecondaryArm secondaryArm = new SecondaryArm();
+    RGBIndicator indicator = new RGBIndicator();
 
     private Pose startPose;
 
@@ -53,6 +57,8 @@ public class Bot_TeleOp extends OpMode {
 
     ElapsedTime primaryTimer = new ElapsedTime();
     ElapsedTime secondaryTimer = new ElapsedTime();
+    ElapsedTime hookShortcutTimer = new ElapsedTime();
+    ElapsedTime totalTimer = new ElapsedTime();
 
     public void init() {
         Bot.initRobot(hardwareMap);
@@ -110,6 +116,8 @@ public class Bot_TeleOp extends OpMode {
         secondaryArm.initSecondaryArm(hardwareMap, Bot.LinearOp);
         outgrabber.initOutgrabber(hardwareMap);
 
+        indicator.initIndicator(hardwareMap);
+
         telemetry.update();
     }
 
@@ -118,6 +126,7 @@ public class Bot_TeleOp extends OpMode {
         grabber.headStraight();
         primaryArm.setRetract();
         secondaryArm.setRetract();
+        totalTimer.reset();
     }
 
     public void loop() {
@@ -129,6 +138,7 @@ public class Bot_TeleOp extends OpMode {
         secondaryShortcutChecker();
         shortcuts();
         mechanismsControl();
+        indicatorCheck();
         primaryArm.rotationChecker();
         grabber.imuGyroCheck();
         grabber.tiltStateCheck();
@@ -447,7 +457,8 @@ public class Bot_TeleOp extends OpMode {
                 retractFromChamberCase = retractFromChamberCases.TUCK;
                 break;
             case TUCK:
-                grabber.doTuck();
+                grabber.headStraight();
+                grabber.setGrabberState(Grabber.grabberStates.OUT);
                 primaryShortcutCase = primaryShortcutCases.NONE;
                 retractFromChamberCase = retractFromChamberCases.OPEN;
                 break;
@@ -476,6 +487,13 @@ public class Bot_TeleOp extends OpMode {
         else if (gamepad2.dpad_down) {
             //This will open the grabber, slightly raise the arm, retract the arm, and tuck grabber.
             if (primaryClipped && !primaryDPressed) {
+                if (hookShortcutTimer.time(TimeUnit.SECONDS) > 5) {
+                    primaryDPressed = true;
+                    primaryShortcutCase = primaryShortcutCases.HOOK_SPECIMEN;
+                    primaryClipped = true;
+                    hookShortcutTimer.reset();
+                    return;
+                }
                 primaryDPressed = true;
                 primaryShortcutCase = primaryShortcutCases.RETRACT_FROM_CHAMBER;
                 primaryClipped = false;
@@ -486,6 +504,7 @@ public class Bot_TeleOp extends OpMode {
                 primaryDPressed = true;
                 primaryShortcutCase = primaryShortcutCases.HOOK_SPECIMEN;
                 primaryClipped = true;
+                hookShortcutTimer.reset();
             }
         } else if (gamepad2.dpad_left) {
             primaryClipped = false;
@@ -582,6 +601,42 @@ public class Bot_TeleOp extends OpMode {
         }
     }
 
+    public void indicatorCheck() {
+        double elapsedTime = totalTimer.time(TimeUnit.SECONDS);
+        double remainingTime = 120 - elapsedTime;
+
+        if (remainingTime > 75) {
+            //First 50 seconds of TeleOp, gather samples from submersible
+            indicator.setColor(RGBIndicator.LightOptions.GREEN);
+        } else if (remainingTime > 70) {
+            if ((int)remainingTime % 2 == 0) {
+                indicator.setColor(RGBIndicator.LightOptions.GREEN);
+            } else {
+                indicator.setColor(RGBIndicator.LightOptions.OFF);
+            }
+        } else if (remainingTime > 35) {
+            //First 40 seconds of hook specimen time
+            indicator.setColor(RGBIndicator.LightOptions.YELLOW);
+        } else if (remainingTime > 30) {
+            if ((int)remainingTime % 2 == 0) {
+                indicator.setColor(RGBIndicator.LightOptions.YELLOW);
+            } else {
+                indicator.setColor(RGBIndicator.LightOptions.OFF);
+            }
+        } else if (remainingTime > 15) {
+            //Last 10 seconds of match
+            indicator.setColor(RGBIndicator.LightOptions.ORANGE);
+        } else if (remainingTime > 10) {
+            if ((int)remainingTime % 2 == 0) {
+                indicator.setColor(RGBIndicator.LightOptions.ORANGE);
+            } else {
+                indicator.setColor(RGBIndicator.LightOptions.OFF);
+            }
+        } else {
+            indicator.setColor(RGBIndicator.LightOptions.RED);
+        }
+    }
+
     public void telemetryOutput() {
         telemetry.addData("Front Left: ", Bot.frontLeftMotor.getCurrentPosition());
         telemetry.addData("Front Right: ", Bot.frontRightMotor.getCurrentPosition());
@@ -589,6 +644,10 @@ public class Bot_TeleOp extends OpMode {
         telemetry.addData("Rear Right: ", Bot.rearRightMotor.getCurrentPosition());
 
         telemetry.update();
+    }
+
+    public void stop() {
+        indicator.setColor(RGBIndicator.LightOptions.OFF);
     }
 
 }
