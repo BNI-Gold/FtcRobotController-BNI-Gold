@@ -62,5 +62,8 @@ public enum Red_1_2_PathStates {
     chambers3LowerArm,
     chambers3LowerArmTimeout,
     chambers3ReleaseAndBack,
-    chambers3ReleaseAndBackTimeout
+    chambers3ReleaseAndBackTimeout,
+    toObservation3,
+    holdObservation3,
+    holdObservation3Timeout
 }

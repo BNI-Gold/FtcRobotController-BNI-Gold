@@ -35,7 +35,7 @@ public class PrimaryArm {
     private void initializePositions() {
         positions.put(positionStates.TUCK, 0);
         positions.put(positionStates.GRAB_SPECIMEN, 425);
-        positions.put(positionStates.RAISE_SPECIMEN, 650);
+        positions.put(positionStates.RAISE_SPECIMEN, 1000);
         positions.put(positionStates.ALIGN_SPECIMEN, 2250);
         positions.put(positionStates.HOOK_SPECIMEN, 1800);
     }

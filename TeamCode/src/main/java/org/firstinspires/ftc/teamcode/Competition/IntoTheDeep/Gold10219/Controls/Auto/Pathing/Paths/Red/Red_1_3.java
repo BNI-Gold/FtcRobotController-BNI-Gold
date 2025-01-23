@@ -200,6 +200,9 @@ public class Red_1_3 extends OpMode {
             tel();
         } else {
             telemetry.addData("Total Time: ", totalTime);
+            if (pathTimer.getElapsedTime() > 5000) {
+                requestOpModeStop();
+            }
         }
     }
 
@@ -661,7 +664,6 @@ public class Red_1_3 extends OpMode {
             case holdObservation5Timeout:
                 if (pathTimer.getElapsedTime() > 250 && !follower.isBusy()) {
                     totalTime = overallTimer.getElapsedTime();
-//                    requestOpModeStop();
                 }
                 break;
         }
