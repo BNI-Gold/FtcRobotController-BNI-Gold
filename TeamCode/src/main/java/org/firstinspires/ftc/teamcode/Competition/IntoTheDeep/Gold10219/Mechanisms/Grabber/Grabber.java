@@ -372,8 +372,8 @@ public class Grabber {
                 double error = desiredAngle - currentAngle;
 
                 // Normalize angle difference to avoid wrapping issues
-                while (error > 180) error -= 360;
-                while (error < -180) error += 360;
+                if (error > 180) error -= 360;
+                else if (error < -180) error += 360;
                 diff = error;
 
                 // If within deadband, consider movement complete

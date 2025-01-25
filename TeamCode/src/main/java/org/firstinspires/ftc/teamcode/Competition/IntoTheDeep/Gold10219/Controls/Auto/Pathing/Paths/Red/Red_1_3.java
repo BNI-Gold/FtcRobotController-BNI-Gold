@@ -391,7 +391,7 @@ public class Red_1_3 extends OpMode {
                 }
                 break;
             case liftSpecimen1:
-                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, false);
+                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, true);
                 setPathState(liftSpecimen1Timeout);
                 break;
             case liftSpecimen1Timeout:
@@ -486,7 +486,7 @@ public class Red_1_3 extends OpMode {
                 }
                 break;
             case liftSpecimen2:
-                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, false);
+                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, true);
                 setPathState(liftSpecimen2Timeout);
                 break;
             case liftSpecimen2Timeout:
@@ -582,7 +582,7 @@ public class Red_1_3 extends OpMode {
                 }
                 break;
             case liftSpecimen3:
-                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, false);
+                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, true);
                 setPathState(liftSpecimen3Timeout);
                 break;
             case liftSpecimen3Timeout:

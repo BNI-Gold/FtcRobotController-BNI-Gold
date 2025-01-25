@@ -374,7 +374,7 @@ public class Blue_1_3 extends OpMode {
                 }
                 break;
             case approachGrabSpecimen1:
-                follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT)), poses.Observations.Grabs.Blue.getHeading());
+                follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT).addY(.25)), poses.Observations.Grabs.Blue.getHeading());
                 setPathState(approachGrabSpecimen1Timeout);
                 break;
             case approachGrabSpecimen1Timeout:
@@ -391,7 +391,7 @@ public class Blue_1_3 extends OpMode {
                 }
                 break;
             case liftSpecimen1:
-                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, false);
+                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, true);
                 setPathState(liftSpecimen1Timeout);
                 break;
             case liftSpecimen1Timeout:
@@ -467,12 +467,12 @@ public class Blue_1_3 extends OpMode {
                 break;
             case holdObservation3:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT).remY(.5)), poses.Observations.Grabs.Blue.getHeading());
+                    follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT).addY(.4)), poses.Observations.Grabs.Blue.getHeading());
                     setPathState(holdObservation3Timeout);
                 }
                 break;
             case holdObservation3Timeout:
-                if (pathTimer.getElapsedTime() > 500 && !follower.isBusy()) {
+                if (pathTimer.getElapsedTime() > 750 && !follower.isBusy()) {
                     setPathState(grabSpecimen2);
                 }
                 break;
@@ -486,7 +486,7 @@ public class Blue_1_3 extends OpMode {
                 }
                 break;
             case liftSpecimen2:
-                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, false);
+                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, true);
                 setPathState(liftSpecimen2Timeout);
                 break;
             case liftSpecimen2Timeout:
@@ -563,12 +563,12 @@ public class Blue_1_3 extends OpMode {
                 break;
             case holdObservation4:
                 if (!follower.isBusy()) {
-                    follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT).remY(.5)), poses.Observations.Grabs.Blue.getHeading());
+                    follower.holdPoint(new EasyPoint(poses.Observations.Grabs.Blue, new Offsets().remY(vars.Mechanisms.Grabber.AtObservation.OUT)), poses.Observations.Grabs.Blue.getHeading());
                     setPathState(holdObservation4Timeout);
                 }
                 break;
             case holdObservation4Timeout:
-                if (pathTimer.getElapsedTime() > 500 && !follower.isBusy()) {
+                if (pathTimer.getElapsedTime() > 750 && !follower.isBusy()) {
                     setPathState(grabSpecimen3);
                 }
                 break;
@@ -582,7 +582,7 @@ public class Blue_1_3 extends OpMode {
                 }
                 break;
             case liftSpecimen3:
-                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, false);
+                primaryArm.setPosition(PrimaryArm.positionStates.RAISE_SPECIMEN, true);
                 setPathState(liftSpecimen3Timeout);
                 break;
             case liftSpecimen3Timeout:

@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Testers.BrightLights;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.BrightLights.RGBIndicator;
 import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.Robots.CompBot.CompBot;
 
+@Disabled
 @TeleOp(name = "B - RGB Indicator Tester", group = "testers")
 public class RGBIndicatorTester extends OpMode {
     public CompBot Bot = new CompBot();

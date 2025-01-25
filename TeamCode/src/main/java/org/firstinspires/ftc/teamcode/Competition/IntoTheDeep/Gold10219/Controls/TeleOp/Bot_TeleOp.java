@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class Bot_TeleOp extends OpMode {
 
     boolean usePowers = true;
-    double d1Power = 3;
+    double d1Power = 2;
 
     double leftStickXVal;
     double leftStickYVal;
@@ -607,7 +607,15 @@ public class Bot_TeleOp extends OpMode {
 
         if (remainingTime > 75) {
             //First 50 seconds of TeleOp, gather samples from submersible
-            indicator.setColor(RGBIndicator.LightOptions.GREEN);
+            if (grabber.isImuRunning()) {
+                indicator.setColor(RGBIndicator.LightOptions.GREEN);
+            } else {
+                if ((int)remainingTime % 2 == 0) {
+                    indicator.setColor(RGBIndicator.LightOptions.GREEN);
+                } else {
+                    indicator.setColor(RGBIndicator.LightOptions.RED);
+                }
+            }
         } else if (remainingTime > 70) {
             if ((int)remainingTime % 2 == 0) {
                 indicator.setColor(RGBIndicator.LightOptions.GREEN);
@@ -616,7 +624,15 @@ public class Bot_TeleOp extends OpMode {
             }
         } else if (remainingTime > 35) {
             //First 40 seconds of hook specimen time
-            indicator.setColor(RGBIndicator.LightOptions.YELLOW);
+            if (grabber.isImuRunning()) {
+                indicator.setColor(RGBIndicator.LightOptions.YELLOW);
+            } else {
+                if ((int)remainingTime % 2 == 0) {
+                    indicator.setColor(RGBIndicator.LightOptions.YELLOW);
+                } else {
+                    indicator.setColor(RGBIndicator.LightOptions.RED);
+                }
+            }
         } else if (remainingTime > 30) {
             if ((int)remainingTime % 2 == 0) {
                 indicator.setColor(RGBIndicator.LightOptions.YELLOW);
@@ -625,7 +641,15 @@ public class Bot_TeleOp extends OpMode {
             }
         } else if (remainingTime > 15) {
             //Last 10 seconds of match
-            indicator.setColor(RGBIndicator.LightOptions.ORANGE);
+            if (grabber.isImuRunning()) {
+                indicator.setColor(RGBIndicator.LightOptions.ORANGE);
+            } else {
+                if ((int)remainingTime % 2 == 0) {
+                    indicator.setColor(RGBIndicator.LightOptions.ORANGE);
+                } else {
+                    indicator.setColor(RGBIndicator.LightOptions.RED);
+                }
+            }
         } else if (remainingTime > 10) {
             if ((int)remainingTime % 2 == 0) {
                 indicator.setColor(RGBIndicator.LightOptions.ORANGE);

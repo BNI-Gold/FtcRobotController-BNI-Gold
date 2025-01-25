@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.PedroPa
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.util.Constants;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Competition.IntoTheDeep.Gold10219.PedroPat
  * @version 2.0, 12/30/2024
  */
 
+@Disabled
 @TeleOp(name = "Example Field-Centric Teleop", group = "Examples")
 public class ExampleFieldCentricTeleop extends OpMode {
     private Follower follower;
